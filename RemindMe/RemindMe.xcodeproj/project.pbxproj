@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */; };
+		AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */; };
+		AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9415242231F60002B853 /* WebKit.framework */; };
+		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
 		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
 		AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A2241D5BDA00A41300 /* Main.storyboard */; };
@@ -23,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController2.swift; sourceTree = "<group>"; };
+		AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController1.swift; sourceTree = "<group>"; };
+		AE7D9415242231F60002B853 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEEBD1A0241D5BDA00A41300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,17 +53,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */,
+				AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE7D9414242231F50002B853 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE7D9417242232140002B853 /* libsqlite3.tbd */,
+				AE7D9415242231F60002B853 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
 				AEEBD19D241D5BDA00A41300 /* RemindMe */,
 				AEEBD19C241D5BDA00A41300 /* Products */,
+				AE7D9414242231F50002B853 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
+				AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */,
+				AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -195,6 +217,8 @@
 				AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */,
 				AEEBD1BB241D660500A41300 /* User.swift in Sources */,
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
+				AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */,
+				AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
 				AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */,
