@@ -12,7 +12,11 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView : UITextView!
     @IBOutlet var btnDone : UIBarButtonItem!
-    @IBOutlet var btnImage : UIButton!
+    @IBOutlet var btnAddImage : UIButton!
+    
+    @IBAction func btnAddImageClicked(sender:UIButton) {
+        attachImageToText()
+    }
     
     @IBAction func barItemClicked(sender : UIBarButtonItem) {
         if btnDone.title == "Done" {
@@ -22,16 +26,23 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    // Attach image to text
+    // Attach image to the text
     func attachImageToText() {
+
+        let image = UIImage(named: "gg-background.jpg")
+        
+        let imageRatio = image!.size.width/image!.size.height
+        
+        // Initiate an attachment with inserted image
         let attachment = NSTextAttachment()
-        attachment.image = UIImage(named: "gg-background.jpg")
-        let imageString = NSAttributedString(attachment: attachment)
+        attachment.image = image
+        attachment.bounds = CGRect(x: 0, y: 0, width: imageRatio * 150, height: 150)
         
-        let content = NSMutableAttributedString(string: textView.text)
-        content.append(imageString)
+        // Add the attachment to an attributed string
+        let attributeString = NSAttributedString(attachment: attachment)
         
-        self.textView.attributedText = content
+        // Add the attributed string to the current position of the text view
+        textView.textStorage.insert(attributeString, at: textView.selectedRange.location)
     }
     
     // Dismiss the keyboard when the user touches outside the textview and the keyboard

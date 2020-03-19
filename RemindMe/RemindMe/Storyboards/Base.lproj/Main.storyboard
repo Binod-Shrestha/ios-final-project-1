@@ -40,7 +40,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <segue destination="Y4Z-vD-myZ" kind="presentation" id="Y2Y-TH-IwG"/>
+                                    <segue destination="2mP-PH-0jb" kind="presentation" id="LZ2-H0-DKb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-YI-TUl">
@@ -95,11 +95,7 @@
                                 <items>
                                     <navigationItem title="Title" id="VF0-Ao-th0">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="SNz-do-3cG"/>
-                                        <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk">
-                                            <connections>
-                                                <segue destination="2mP-PH-0jb" kind="presentation" id="1TS-I2-7wx"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -205,7 +201,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Create New Note" id="5PL-y6-10b">
+                                    <navigationItem title="New Note" id="5PL-y6-10b">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="rFv-WR-qh5"/>
                                         <barButtonItem key="rightBarButtonItem" title="Create" id="kJq-ST-bQI">
                                             <connections>
@@ -230,7 +226,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="camera.png"/>
                                 <connections>
-                                    <action selector="btnImageClickedWithSender:" destination="2mP-PH-0jb" eventType="primaryActionTriggered" id="oZD-BG-Xpz"/>
+                                    <action selector="btnAddImageClickedWithSender:" destination="2mP-PH-0jb" eventType="primaryActionTriggered" id="XTr-jW-ki9"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -238,8 +234,8 @@
                         <viewLayoutGuide key="safeArea" id="AQe-eG-nK8"/>
                     </view>
                     <connections>
+                        <outlet property="btnAddImage" destination="iza-1S-GA5" id="rGq-4k-c4Q"/>
                         <outlet property="btnDone" destination="kJq-ST-bQI" id="A9J-Eq-VnX"/>
-                        <outlet property="btnImage" destination="iza-1S-GA5" id="Esb-Vm-m8D"/>
                         <outlet property="textView" destination="muT-6u-Z3P" id="DP3-Xt-kw9"/>
                     </connections>
                 </viewController>
@@ -259,7 +255,9 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Note Detail" id="PoM-KE-Kya"/>
+                                    <navigationItem title="Note Detail" id="PoM-KE-Kya">
+                                        <barButtonItem key="rightBarButtonItem" title="Edit" id="WIo-fc-eD1"/>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
