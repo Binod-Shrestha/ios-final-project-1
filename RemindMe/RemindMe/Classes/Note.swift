@@ -9,5 +9,10 @@
 import UIKit
 
 class Note: NSObject {
-
+    var content : String?
+    var images : NSMutableArray?
+    
+    init(content: String) {
+        self.content = content
+    }
 }
