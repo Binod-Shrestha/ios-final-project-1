@@ -17,15 +17,15 @@ class DueDateViewController1: UIViewController {
         
     }
     
-    var dueDate: DueDate!{
-        didSet{
-            self.txtfdEvents.text = dueDate.name
-            self.dpDate.text = dueDate.dueDate.add
-            self.pickerData = dueDate.category
-            self.scPriority = DueDateViewController1
-            self.
-        }
-    }
+//    var dueDate: DueDate!{
+//        didSet{
+//            self.txtfdEvents.text = dueDate.name
+//            self.dpDate.text = dueDate.dueDate.add
+//            self.pickerData = dueDate.category
+//            self.scPriority = DueDateViewController1
+//            self.
+//        }
+//    }
     
     var db: OpaquePointer?
     
