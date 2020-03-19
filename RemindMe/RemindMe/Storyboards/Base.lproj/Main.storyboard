@@ -39,9 +39,6 @@
                                         </fragment>
                                     </attributedString>
                                 </state>
-                                <connections>
-                                    <segue destination="Y4Z-vD-myZ" kind="presentation" id="Y2Y-TH-IwG"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-YI-TUl">
                                 <rect key="frame" x="137" y="676" width="141" height="30"/>
@@ -95,11 +92,7 @@
                                 <items>
                                     <navigationItem title="Title" id="VF0-Ao-th0">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="SNz-do-3cG"/>
-                                        <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk">
-                                            <connections>
-                                                <segue destination="2mP-PH-0jb" kind="presentation" id="1TS-I2-7wx"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -193,10 +186,10 @@
             </objects>
             <point key="canvasLocation" x="3502" y="798"/>
         </scene>
-        <!--Create Note View Controller-->
+        <!--View Controller-->
         <scene sceneID="5Ys-JU-ij9">
             <objects>
-                <viewController id="2mP-PH-0jb" customClass="CreateNoteViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2mP-PH-0jb" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dnb-EX-wXg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -205,47 +198,17 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Create New Note" id="5PL-y6-10b">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="rFv-WR-qh5"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Create" id="kJq-ST-bQI">
-                                            <connections>
-                                                <action selector="barItemClickedWithSender:" destination="2mP-PH-0jb" id="9Sq-0q-t1S"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
+                                    <navigationItem title="Create New Note" id="5PL-y6-10b"/>
                                 </items>
                             </navigationBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="muT-6u-Z3P">
-                                <rect key="frame" x="0.0" y="88" width="414" height="714"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="2mP-PH-0jb" id="sAK-aq-zwg"/>
-                                </connections>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iza-1S-GA5">
-                                <rect key="frame" x="343" y="810" width="51" height="52"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="camera.png"/>
-                                <connections>
-                                    <action selector="btnImageClickedWithSender:" destination="2mP-PH-0jb" eventType="primaryActionTriggered" id="oZD-BG-Xpz"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="AQe-eG-nK8"/>
                     </view>
-                    <connections>
-                        <outlet property="btnDone" destination="kJq-ST-bQI" id="A9J-Eq-VnX"/>
-                        <outlet property="btnImage" destination="iza-1S-GA5" id="Esb-Vm-m8D"/>
-                        <outlet property="textView" destination="muT-6u-Z3P" id="DP3-Xt-kw9"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTt-XF-bCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4452.1739130434789" y="801.5625"/>
+            <point key="canvasLocation" x="4454" y="802"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5md-8I-C4y">
@@ -464,7 +427,4 @@
             <point key="canvasLocation" x="-804" y="134"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="camera.png" width="409.60000610351562" height="409.60000610351562"/>
-    </resources>
 </document>

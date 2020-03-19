@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AE6A791F242328D000E962FF /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6A791E242328D000E962FF /* CreateNoteViewController.swift */; };
-		AE6A79222423300600E962FF /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE6A79212423300600E962FF /* camera.png */; };
-		AEE058B7242345E8006AE8DD /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AEE058B6242345E8006AE8DD /* gg-background.jpg */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
 		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
 		AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A2241D5BDA00A41300 /* Main.storyboard */; };
@@ -26,9 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AE6A791E242328D000E962FF /* CreateNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
-		AE6A79212423300600E962FF /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
-		AEE058B6242345E8006AE8DD /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEEBD1A0241D5BDA00A41300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,23 +51,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AE6A792024232F1F00E962FF /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				AEE058B6242345E8006AE8DD /* gg-background.jpg */,
-				AE6A79212423300600E962FF /* camera.png */,
-			);
-			path = Buttons;
-			sourceTree = "<group>";
-		};
-		AEE058B1242333E4006AE8DD /* Notes */ = {
-			isa = PBXGroup;
-			children = (
-				AE6A791E242328D000E962FF /* CreateNoteViewController.swift */,
-			);
-			path = Notes;
-			sourceTree = "<group>";
-		};
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +83,6 @@
 		AEEBD1B0241D5BF200A41300 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				AE6A792024232F1F00E962FF /* Buttons */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -139,7 +115,6 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AEE058B1242333E4006AE8DD /* Notes */,
 				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
 			);
 			path = ViewControllers;
@@ -203,10 +178,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEE058B7242345E8006AE8DD /* gg-background.jpg in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
-				AE6A79222423300600E962FF /* camera.png in Resources */,
 				AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,7 +198,6 @@
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
 				AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */,
-				AE6A791F242328D000E962FF /* CreateNoteViewController.swift in Sources */,
 				AEEBD1B5241D65C200A41300 /* DueDate.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
 				AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */,
