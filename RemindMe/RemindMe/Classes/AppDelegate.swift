@@ -20,6 +20,119 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var task : Task?
     var note : Note?
     
+    func getNoteById(id: Int) -> Note {
+        var note : Note = Note()
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Notes where Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
+                
+                while sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let cContent = sqlite3_column_text(selectStatement, 1)
+                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
+                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
+                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
+                    
+                    let content = String(cString: cContent!)
+                    
+                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
+                }
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select note by task statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return note
+    }
+    
+    func getNotesByDueDate(duedate_id: Int) -> [Note] {
+        var notes : [Note] = []
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Notes where DueDate_Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(duedate_id))
+                
+                while sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let cContent = sqlite3_column_text(selectStatement, 1)
+                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
+                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
+                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
+                    
+                    let content = String(cString: cContent!)
+                    
+                    let note : Note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
+                    
+                    notes.append(note)
+                }
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select note by task statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return notes
+    }
+    
+    
+    func getNotesByTask(task_id : Int) -> [Note] {
+        var notes : [Note] = []
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Notes where Task_Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(task_id))
+                
+                while sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let cContent = sqlite3_column_text(selectStatement, 1)
+                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
+                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
+                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
+                    
+                    let content = String(cString: cContent!)
+                    
+                    let note : Note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
+                    
+                    notes.append(note)
+                }
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select note by task statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return notes
+    }
+    
     func deleteNote(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
