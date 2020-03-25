@@ -36,11 +36,11 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
         
         let email = tfemail.text
         let password = tfpassowrd.text
-        let mydata = User()
-        mydata.inWithData(theEmail: email!, thePassword: password!)
-        
-        lbEmail.text = mydata.email
-        lbPassword.text = mydata.password
+//        let mydata = User()
+//        mydata.inWithData(theEmail: email!, thePassword: password!)
+//
+//        lbEmail.text = mydata.email
+//        lbPassword.text = mydata.password
     }
     /*
     // MARK: - Navigation

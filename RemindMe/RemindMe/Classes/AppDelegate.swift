@@ -12,10 +12,45 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var databaseName : String? = "RemindMe.db"
+    var databasePath : String?
+    
+    var user : User?
+    var task : Task?
+    var note : Note?
+    
+    func checkAndCreateDatabase() {
+        var success = false
+        
+        // Access to FileManager
+        let fileManager = FileManager.default
+        
+        // Check if the database already exists
+        success = fileManager.fileExists(atPath: databasePath!)
+        
+        if success {
+            return
+        }
+        
+        // If the database doesn't exist, copy the database to app's document folder by looking for the app location on the device
+        let databasePathFromApp = Bundle.main.resourcePath?.appending("/" + databaseName!)
+        
+        // try for error handling
+        try?fileManager.copyItem(atPath: databasePathFromApp!, toPath: databasePath!)
+        
+        return
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let documentDir = documentPaths[0]
+        
+        // Set the path of database
+        databasePath = documentDir.appending("/" + databaseName!)
+        
+        checkAndCreateDatabase()
+        
         return true
     }
 

@@ -11,5 +11,11 @@
 import UIKit
 
 class Task: NSObject {
-
+    var id : Int?
+    var title : String?
+    
+    init(row : Int, title : String) {
+        self.id = row
+        self.title = title
+    }
 }

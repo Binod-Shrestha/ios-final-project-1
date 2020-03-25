@@ -9,19 +9,11 @@
 import UIKit
 
 class User: NSObject {
-    var email : String = ""
-    var password : String = ""
-    var name: String = ""
-    var confirmPassword: String = ""
-    var postalCode:  String = ""
-    var phoneNumber: String = ""
-    var streetName: String = ""
+    var id : Int?
+    var email : String?
     
-    func inWithData(theEmail n : String , thePassword e : String)
-    {
-        email = n
-        password = e
-        
+    init(row : Int, email : String) {
+        self.id = row
+        self.email = email
     }
-  
 }

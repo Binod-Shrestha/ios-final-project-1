@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
+		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
+		AE37E431242B3DBE00F32C86 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE37E430242B3DBE00F32C86 /* RemindMe.db */; };
 		AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */; };
 		AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */; };
 		AE7C85582423FEBC00EA6CBC /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* camera.png */; };
@@ -16,6 +18,7 @@
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
 		AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9415242231F60002B853 /* WebKit.framework */; };
 		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
+		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
 		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
 		AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A2241D5BDA00A41300 /* Main.storyboard */; };
@@ -34,6 +37,8 @@
 /* Begin PBXFileReference section */
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
+		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		AE37E430242B3DBE00F32C86 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController2.swift; sourceTree = "<group>"; };
 		AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController1.swift; sourceTree = "<group>"; };
 		AE7C85572423FEBC00EA6CBC /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
@@ -41,6 +46,7 @@
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
 		AE7D9415242231F60002B853 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEEBD1A0241D5BDA00A41300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */,
 				AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */,
 				AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */,
 			);
@@ -71,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE37E429242B37ED00F32C86 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				AE37E430242B3DBE00F32C86 /* RemindMe.db */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		AE7C85542423FE8F00EA6CBC /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */,
+				AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -98,6 +114,7 @@
 		AE7D9414242231F50002B853 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE37E427242B266700F32C86 /* libsqlite3.0.tbd */,
 				AE7D9417242232140002B853 /* libsqlite3.tbd */,
 				AE7D9415242231F60002B853 /* WebKit.framework */,
 			);
@@ -124,6 +141,7 @@
 		AEEBD19D241D5BDA00A41300 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
+				AE37E429242B37ED00F32C86 /* Database */,
 				AEEBD1B3241D5C0C00A41300 /* ViewControllers */,
 				AEEBD1B2241D5C0400A41300 /* Storyboards */,
 				AEEBD1B1241D5BFE00A41300 /* Classes */,
@@ -239,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE37E431242B3DBE00F32C86 /* RemindMe.db in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
@@ -256,6 +275,7 @@
 			files = (
 				AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */,
 				AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */,
+				AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */,
 				AEEBD1BB241D660500A41300 /* User.swift in Sources */,
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */,
