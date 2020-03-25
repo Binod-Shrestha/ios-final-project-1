@@ -14,21 +14,49 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var btnDone : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
     
+    @IBAction func unwindToCreateNote(sender : UIStoryboardSegue) {}
+    
     @IBAction func btnAddImageClicked(sender:UIButton) {
         attachImageToText()
     }
     
     @IBAction func barItemClicked(sender : UIBarButtonItem) {
+        // End editing
         if btnDone.title == "Done" {
-            self.view.endEditing(true)
+            textView.resignFirstResponder()
         } else {
+            // Save note to task
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            let currentUser : User = mainDelegate.user!
+            let task : Task = mainDelegate.task!
+            
+            let content = textView.text
+            
+            var returnCode = false
+            
+            if(content != "" && content != "Note") {
+                let note = Note.init(content: content!, task_id: task.id, duedate_id: nil, user_id: currentUser.id!)
+                
+                returnCode = mainDelegate.insertNote(note: note)
+            }
+            
+            var returnMesage = "Successfully Inserted Note"
+            
+            if returnCode == false {
+                returnMesage = "Insert Note Failed"
+            }
+            
+            let alertController = UIAlertController(title: "Insert Note", message: returnMesage, preferredStyle: .alert)
+            let  cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true)
         }
     }
     
     // Attach image to the text
     func attachImageToText() {
-
+        
         let image = UIImage(named: "gg-background.jpg")
         
         let imageRatio = image!.size.width/image!.size.height
@@ -43,6 +71,8 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         
         // Add the attributed string to the current position of the text view
         textView.textStorage.insert(attributeString, at: textView.selectedRange.location)
+        
+        print("AttributedString: \(textView.attributedText.string)")
     }
     
     func setEmptyTextViewStyle() {
@@ -74,12 +104,12 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     
     // Dismiss the keyboard when the user touches outside the textview and the keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        textView.resignFirstResponder()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Set up pre-enter textview as note
         setEmptyTextViewStyle()
     }
