@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite3
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,79 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var user : User?
     var task : Task?
     var note : Note?
+    
+    func deleteNote(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery: String = "delete from Notes where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    returnCode = true
+                    print("Successfully deleted note id: \(id)")
+                } else {
+                    print("Could not delete the note id:\(id)")
+                }
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete note statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return returnCode
+    }
+    
+    func insertNote(note: Note) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var insertStatement :OpaquePointer? = nil
+            var insertQuery : String = "insert into Notes values(NULL, ?, ?, ?, ?)"
+            
+            if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
+                let cContent = note.content! as NSString
+                
+                sqlite3_bind_text(insertStatement, 1, cContent.utf8String, -1, nil)
+                if note.task_id == nil {
+                    sqlite3_bind_null(insertStatement, 2)
+                } else {
+                    sqlite3_bind_int(insertStatement, 2, Int32(note.task_id!))
+                }
+                if note.duedate_id == nil {
+                    sqlite3_bind_null(insertStatement, 3)
+                } else {
+                    sqlite3_bind_int(insertStatement, 3, Int32(note.duedate_id!))
+                }
+                sqlite3_bind_int(insertStatement, 4, Int32(note.user_id!))
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE {
+                    let rowID = sqlite3_last_insert_rowid(db)
+                    print("Successfully inserted note into id: \(rowID)")
+                    returnCode = true
+                } else {
+                    print("Could not insert note")
+                }
+                sqlite3_finalize(insertStatement)
+            } else {
+                print("Could not prepare insert note statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return returnCode
+    }
     
     func checkAndCreateDatabase() {
         var success = false
