@@ -27,8 +27,8 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         } else {
             // Save note to task
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            let currentUser : User = mainDelegate.user!
-            let task : Task = mainDelegate.task!
+            let currentUser : User = mainDelegate.currentUser!
+            let task : Task = mainDelegate.currentTask!
             
             let content = textView.text
             

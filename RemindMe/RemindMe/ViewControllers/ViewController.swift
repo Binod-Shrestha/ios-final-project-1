@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet var segmentControl : UISegmentedControl!
+    
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
         
     }

@@ -9,7 +9,6 @@
 import UIKit
 
 class EditNoteViewController: UIViewController, UITextViewDelegate {
-    
     @IBOutlet var textView : UITextView!
     @IBOutlet var btnDone : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
@@ -89,7 +88,7 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        var note = mainDelegate.getNoteById(id: 2)
+        var note = mainDelegate.getNoteById(id: 1)
         
         textView.text = note.content
     }
