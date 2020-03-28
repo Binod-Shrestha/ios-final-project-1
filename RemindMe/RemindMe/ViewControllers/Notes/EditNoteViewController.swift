@@ -12,9 +12,15 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var textView : UITextView!
     @IBOutlet var btnDone : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
+    @IBOutlet var btnUpdate : UIButton!
     
     @IBAction func btnAddImageClicked(sender:UIButton) {
         attachImageToText()
+    }
+    
+    //TODO: Do UpdateNote function
+    @IBAction func btnUpdateTriggered(sender : UIButton) {
+        
     }
     
     @IBAction func barItemClicked(sender : UIBarButtonItem) {
@@ -22,6 +28,7 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
             textView.isEditable = true
             textView.becomeFirstResponder()
         } else {
+            textView.isEditable = false
             textView.resignFirstResponder()
         }
     }
@@ -88,6 +95,7 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
+        //TODO: Change NoteId
         var note = mainDelegate.getNoteById(id: 1)
         
         textView.text = note.content

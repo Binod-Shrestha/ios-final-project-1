@@ -20,6 +20,7 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         attachImageToText()
     }
     
+    //TODO: Fix CreateNote function
     @IBAction func barItemClicked(sender : UIBarButtonItem) {
         // End editing
         if btnDone.title == "Done" {
@@ -34,9 +35,10 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
             
             var returnCode = false
             
+            // Fix note content
             if(content != "" && content != "Note") {
                 let note = Note.init(content: content!, task_id: task.id, duedate_id: nil, user_id: currentUser.id!)
-                
+            
                 returnCode = mainDelegate.insertNote(note: note)
             }
             

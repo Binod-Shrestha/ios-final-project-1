@@ -41,7 +41,7 @@
                                 </state>
                                 <connections>
                                     <action selector="loginWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="52c-q8-M88"/>
-                                    <segue destination="KLP-Os-u4e" kind="presentation" id="oGY-YO-lbf"/>
+                                    <segue destination="Y4Z-vD-myZ" kind="presentation" id="mJQ-WL-FUI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-YI-TUl">
@@ -128,7 +128,7 @@
         <!--View Controller-->
         <scene sceneID="cnn-xA-qhA">
             <objects>
-                <viewController id="Y4Z-vD-myZ" sceneMemberID="viewController">
+                <viewController id="Y4Z-vD-myZ" customClass="ViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="df8-6u-4R2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -137,16 +137,20 @@
                                 <rect key="frame" x="0.0" y="123" width="414" height="780"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y4Z-vD-myZ" id="uJx-w8-9HK"/>
+                                    <outlet property="delegate" destination="Y4Z-vD-myZ" id="Omm-4q-t0B"/>
+                                </connections>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VUf-xa-IrU">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Title" id="VF0-Ao-th0">
+                                    <navigationItem title="RemindMe" id="VF0-Ao-th0">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="SNz-do-3cG"/>
                                         <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk">
                                             <connections>
-                                                <segue destination="KLP-Os-u4e" kind="presentation" id="g3T-jW-19o"/>
+                                                <action selector="btnCreateTriggeredWithSender:" destination="Y4Z-vD-myZ" id="CUa-O1-FZi"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -160,11 +164,21 @@
                                     <segment title="Tasks"/>
                                     <segment title="Contacts"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentSelectValueChangedWithSender:" destination="Y4Z-vD-myZ" eventType="valueChanged" id="qWC-U9-zGy"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="DdI-Vu-yU1"/>
                     </view>
+                    <connections>
+                        <outlet property="btnCreate" destination="IPp-Ve-GHk" id="r15-B3-g45"/>
+                        <outlet property="segmentControl" destination="UgA-lN-ZWK" id="9pU-j2-TWZ"/>
+                        <outlet property="tableView" destination="DLU-Cw-yYl" id="crQ-E3-BLK"/>
+                        <segue destination="OuM-Ve-ExZ" kind="presentation" identifier="HomeToCreateNewTaskSegue" id="H3D-Qg-JGp"/>
+                        <segue destination="KLP-Os-u4e" kind="presentation" identifier="HomeToCreateDueDate" id="MMe-t8-05a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HzD-EE-VYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -709,10 +723,10 @@
             </objects>
             <point key="canvasLocation" x="3482" y="1522"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Task View Controller-->
         <scene sceneID="ijg-hF-teJ">
             <objects>
-                <viewController id="OuM-Ve-ExZ" sceneMemberID="viewController">
+                <viewController id="OuM-Ve-ExZ" customClass="CreateTaskViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EMP-Kq-7Ms">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -721,7 +735,13 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Create New Task" id="3AO-R7-nqd"/>
+                                    <navigationItem title="Create New Task" id="3AO-R7-nqd">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="tyM-SF-Bz2">
+                                            <connections>
+                                                <segue destination="C8e-fv-k6O" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="yXT-cO-fkT"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -730,6 +750,7 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3al-eI-J1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="C8e-fv-k6O" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1878" y="838"/>
         </scene>
@@ -904,7 +925,4 @@
     <resources>
         <image name="camera.png" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="g3T-jW-19o"/>
-    </inferredMetricsTieBreakers>
 </document>
