@@ -19,20 +19,20 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
     @IBOutlet weak var lblPickerTest: UILabel!
     @IBOutlet weak var tfsecurityAnswer: UITextField!
     
-    var pickerData: [String] = [String]()
+    var securityQuestions: [String] = [String]()
     var row : Int = 0
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return securityQuestions.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        return securityQuestions[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.row  = row
-        lblPickerTest.text = pickerData[row]
+        lblPickerTest.text = securityQuestions[row]
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -73,7 +73,7 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
             }
             
             let alertController = UIAlertController(title: "Success", message: returnMsg, preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "loginSegue", sender: self) }
+            let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "SignUptoLoginSegue", sender: self) }
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
         }
@@ -84,7 +84,9 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
         // Do any additional setup after loading the view.
         self.picker.delegate = self
         self.picker.dataSource = self
-        pickerData = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
+        
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        securityQuestions = mainDelegate.securityQuestions
     }
     
     func textFieldShouldReturn(_ textField: UITextField)-> Bool {

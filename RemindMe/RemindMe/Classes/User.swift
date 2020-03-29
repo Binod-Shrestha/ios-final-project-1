@@ -26,6 +26,13 @@ class User: NSObject {
         self.password = password
     }
     
+    init(row: Int, email: String, securityQuestion: Int, securityAnswer : String) {
+        self.id = row
+        self.email = email
+        self.securityQuestion = securityQuestion
+        self.securityAnswer = securityAnswer
+    }
+    
     init(row : Int, email: String, password : String, name : String, securityQuestion :Int, securityAnswer : String)
     {
         self.id = row

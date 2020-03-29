@@ -16,10 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var databaseName : String? = "RemindMe.db"
     var databasePath : String?
     
+    var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
     var currentUser : User? = nil
     
     //MARK: Database functions for Users
-    func resetPassword(newPassword : String) -> Bool {
+    func resetPassword(user: User, newPassword : String) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
         
@@ -33,11 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let cPassword = newPassword as NSString
                 
                 sqlite3_bind_text(updateStatement, 1, cPassword.utf8String, -1, nil)
-                sqlite3_bind_int(updateStatement, 2, Int32(currentUser!.id!))
+                sqlite3_bind_int(updateStatement, 2, Int32(user.id!))
                 
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
-                    print("Updated password of user \(currentUser?.id) | \(currentUser?.email)")
-                    currentUser?.password = newPassword
+                    print("Updated password of user \(user.id) | \(user.email)")
                 } else {
                     print("Update user password failed")
                     returnCode = false
@@ -58,12 +58,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return returnCode
     }
     
-    func verifyOldPasswordAndSecurity(oldPass: String, securityAnswer: String) -> Bool {
-        if oldPass == currentUser?.password && securityAnswer == currentUser?.securityAnswer {
-            return true
+    func getUserByEmail(email : String) -> User {
+        var user : User = User()
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath!, &db) == SQLITE_OK {
+            
+            var findUserStatement : OpaquePointer? = nil
+            var findUserStatementString : String = "select Id, Email, Question, Answer from Users where Email = ?"
+            
+            if sqlite3_prepare_v2(db, findUserStatementString, -1, &findUserStatement, nil) == SQLITE_OK {
+                
+                let cEmail = email as NSString
+                
+                sqlite3_bind_text(findUserStatement, 1, cEmail.utf8String, -1, nil)
+                
+                if sqlite3_step(findUserStatement) == SQLITE_ROW {
+                    
+                    let id : Int = Int(sqlite3_column_int(findUserStatement, 0))
+                    let cEmail = sqlite3_column_text(findUserStatement, 1)
+                    let question = Int(sqlite3_column_int(findUserStatement, 2))
+                    let cAnswer = sqlite3_column_text(findUserStatement, 3)
+                    
+                    let email = String(cString: cEmail!)
+                    let answer = String(cString: cAnswer!)
+
+                    user = User(row: id, email: email, securityQuestion: question, securityAnswer: answer)
+
+                } else {
+                    print("Cannot find email: \(email)")
+                }
+                
+                sqlite3_finalize(findUserStatement)
+            } else {
+                print("Could not prepare find user by email statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
         }
         
-        return false
+        return user
     }
     
     func logOut() {
