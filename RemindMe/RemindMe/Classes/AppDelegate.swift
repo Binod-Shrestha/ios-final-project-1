@@ -21,7 +21,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var currentNote : Note?
     
     //MARK: Database functions for Tasks
-    func getTaskById(task_id: Int) -> Task {
+    func deleteTask(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery : String = "delete from Tasks where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("Deleted task \(id)")
+                    returnCode = true
+                } else {
+                    print("Could not delete task \(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete task statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
+    }
+    
+    func updateTask(task : Task) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Tasks set Title = ?, Status = ?, Priority = ?, DueDate = ?, DaysInAdvance = ? where Id = ?"
+            
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                
+                var cTitle = task.title! as NSString
+                var intStatus = task.status! as NSNumber
+                var cTaskDueDate = task.taskDueDate! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cTitle.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 2, Int32(intStatus))
+                sqlite3_bind_int(updateStatement, 3, Int32(task.priority!))
+                sqlite3_bind_text(updateStatement, 4, cTaskDueDate.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 5, Int32(task.daysInAdvance!))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated task \(task.id) | \(task.title)")
+                    returnCode = true
+                } else {
+                    print("Could not update task \(task.id) | \(task.title)")
+                }
+                
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update task statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
+    }
+    
+    func getTaskById(id: Int) -> Task {
         var task : Task = Task()
         
         var db : OpaquePointer? = nil
@@ -33,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
                 
-                sqlite3_bind_int(selectStatement, 1, Int32(task_id))
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
                 
                 if sqlite3_step(selectStatement) == SQLITE_ROW {
                     let id : Int = Int(sqlite3_column_int(selectStatement, 0))
@@ -116,6 +190,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     //MARK: Database functions for Notes
+    func deleteNote(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery: String = "delete from Notes where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    returnCode = true
+                    print("Successfully deleted note id: \(id)")
+                } else {
+                    print("Could not delete the note id:\(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete note statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return returnCode
+    }
+    
+    func updateNote(note : Note) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Notes set Content = ? where Id = ?"
+            
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                
+                var cContent = note.content! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cContent.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 2, Int32(note.id!))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated note \(note.id) | \(note.content)")
+                    returnCode = true
+                } else {
+                    print("Could not update note \(note.id) | \(note.content)")
+                }
+                
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update note statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
+    }
+    
     func getNoteById(id: Int) -> Note {
         var note : Note = Note()
         
@@ -224,37 +365,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return note
-    }
-    
-    func deleteNote(id: Int) -> Bool {
-        var db : OpaquePointer? = nil
-        var returnCode = false
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            var deleteStatement : OpaquePointer? = nil
-            var deleteQuery: String = "delete from Notes where Id = ?"
-            
-            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(deleteStatement, 1, Int32(id))
-                
-                if sqlite3_step(deleteStatement) == SQLITE_DONE {
-                    returnCode = true
-                    print("Successfully deleted note id: \(id)")
-                } else {
-                    print("Could not delete the note id:\(id)")
-                }
-                
-                sqlite3_finalize(deleteStatement)
-            } else {
-                print("Could not prepare delete note statement")
-            }
-            sqlite3_close(db)
-        } else {
-            print("Could not open the database")
-        }
-        
-        return returnCode
     }
     
     func insertNote(note: Note) -> Bool {

@@ -8,24 +8,106 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var segmentControl : UISegmentedControl!
     @IBOutlet var btnCreate : UIBarButtonItem!
+    @IBOutlet var btnLogOut : UIBarButtonItem!
     @IBOutlet var tableView : UITableView!
     
+    var indexPath : IndexPath?
+    
+    @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
+        // Cancel object selection
+        if btnLogOut.title == "Cancel" {
+            var cell = self.tableView.cellForRow(at: indexPath!)
+            cell?.isSelected = false
+            
+            btnLogOut.title = "Log Out"
+            btnCreate.title = "+"
+            
+            indexPath = nil
+        } else {
+            //TODO: Log Out function from Users
+        }
+    }
+    
     @IBAction func btnCreateTriggered(sender: UIBarButtonItem) {
-        switch segmentControl.selectedSegmentIndex {
-        case 0:
-            performSegue(withIdentifier: "HomeToCreateDueDate", sender: nil)
-            break
-        case 1:
-            performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
-            break
-        case 2:
-            break
-        default:
-            break
+        // Create new object
+        if btnCreate.title == "+" {
+            switch segmentControl.selectedSegmentIndex {
+            case 0:
+                performSegue(withIdentifier: "HomeToCreateDueDate", sender: nil)
+                break
+            case 1:
+                // Display Create New Task ViewController
+                performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
+                break
+            case 2:
+                break
+            default:
+                break
+            }
+        } else {
+            // Delete object
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            switch segmentControl.selectedSegmentIndex {
+            case 0:
+                break
+            case 1:
+                // Delete selected task
+                var row = indexPath!.row
+                
+                let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
+                    (action) in
+                    
+                    //TODO: Change user id
+                    var tasks = mainDelegate.getTasksByUser(user_id: 1)
+                    var task = tasks[row]
+                    
+                    let returnCode = mainDelegate.deleteTask(id: task.id!)
+                    
+                    var title : String = ""
+                    var message : String = ""
+                    var action = UIAlertAction()
+                    
+                    if returnCode == true {
+                        // Successfully delete task
+                        title = "Successfully"
+                        message = "Deleted \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .default) {
+                            (action) in
+                            self.tableView.reloadData()
+                            self.btnCreate.title = "+"
+                            self.btnLogOut.title = "Log Out"
+                        }
+                    } else {
+                        // Delete task failed
+                        title = "Error"
+                        message = "Could not delete \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    }
+                    
+                    var deleteAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                    deleteAlert.addAction(action)
+                    
+                    self.present(deleteAlert, animated: true)
+
+                }
+                
+                alert.addAction(cancelAction)
+                alert.addAction(confirmAction)
+                
+                self.present(alert, animated: true)
+                break
+            case 2:
+                break
+            default:
+                break
+            }
         }
     }
     
@@ -111,6 +193,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            break
+        case 1:
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            let tasks = mainDelegate.getTasksByUser(user_id: 1)
+            
+            let row = indexPath.row
+            mainDelegate.currentTask = tasks[row]
+            
+            performSegue(withIdentifier: "HomeToEditTaskSegue", sender: nil)
+            break
+        case 2:
+            break
+        default:
+            break
+        }
+    }
 
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
         
@@ -119,8 +221,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // Long Press Gesture
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0
+        longPressGesture.delegate = self
+        self.tableView.addGestureRecognizer(longPressGesture)
     }
+    
+    @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            let touchPoint = longPressGestureRecognizer.location(in: self.tableView)
 
-
+            if let selectedIndexPath = tableView.indexPathForRow(at: touchPoint) {
+                btnLogOut.title = "Cancel"
+                btnCreate.title = "Delete"
+                
+                var cell = tableView.cellForRow(at: selectedIndexPath)
+                cell?.isSelected = true
+                //cell?.backgroundColor = UIColor.lightGray
+                indexPath = selectedIndexPath
+                
+                print("Row \(selectedIndexPath.row)")
+            }
+        }
+    }
 }
 

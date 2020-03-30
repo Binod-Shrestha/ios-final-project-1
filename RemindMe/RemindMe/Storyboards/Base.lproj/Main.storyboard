@@ -147,7 +147,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="RemindMe" id="VF0-Ao-th0">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="SNz-do-3cG"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="SNz-do-3cG">
+                                            <connections>
+                                                <action selector="btnLogOutTriggeredWithSender:" destination="Y4Z-vD-myZ" id="Ywf-Zm-nK2"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="+" id="IPp-Ve-GHk">
                                             <connections>
                                                 <action selector="btnCreateTriggeredWithSender:" destination="Y4Z-vD-myZ" id="CUa-O1-FZi"/>
@@ -174,10 +178,12 @@
                     </view>
                     <connections>
                         <outlet property="btnCreate" destination="IPp-Ve-GHk" id="r15-B3-g45"/>
+                        <outlet property="btnLogOut" destination="SNz-do-3cG" id="xqm-7o-ern"/>
                         <outlet property="segmentControl" destination="UgA-lN-ZWK" id="9pU-j2-TWZ"/>
                         <outlet property="tableView" destination="DLU-Cw-yYl" id="crQ-E3-BLK"/>
                         <segue destination="OuM-Ve-ExZ" kind="presentation" identifier="HomeToCreateNewTaskSegue" id="H3D-Qg-JGp"/>
                         <segue destination="KLP-Os-u4e" kind="presentation" identifier="HomeToCreateDueDate" id="MMe-t8-05a"/>
+                        <segue destination="KpI-au-vPC" kind="presentation" identifier="HomeToEditTaskSegue" id="CEi-xV-s7A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HzD-EE-VYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -331,34 +337,10 @@
             </objects>
             <point key="canvasLocation" x="1878.2608695652175" y="136.60714285714286"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="eRc-pz-MbE">
-            <objects>
-                <viewController id="F7T-a8-koP" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Pka-fm-tgi">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzr-7N-qSY">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Task Detail" id="kWR-mR-Jds"/>
-                                </items>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="z1t-bG-xb4"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kzw-c8-NIq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2706" y="838"/>
-        </scene>
-        <!--View Controller-->
+        <!--Edit Task View Controller-->
         <scene sceneID="jfV-sC-jj5">
             <objects>
-                <viewController id="KpI-au-vPC" sceneMemberID="viewController">
+                <viewController id="KpI-au-vPC" customClass="EditTaskViewController" customModule="RemindMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DVB-mY-dhb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -367,7 +349,13 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Edit Task" id="ghg-uc-IPn"/>
+                                    <navigationItem title="Edit Task" id="ghg-uc-IPn">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="wvn-R0-Fgq">
+                                            <connections>
+                                                <segue destination="fC0-Sl-n44" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="D1T-N1-D6j"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -376,8 +364,9 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxv-cc-3vl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="fC0-Sl-n44" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3509" y="837"/>
+            <point key="canvasLocation" x="2699" y="838"/>
         </scene>
         <!--Create Note View Controller-->
         <scene sceneID="5Ys-JU-ij9">
@@ -421,7 +410,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUl-0z-ft5">
                                 <rect key="frame" x="343" y="810" width="51" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="camera.png"/>
+                                <state key="normal" title="Button" image="icon_camera.png"/>
                                 <connections>
                                     <action selector="btnAddImageClickedWithSender:" destination="2mP-PH-0jb" eventType="primaryActionTriggered" id="QCX-mv-eog"/>
                                 </connections>
@@ -446,7 +435,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTt-XF-bCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4310" y="838"/>
+            <point key="canvasLocation" x="3519" y="838"/>
         </scene>
         <!--Edit Note View Controller-->
         <scene sceneID="5md-8I-C4y">
@@ -487,7 +476,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Aj-r1-Vbq">
                                 <rect key="frame" x="343" y="810" width="51" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="camera.png"/>
+                                <state key="normal" title="Button" image="icon_camera.png"/>
                                 <connections>
                                     <action selector="btnAddImageClickedWithSender:" destination="UyJ-vZ-xOp" eventType="primaryActionTriggered" id="yb8-oy-96H"/>
                                     <action selector="btnAddImageClickedWithSender:" destination="2mP-PH-0jb" eventType="primaryActionTriggered" id="ziP-ex-GhN"/>
@@ -506,7 +495,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M7K-mN-4hP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nvn-gP-GmH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5126" y="838"/>
+            <point key="canvasLocation" x="4335" y="838"/>
         </scene>
         <!--Due Date View Controller2-->
         <scene sceneID="YpP-H1-mGT">
@@ -738,7 +727,7 @@
                                     <navigationItem title="Create New Task" id="3AO-R7-nqd">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="tyM-SF-Bz2">
                                             <connections>
-                                                <segue destination="C8e-fv-k6O" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="yXT-cO-fkT"/>
+                                                <segue destination="C8e-fv-k6O" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="u7K-mu-8Qz"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -923,6 +912,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera.png" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="icon_camera.png" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
 </document>
