@@ -58,8 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return returnCode
     }
     
-    func getUserByEmail(email : String) -> User {
-        var user : User = User()
+    func getUserByEmail (email : String) -> User? {
+       // var user : User = User()
+       var user : User? = nil
         
         var db : OpaquePointer? = nil
         

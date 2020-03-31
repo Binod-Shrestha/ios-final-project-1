@@ -211,9 +211,12 @@
                         <viewLayoutGuide key="safeArea" id="QAb-J8-eRR"/>
                     </view>
                     <connections>
+                        <outlet property="answerLabel" destination="Thi-Fx-3QW" id="XDt-QF-OGe"/>
                         <outlet property="btnChangePassword" destination="EOc-wk-tWQ" id="pVY-22-3di"/>
                         <outlet property="btnSecurity" destination="UXj-98-i26" id="jjD-WL-VlO"/>
                         <outlet property="lbQuestion" destination="SBf-Lh-Ng4" id="5Yz-zI-KRB"/>
+                        <outlet property="newPasswordLabel" destination="rRI-T6-hf1" id="Dhb-Ec-RWS"/>
+                        <outlet property="questionLabel" destination="f9b-ST-W2o" id="zu8-nt-GQz"/>
                         <outlet property="tfAnswer" destination="Cy0-Jl-LTD" id="k8o-An-ALG"/>
                         <outlet property="tfEmail" destination="DeQ-Eb-qz9" id="UIG-VI-XiK"/>
                         <outlet property="tfNewPassword" destination="Y1Y-Dt-BqC" id="y1z-Uh-XA4"/>

@@ -42,7 +42,6 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
         
         if returnCode == true
         {
-            
             var returnMsg : String = "Login Successful"
             let alertController = UIAlertController(title: "SQl Lite Add", message: returnMsg, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "LogIntoHomeSegue", sender: self) }

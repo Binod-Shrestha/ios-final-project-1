@@ -19,30 +19,45 @@ class ResetPasswordViewController: UIViewController {
     @IBOutlet var btnSecurity : UIButton!
     @IBOutlet var btnChangePassword : UIButton!
     
+    @IBOutlet weak var newPasswordLabel: UILabel!
+    @IBOutlet weak var answerLabel: UILabel!
     var foundUser : User?
     
+    @IBOutlet weak var questionLabel: UILabel!
     @IBAction func btnSecurityClicked(sender: UIButton) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
         var email = tfEmail.text
         
         if email == nil || email == "" {
-            //TODO: Display alert
-            // Display an alert to ask user to enter email
+            let alertController = UIAlertController(title: "Error", message: "Please do not leave email field blank", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            present(alertController,animated: true)
         } else {
             foundUser = mainDelegate.getUserByEmail(email: email!)
             
             if foundUser == nil {
                 
-                //TODO: Display alert
-                // Display an alert that says "Could not find the email..."
+                let alertController = UIAlertController(title: "Error", message: "Email cannot be found", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                present(alertController,animated: true)
+            
                 
-            } else {
+            }
+              
+            else {
                 var securityQuestions = mainDelegate.securityQuestions
                 lbQuestion.text = securityQuestions[foundUser!.securityQuestion!]
                 
-                //TODO: Write Code
-                // Write code to show security question label, answer textfield, ..
+                self.answerLabel.isHidden = false
+                self.questionLabel.isHidden = false
+                self.lbQuestion.isHidden = false
+                self.tfAnswer.isHidden = false
+                self.tfNewPassword.isHidden = false
+                self.btnChangePassword.isHidden = false
+                self.newPasswordLabel.isHidden = false
             }
         }
     }
@@ -53,18 +68,24 @@ class ResetPasswordViewController: UIViewController {
         let answer = tfAnswer.text
         
         if answer == nil || answer == "" {
-            //TODO: Display alert
-            // Display an alert that says "Please enter security answer"
+            let alertController = UIAlertController(title: "Error", message: "Do not leave security answer blank", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            present(alertController,animated: true)
         } else if answer != foundUser!.securityAnswer {
-            //TODO: Display alert
-            // Display an alert to tell user try again as the entered answer is wrong
+            let alertController = UIAlertController(title: "Error", message: "Please try again the answere entered doesnt match", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            present(alertController,animated: true)
         } else {
             
             let password = tfNewPassword.text
             
             if password == nil || password == "" {
-                //TODO: Display alert
-                // Display alert to ask user to enter the new password (dont leave it blank)
+                let alertController = UIAlertController(title: "Error", message: "Do not leave password field balnk", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                present(alertController,animated: true)
             } else {
                 let returnCode = mainDelegate.resetPassword(user: foundUser!, newPassword: password!)
                 
@@ -73,8 +94,11 @@ class ResetPasswordViewController: UIViewController {
                     returnMessage = "Could not change password. Please try again"
                 }
                 
-                //TODO: Display alert
-                // Display alert to show returnMessage
+                        let alertController = UIAlertController(title: "Success", message: returnMessage, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                present(alertController,animated: true)
+
             }
         }
     }
@@ -82,9 +106,15 @@ class ResetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        //TODO: Write Code
-        // Write code to hide the security question label,  answer textfield, ...
+      
+        self.answerLabel.isHidden = true
+        self.questionLabel.isHidden = true
+        self.lbQuestion.isHidden = true
+        self.tfAnswer.isHidden = true
+        self.tfNewPassword.isHidden = true
+        self.btnChangePassword.isHidden = true
+        self.newPasswordLabel.isHidden = true
+
     }
     
 
