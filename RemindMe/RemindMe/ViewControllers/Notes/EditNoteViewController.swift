@@ -20,7 +20,8 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
     
     //TODO: Do UpdateNote function
     @IBAction func btnUpdateTriggered(sender : UIButton) {
-        
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        var note = mainDelegate.currentTask?.note
     }
     
     @IBAction func barItemClicked(sender : UIBarButtonItem) {
@@ -52,19 +53,10 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         textView.textStorage.insert(attributeString, at: textView.selectedRange.location)
     }
     
-    func setEmptyTextViewStyle() {
-        textView.isEditable = false
-        textView.text = "Note"
-        textView.textColor = UIColor.lightGray
-    }
-    
     // When the user begins to enter the note
     // Set the color to black
     // Change the title of BarItem from 'Edit' to 'Done'
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "Note" {
-            textView.text = ""
-        }
         textView.textColor = UIColor.black
         btnDone.title = "Done"
     }
@@ -73,9 +65,7 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
     // Set text color to light gray
     // Change BarItem from 'Done' to 'Edit'
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            setEmptyTextViewStyle()
-        }
+        textView.isEditable = false
         textView.textColor = UIColor.lightGray
         btnDone.title = "Edit"
     }
@@ -89,16 +79,10 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        // Set up pre-enter textview as note
-        setEmptyTextViewStyle()
-        
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        //TODO: Change NoteId
-        var note = mainDelegate.getNoteById(id: 1)
-        
-        textView.text = note.content
+        var currentNote = mainDelegate.currentTask!.note
+        textView.text = currentNote?.content
     }
     
     

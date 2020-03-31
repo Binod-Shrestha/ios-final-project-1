@@ -16,9 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var databaseName : String? = "RemindMe.db"
     var databasePath : String?
     
-    var currentUser : User?
-    var currentTask : Task?
-    var currentNote : Note?
+    var currentUser : User? = nil
+    var currentTask : Task? = nil
+//    var currentNote : Note? = nil
     
     //MARK: Database functions for Tasks
     func deleteTask(id: Int) -> Bool {

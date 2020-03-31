@@ -21,6 +21,7 @@
 		AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217A242F3A8600666B90 /* TaskCell.swift */; };
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
 		AEA40C412431D292003DAE7A /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEA40C402431D292003DAE7A /* RemindMe.db */; };
+		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
 		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
@@ -52,6 +53,7 @@
 		AE83217A242F3A8600666B90 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		AEA40C402431D292003DAE7A /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
+		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,15 @@
 			path = Tasks;
 			sourceTree = "<group>";
 		};
+		AEAE019124328DFD003365F7 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				AEAE018F24328A0C003365F7 /* NoteCell.swift */,
+				AE83217A242F3A8600666B90 /* TaskCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +190,7 @@
 		AEEBD1B1241D5BFE00A41300 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AEAE019124328DFD003365F7 /* CustomCells */,
 				AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */,
 				AEEBD1B4241D65C200A41300 /* DueDate.swift */,
 				AEEBD1B6241D65D800A41300 /* Contact.swift */,
@@ -188,7 +200,6 @@
 				AEEBD1BE241D662F00A41300 /* Alarm.swift */,
 				AEEBD1C0241D680C00A41300 /* Task.swift */,
 				AEEBD1C2241D6C1000A41300 /* Note.swift */,
-				AE83217A242F3A8600666B90 /* TaskCell.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -297,6 +308,7 @@
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */,
 				AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */,
+				AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */,
 				AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,

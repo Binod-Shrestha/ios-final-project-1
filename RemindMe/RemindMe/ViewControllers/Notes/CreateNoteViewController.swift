@@ -12,6 +12,7 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView : UITextView!
     @IBOutlet var btnDone : UIBarButtonItem!
+    @IBOutlet var btnBack : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
     
     @IBAction func unwindToCreateNote(sender : UIStoryboardSegue) {}
@@ -20,8 +21,12 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         attachImageToText()
     }
     
+    @IBAction func btnBackClicked(sender : UIBarButtonItem) {
+        performSegue(withIdentifier: "CreateNoteToCreateTaskSegue", sender: nil)
+    }
+    
     //TODO: Fix CreateNote function
-    @IBAction func barItemClicked(sender : UIBarButtonItem) {
+    @IBAction func btnDoneClicked(sender : UIBarButtonItem) {
         // End editing
         if btnDone.title == "Done" {
             textView.resignFirstResponder()
@@ -36,23 +41,26 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
             var returnCode = false
             
             // Fix note content
-            if(content != "" && content != "Note") {
+            if(content != "") {
                 let note = Note.init(content: content!, task_id: task.id, duedate_id: nil, user_id: currentUser.id!)
-            
-                returnCode = mainDelegate.insertNote(note: note)
+                
+                let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                mainDelegate.currentTask!.note = note
+                performSegue(withIdentifier: "CreateNoteToCreateTaskSegue", sender: self)
+//                returnCode = mainDelegate.insertNote(note: note)
             }
             
-            var returnMesage = "Successfully Inserted Note"
-            
-            if returnCode == false {
-                returnMesage = "Insert Note Failed"
-            }
-            
-            let alertController = UIAlertController(title: "Insert Note", message: returnMesage, preferredStyle: .alert)
-            let  cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            
-            alertController.addAction(cancelAction)
-            present(alertController, animated: true)
+//            var returnMesage = "Successfully Inserted Note"
+//
+//            if returnCode == false {
+//                returnMesage = "Insert Note Failed"
+//            }
+//
+//            let alertController = UIAlertController(title: "Insert Note", message: returnMesage, preferredStyle: .alert)
+//            let  cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//
+//            alertController.addAction(cancelAction)
+//            present(alertController, animated: true)
         }
     }
     
@@ -77,31 +85,23 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
         print("AttributedString: \(textView.attributedText.string)")
     }
     
-    func setEmptyTextViewStyle() {
-        textView.text = "Note"
-        textView.textColor = UIColor.lightGray
-    }
-    
     // When the user begins to enter the note
     // Set the color to black
-    // Change the title of BarItem from 'Create' to 'Done'
+    // Change the title of BarItem from 'Add' to 'Done'
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == "Note" {
-            textView.text = ""
-        }
         textView.textColor = UIColor.black
         btnDone.title = "Done"
     }
     
     // After the user finishes editing the note
     // Set text color to light gray
-    // Change BarItem from 'Done' to 'Create'
+    // Change BarItem from 'Done' to 'Add'
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            setEmptyTextViewStyle()
+            textView.textColor = UIColor.lightGray
         }
         textView.textColor = UIColor.lightGray
-        btnDone.title = "Create"
+        btnDone.title = "Add"
     }
     
     // Dismiss the keyboard when the user touches outside the textview and the keyboard
@@ -112,7 +112,10 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up pre-enter textview as note
-        setEmptyTextViewStyle()
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        var currentNote = mainDelegate.currentTask!.note
+        
+        textView.text = currentNote?.content
     }
 }

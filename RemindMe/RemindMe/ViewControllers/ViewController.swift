@@ -41,6 +41,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 break
             case 1:
                 // Display Create New Task ViewController
+                let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                mainDelegate.currentTask = nil
                 performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
                 break
             case 2:
