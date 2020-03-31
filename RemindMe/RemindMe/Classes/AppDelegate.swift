@@ -811,9 +811,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         checkAndCreateDatabase()
         //readContactDataFromDatabase()
-
-	currentUser = User.init(row: 1, email: "Testing@gmail.com")
-
         return true
     }
 

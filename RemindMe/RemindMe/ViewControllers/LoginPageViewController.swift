@@ -11,8 +11,6 @@ import UIKit
 class LoginPageViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet var tfemail : UITextField!
     @IBOutlet var tfpassword : UITextField!
-    @IBOutlet var lbEmail : UILabel!
-    @IBOutlet var lbPassword : UILabel!
     
     @IBAction func unwindToLoginVC(sender:UIStoryboardSegue){
         
@@ -30,7 +28,6 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
     }
     @IBAction func login(sender : Any)
     {
-        
         let email = tfemail.text
         let password = tfpassword.text
         
@@ -51,17 +48,11 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
             
         else if  returnCode == false
         {
-            
-            
             let alertController = UIAlertController(title: "SQl Lite Add", message: "Login Faileed Please try again", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
         }
-        
-        let email = tfemail.text
-        let password = tfpassowrd.text
-
     }
     
     /*

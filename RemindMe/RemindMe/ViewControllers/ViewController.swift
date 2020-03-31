@@ -28,7 +28,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             
             indexPath = nil
         } else {
-            //TODO: Log Out function from Users
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            mainDelegate.logOut()
+            
+            
+            let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "logOutSegue", sender: self) }
+            alertController.addAction(cancelAction)
+            alertController.addAction(okAction)
+            
+            present(alertController,animated: true)
         }
     }
     
@@ -214,20 +224,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         default:
             break
         }
-    }
-
-    @IBAction func btnLogOutClicked(sender : UIBarButtonItem) {
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        mainDelegate.logOut()
-        
-        
-        let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "logOutSegue", sender: self) }
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-    
-        present(alertController,animated: true)
     }
 
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
