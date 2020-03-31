@@ -93,6 +93,13 @@
 			path = Database;
 			sourceTree = "<group>";
 		};
+		3B93C6E42432F047005B7F77 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		AE7C85542423FE8F00EA6CBC /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +155,7 @@
 		AEEBD19D241D5BDA00A41300 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
+				3B93C6E42432F047005B7F77 /* New Group */,
 				3B0EBE23243112A40024B86E /* Database */,
 				AEEBD1B3241D5C0C00A41300 /* ViewControllers */,
 				AEEBD1B2241D5C0400A41300 /* Storyboards */,
