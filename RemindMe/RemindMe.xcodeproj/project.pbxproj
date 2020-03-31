@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
+		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
 		AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */; };
 		AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */; };
+		AE7C85582423FEBC00EA6CBC /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* camera.png */; };
+		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
+		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
 		AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9415242231F60002B853 /* WebKit.framework */; };
 		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
@@ -27,8 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
+		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController2.swift; sourceTree = "<group>"; };
 		AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController1.swift; sourceTree = "<group>"; };
+		AE7C85572423FEBC00EA6CBC /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
+		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
 		AE7D9415242231F60002B853 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +71,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE7C85542423FE8F00EA6CBC /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				AE7C85572423FEBC00EA6CBC /* camera.png */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		AE7C85592423FF4600EA6CBC /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		AE7C855C2423FFD900EA6CBC /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				AE7C855D2423FFE900EA6CBC /* gg-background.jpg */,
+			);
+			path = Testing;
+			sourceTree = "<group>";
+		};
 		AE7D9414242231F50002B853 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +137,8 @@
 		AEEBD1B0241D5BF200A41300 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AE7C855C2423FFD900EA6CBC /* Testing */,
+				AE7C85542423FE8F00EA6CBC /* Buttons */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -135,7 +171,10 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AE7C85592423FF4600EA6CBC /* Notes */,
 				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
+				3B6606DA2423938700160572 /* SignupPageViewController.swift */,
+				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
 				AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */,
 				AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */,
 			);
@@ -200,8 +239,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
+				AE7C85582423FEBC00EA6CBC /* camera.png in Resources */,
 				AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,10 +261,13 @@
 				AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */,
 				AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
+				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
 				AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */,
 				AEEBD1B5241D65C200A41300 /* DueDate.swift in Sources */,
+				3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
+				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,
 				AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
