@@ -9,19 +9,36 @@
 import UIKit
 
 class User: NSObject {
-    var email : String = ""
-    var password : String = ""
-    var name: String = ""
-    var confirmPassword: String = ""
-    var postalCode:  String = ""
-    var phoneNumber: String = ""
-    var streetName: String = ""
+    var id: Int?
+    var email : String?
+    var password : String?
+    var name: String?
+    var securityAnswer: String?
+    var securityQuestion: Int?
     
-    func inWithData(theEmail n : String , thePassword e : String)
-    {
-        email = n
-        password = e
-        
+    override init() {
+        super.init()
     }
-  
+    
+    init(email : String, password : String) {
+        self.email = email
+        self.password = password
+    }
+    
+    init(row: Int, email: String, securityQuestion: Int, securityAnswer : String) {
+        self.id = row
+        self.email = email
+        self.securityQuestion = securityQuestion
+        self.securityAnswer = securityAnswer
+    }
+    
+    init(row : Int, email: String, password : String, name : String, securityQuestion :Int, securityAnswer : String)
+    {
+        self.id = row
+        self.email = email
+        self.password = password
+        self.name = name
+        self.securityAnswer = securityAnswer
+        self.securityQuestion = securityQuestion
+    }
 }
