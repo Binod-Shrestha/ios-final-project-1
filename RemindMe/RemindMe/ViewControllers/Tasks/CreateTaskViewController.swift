@@ -8,15 +8,25 @@
 
 import UIKit
 
-class CreateTaskViewController: UIViewController {
+class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet var lbNote : UILabel!
+    @IBOutlet var tfTitle : UITextField!
+    @IBOutlet var sgmPriority : UISegmentedControl!
+    @IBOutlet var swStatus : UISwitch!
+    @IBOutlet var lbStatus : UILabel!
+    @IBOutlet var btnNote : UIButton!
+    
+    @IBOutlet var dpDeadline :  UIDatePicker!
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch : UITouch = touches.first!
         let touchPoint : CGPoint = touch.location(in: self.view!)
         
-        let noteFrame : CGRect = lbNote.frame
+        let noteFrame : CGRect = btnNote.frame
         
         if noteFrame.contains(touchPoint) {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -48,12 +58,11 @@ class CreateTaskViewController: UIViewController {
         
         // Set label for note
         if currentTask?.note == nil {
-            lbNote.text = "Add Note"
+            btnNote.titleLabel!.text = "Add Note"
         } else {
             var tempNote = mainDelegate.currentTask!.note
-            lbNote.text = tempNote!.content
+            btnNote.titleLabel!.text = tempNote!.content
         }
-        lbNote.textColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +73,7 @@ class CreateTaskViewController: UIViewController {
         var currentTask = mainDelegate.currentTask
         
         if currentTask != nil {
-            lbNote.text = currentTask!.note?.content
+            btnNote.titleLabel!.text = currentTask!.note?.content
         }
     }
     
