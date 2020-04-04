@@ -15,8 +15,6 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var btnBack : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
     
-    @IBAction func unwindToCreateNote(sender : UIStoryboardSegue) {}
-    
     @IBAction func btnAddImageClicked(sender:UIButton) {
         attachImageToText()
     }
@@ -36,9 +34,9 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
             let currentUser : User = mainDelegate.currentUser!
             let task : Task = mainDelegate.currentTask!
             
-            let content = textView.text
+            var content = textView.text
             
-            var returnCode = false
+//            var returnCode = false
             
             // Fix note content
             if(content != "") {

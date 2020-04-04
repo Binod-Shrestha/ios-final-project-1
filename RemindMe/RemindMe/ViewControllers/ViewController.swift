@@ -63,6 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             // Delete object
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            var currentUser : User = mainDelegate.currentUser!
             
             switch segmentControl.selectedSegmentIndex {
             case 0:
@@ -77,7 +78,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     (action) in
                     
                     //TODO: Change user id
-                    var tasks = mainDelegate.getTasksByUser(user_id: 1)
+                    var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
                     
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
@@ -227,7 +228,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
-        
+        tableView.reloadData()
     }
 
     override func viewDidLoad() {

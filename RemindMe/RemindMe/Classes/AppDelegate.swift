@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Tasks set Title = ?, Status = ?, Priority = ?, DueDate = ?, DaysInAdvance = ? where Id = ?"
+            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=? where Id=?"
             
             if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
@@ -78,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_int(updateStatement, 3, Int32(task.priority!))
                 sqlite3_bind_text(updateStatement, 4, cTaskDueDate.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 5, Int32(task.daysInAdvance!))
+                
+                sqlite3_bind_int(updateStatement, 6, Int32(task.id!))
                 
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
                     print("Updated task \(task.id) | \(task.title)")
@@ -176,7 +178,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     tasks.append(task)
                     
                     print("Result tasks:")
-                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note.id)")
+                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note?.id)")
                 }
                 
                 sqlite3_finalize(selectStatement)
@@ -191,6 +193,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
         
         return tasks
+    }
+    
+    func insertTask(task: Task) -> Int? {
+        var db : OpaquePointer? = nil
+        var rowID : Int? = nil
+        //var returnCode : Bool = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var insertStatement :OpaquePointer? = nil
+            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?)"
+            
+            if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
+                
+                let cTitle = task.title as! NSString
+                let cDueDate = task.taskDueDate as! NSString
+                let intStatus = task.status as! NSNumber
+                
+                sqlite3_bind_int(insertStatement, 1, Int32(task.user_id!))
+                sqlite3_bind_text(insertStatement, 2, cTitle.utf8String, -1, nil)
+                sqlite3_bind_int(insertStatement, 3, Int32(intStatus))
+                sqlite3_bind_int(insertStatement, 4, Int32(task.priority!))
+                sqlite3_bind_text(insertStatement, 5, cDueDate.utf8String, -1, nil)
+                sqlite3_bind_int(insertStatement, 6, Int32(task.daysInAdvance!))
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE {
+                    rowID = Int(sqlite3_last_insert_rowid(db))
+                    print("Successfully inserted note into id: \(rowID)")
+                } else {
+                    print("Could not insert note")
+                }
+                
+                sqlite3_finalize(insertStatement)
+            } else {
+                print("Could not prepare insert note statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return rowID
     }
     
     //MARK: Database functions for Notes
@@ -298,8 +341,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return note
     }
     
-    func getNoteByDueDate(duedate_id: Int) -> Note {
-        var note : Note = Note()
+    func getNoteByDueDate(duedate_id: Int) -> Note? {
+        var note : Note? = nil
         
         var db : OpaquePointer? = nil
         
@@ -335,8 +378,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return note
     }
     
-    func getNoteByTask(task_id : Int) -> Note {
-        var note : Note = Note()
+    func getNoteByTask(task_id : Int) -> Note? {
+        var note : Note? = nil
         
         var db : OpaquePointer? = nil
         
