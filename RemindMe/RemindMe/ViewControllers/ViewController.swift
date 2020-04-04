@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import FacebookLogin
-import FacebookCore
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
@@ -18,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var tableView : UITableView!
     
     var indexPath : IndexPath?
- 
+    
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
         if btnLogOut.title == "Cancel" {
@@ -31,16 +29,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             indexPath = nil
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            let loginManager = LoginManager()
-            loginManager.logOut()
             mainDelegate.logOut()
             
             
             let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "logOutSegue", sender: self)
-   
-            }
+            let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "logOutSegue", sender: self) }
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
             
