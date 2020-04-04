@@ -16,8 +16,6 @@
 		AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */; };
 		AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D42432D04A006E9166 /* EditContactViewController.swift */; };
 		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
-		AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */; };
-		AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */; };
 		AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* icon_camera.png */; };
 		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
@@ -28,12 +26,8 @@
 		AE86E78F2438226900EDBDA9 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE86E78E2438226800EDBDA9 /* RemindMe.db */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
-		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
-		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
-		AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A2241D5BDA00A41300 /* Main.storyboard */; };
 		AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */; };
 		AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */; };
-		AEEBD1B5241D65C200A41300 /* DueDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B4241D65C200A41300 /* DueDate.swift */; };
 		AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B6241D65D800A41300 /* Contact.swift */; };
 		AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B8241D65F000A41300 /* Reminder.swift */; };
 		AEEBD1BB241D660500A41300 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BA241D660500A41300 /* User.swift */; };
@@ -41,6 +35,15 @@
 		AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BE241D662F00A41300 /* Alarm.swift */; };
 		AEEBD1C1241D680C00A41300 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C0241D680C00A41300 /* Task.swift */; };
 		AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C2241D6C1000A41300 /* Note.swift */; };
+		AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */; };
+		AEFAD2C82436CC860078640F /* EditDueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */; };
+		AEFAD2C92436CC860078640F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C62436CC860078640F /* ViewController.swift */; };
+		AEFAD2CB2436CCA20078640F /* DueDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2CA2436CCA20078640F /* DueDateCell.swift */; };
+		AEFAD2CF2436CD050078640F /* DueDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2CE2436CD050078640F /* DueDate.swift */; };
+		AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D02436CD230078640F /* AppDelegate.swift */; };
+		AEFAD2D32436CD240078640F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D12436CD230078640F /* Category.swift */; };
+		AEFAD2D52436CD570078640F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEFAD2D42436CD570078640F /* Main.storyboard */; };
+		AEFAD2D72436CD720078640F /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEFAD2D62436CD710078640F /* RemindMe.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,8 +57,6 @@
 		AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D42432D04A006E9166 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController2.swift; sourceTree = "<group>"; };
-		AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController1.swift; sourceTree = "<group>"; };
 		AE7C85572423FEBC00EA6CBC /* icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_camera.png; sourceTree = "<group>"; };
 		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
@@ -67,13 +68,9 @@
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AEEBD1A0241D5BDA00A41300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AEEBD1A3241D5BDA00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEEBD1A8241D5BDB00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AEEBD1AA241D5BDB00A41300 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AEEBD1B4241D65C200A41300 /* DueDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDate.swift; sourceTree = "<group>"; };
 		AEEBD1B6241D65D800A41300 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		AEEBD1B8241D65F000A41300 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		AEEBD1BA241D660500A41300 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -81,6 +78,15 @@
 		AEEBD1BE241D662F00A41300 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		AEEBD1C0241D680C00A41300 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		AEEBD1C2241D6C1000A41300 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDueDateViewController.swift; sourceTree = "<group>"; };
+		AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDueDateViewController.swift; sourceTree = "<group>"; };
+		AEFAD2C62436CC860078640F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AEFAD2CA2436CCA20078640F /* DueDateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DueDateCell.swift; sourceTree = "<group>"; };
+		AEFAD2CE2436CD050078640F /* DueDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DueDate.swift; sourceTree = "<group>"; };
+		AEFAD2D02436CD230078640F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AEFAD2D12436CD230078640F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		AEFAD2D42436CD570078640F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		AEFAD2D62436CD710078640F /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +108,7 @@
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				AE86E78E2438226800EDBDA9 /* RemindMe.db */,
+				AEFAD2D62436CD710078640F /* RemindMe.db */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -156,6 +162,7 @@
 		AEAE019124328DFD003365F7 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				AEFAD2CA2436CCA20078640F /* DueDateCell.swift */,
 				AEAE018F24328A0C003365F7 /* NoteCell.swift */,
 				AE83217A242F3A8600666B90 /* TaskCell.swift */,
 			);
@@ -214,9 +221,10 @@
 		AEEBD1B1241D5BFE00A41300 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AEFAD2D02436CD230078640F /* AppDelegate.swift */,
+				AEFAD2D12436CD230078640F /* Category.swift */,
+				AEFAD2CE2436CD050078640F /* DueDate.swift */,
 				AEAE019124328DFD003365F7 /* CustomCells */,
-				AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */,
-				AEEBD1B4241D65C200A41300 /* DueDate.swift */,
 				AEEBD1B6241D65D800A41300 /* Contact.swift */,
 				AEEBD1B8241D65F000A41300 /* Reminder.swift */,
 				AEEBD1BA241D660500A41300 /* User.swift */,
@@ -231,7 +239,7 @@
 		AEEBD1B2241D5C0400A41300 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				AEEBD1A2241D5BDA00A41300 /* Main.storyboard */,
+				AEFAD2D42436CD570078640F /* Main.storyboard */,
 				AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
@@ -240,15 +248,15 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */,
+				AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */,
+				AEFAD2C62436CC860078640F /* ViewController.swift */,
 				AE832173242F2F5800666B90 /* Tasks */,
 				AE7C85592423FF4600EA6CBC /* Notes */,
 				AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */,
 				AE2A35D42432D04A006E9166 /* EditContactViewController.swift */,
-				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
 				3B6606DA2423938700160572 /* SignupPageViewController.swift */,
 				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
-				AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */,
-				AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */,
 				3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */,
 			);
 			path = ViewControllers;
@@ -312,12 +320,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE86E78F2438226900EDBDA9 /* RemindMe.db in Resources */,
+				AEFAD2D72436CD720078640F /* RemindMe.db in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
+				AEFAD2D52436CD570078640F /* Main.storyboard in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
 				AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */,
-				AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,43 +336,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */,
 				AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */,
-				AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */,
 				AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */,
 				AEEBD1BB241D660500A41300 /* User.swift in Sources */,
 				3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */,
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */,
-				AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */,
 				AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */,
-				AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */,
 				AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */,
 				AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
+				AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
-				AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */,
-				AEEBD1B5241D65C200A41300 /* DueDate.swift in Sources */,
 				3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */,
 				AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */,
+				AEFAD2D32436CD240078640F /* Category.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
 				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,
 				AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */,
+				AEFAD2CB2436CCA20078640F /* DueDateCell.swift in Sources */,
+				AEFAD2C92436CC860078640F /* ViewController.swift in Sources */,
+				AEFAD2CF2436CD050078640F /* DueDate.swift in Sources */,
 				AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */,
+				AEFAD2C82436CC860078640F /* EditDueDateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AEEBD1A2241D5BDA00A41300 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AEEBD1A3241D5BDA00A41300 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
