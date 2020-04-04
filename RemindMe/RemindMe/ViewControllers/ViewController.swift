@@ -47,7 +47,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if btnCreate.title == "+" {
             switch segmentControl.selectedSegmentIndex {
             case 0:
-                performSegue(withIdentifier: "HomeToCreateDueDate", sender: nil)
+                performSegue(withIdentifier: "HomeToCreateDueDateSegue", sender: nil)
                 break
             case 1:
                 // Display Create New Task ViewController
@@ -63,21 +63,29 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             // Delete object
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            var row = indexPath!.row
+            
+            var currentUser : User = mainDelegate.currentUser!
             
             switch segmentControl.selectedSegmentIndex {
             case 0:
+                let duedates = mainDelegate.duedates
+                var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                
+                if returnCode {
+                    mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+                    tableView.reloadData()
+                }
                 break
             case 1:
                 // Delete selected task
-                var row = indexPath!.row
-                
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
                     (action) in
                     
                     //TODO: Change user id
-                    var tasks = mainDelegate.getTasksByUser(user_id: 1)
+                    var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
                     
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
@@ -93,8 +101,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                         action = UIAlertAction(title: "OK", style: .default) {
                             (action) in
                             self.tableView.reloadData()
-                            self.btnCreate.title = "+"
-                            self.btnLogOut.title = "Log Out"
                         }
                     } else {
                         // Delete task failed
@@ -107,7 +113,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     deleteAlert.addAction(action)
                     
                     self.present(deleteAlert, animated: true)
-
                 }
                 
                 alert.addAction(cancelAction)
@@ -120,6 +125,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             default:
                 break
             }
+            
+            self.btnCreate.title = "+"
+            self.btnLogOut.title = "Log Out"
         }
     }
     
@@ -131,12 +139,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var count : Int = 0
         
+        var currentUser : User = mainDelegate.currentUser!
+        
         switch segmentControl.selectedSegmentIndex {
         case 0:
+            mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+            let duedates = mainDelegate.duedates
+            count = duedates.count
             break
         case 1:
             //TODO: Change UserId
-            let tasks = mainDelegate.getTasksByUser(user_id: 1)
+            let tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
             count = tasks.count
             break
         case 2:
@@ -153,6 +166,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
+            height = 110
             break
         case 1:
             height = 95
@@ -172,6 +186,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? DueDateCell ?? DueDateCell(style: .default,reuseIdentifier : "cell")
+            
+            let rowNum = indexPath.row
+            (cell as! DueDateCell).primaryLabel.text = "Event: " + mainDelegate.duedates[rowNum].name!
+            (cell as! DueDateCell).secondaryLabel.text = "Category: \(mainDelegate.duedates[rowNum].category!)"
+            (cell as! DueDateCell).thirdLabel.text = "Sub Category: \(mainDelegate.duedates[rowNum].subCategory!)"
+            (cell as! DueDateCell).fourthLabel.text = "Priority: " + mainDelegate.duedates[rowNum].priority!
+            (cell as! DueDateCell).fifthLabel.text = "Due Date: " + mainDelegate.duedates[rowNum].date!
+            
+            cell.accessoryType = .disclosureIndicator
             break
         case 1:
             //TODO: Change UserId
@@ -209,6 +233,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch segmentControl.selectedSegmentIndex {
         case 0:
+            // Peofrm the segue to Edit the selected duedate
+            
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            var currentUser : User = mainDelegate.currentUser!
+            mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+            let duedates = mainDelegate.duedates
+            
+            let row = indexPath.row
+            mainDelegate.currentDueDate = duedates[row]
+            
+            performSegue(withIdentifier: "HomeToEditDueDatesSegue", sender: nil)
             break
         case 1:
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -232,13 +267,81 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
         // Long Press Gesture
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 1.0
         longPressGesture.delegate = self
         self.tableView.addGestureRecognizer(longPressGesture)
+    }
+    
+    // swiping functions
+    //method:1
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    //method:2 right to left
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        // If user clicks Modify-> go to the corresponding Edit View
+        let modify = UIContextualAction(style: .normal, title: "Modify") { (action, view, success) in
+            
+            switch self.segmentControl.selectedSegmentIndex
+            {
+            case 0:
+                // Perform segue to go to EditDueDateVC
+                break
+            case 1:
+                // Perform segue to go to EditTaskVC
+                break
+            case 2:
+                // Perform segue to go to EditContactVC
+                break
+            default:
+                break
+            }
+            success(true)
+        }
+        modify.backgroundColor = .blue
+        return UISwipeActionsConfiguration(actions: [modify])
+    }
+    
+    // Swipe from right to left
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .normal, title: "Delete", handler: {
+            action, index in
+            
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            let row = indexPath.row
+            
+            var currentUser : User = mainDelegate.currentUser!
+            
+            switch self.segmentControl.selectedSegmentIndex {
+            case 0:
+                // Delete the selected due date
+                let duedates = mainDelegate.duedates
+                var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                
+                if returnCode {
+                    mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+                    tableView.reloadData()
+                }
+                break
+            case 1:
+                // Delete the selected task
+                break
+            case 2:
+                // Delete the selected contact
+                break
+            default:
+                break
+            }
+
+        })
+        return [delete]
     }
     
     @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
