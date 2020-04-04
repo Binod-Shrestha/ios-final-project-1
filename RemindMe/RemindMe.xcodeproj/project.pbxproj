@@ -3,12 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3B0EBE27243112F90024B86E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B0EBE26243112F90024B86E /* libsqlite3.0.tbd */; };
 		3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */; };
+		3B375E352437C4FA000BCBBC /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = 3B375E342437C4FA000BCBBC /* FacebookShare */; };
+		3B375E372437C4FA000BCBBC /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3B375E362437C4FA000BCBBC /* FacebookCore */; };
+		3B375E392437C4FA000BCBBC /* FacebookGamingServices in Frameworks */ = {isa = PBXBuildFile; productRef = 3B375E382437C4FA000BCBBC /* FacebookGamingServices */; };
+		3B375E3B2437C4FA000BCBBC /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 3B375E3A2437C4FA000BCBBC /* FacebookLogin */; };
+		3B375E3E2437C57D000BCBBC /* FacebookLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B375E3D2437C57D000BCBBC /* FacebookLogin.m */; };
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
@@ -47,6 +52,8 @@
 		3B0EBE24243112CE0024B86E /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		3B0EBE26243112F90024B86E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		3B375E3C2437C57C000BCBBC /* RemindMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RemindMe-Bridging-Header.h"; sourceTree = "<group>"; };
+		3B375E3D2437C57D000BCBBC /* FacebookLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FacebookLogin.m; sourceTree = "<group>"; };
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
@@ -90,15 +97,26 @@
 			files = (
 				AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */,
 				3B0EBE27243112F90024B86E /* libsqlite3.0.tbd in Frameworks */,
+				3B375E372437C4FA000BCBBC /* FacebookCore in Frameworks */,
+				3B375E352437C4FA000BCBBC /* FacebookShare in Frameworks */,
 				AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */,
+				3B375E3B2437C4FA000BCBBC /* FacebookLogin in Frameworks */,
 				AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */,
 				AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */,
+				3B375E392437C4FA000BCBBC /* FacebookGamingServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B93C6F92436242D005B7F77 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +191,7 @@
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
+				3B93C6F92436242D005B7F77 /* Packages */,
 				AEEBD19D241D5BDA00A41300 /* RemindMe */,
 				AEEBD19C241D5BDA00A41300 /* Products */,
 				AE7D9414242231F50002B853 /* Frameworks */,
@@ -224,6 +243,8 @@
 				AEEBD1BE241D662F00A41300 /* Alarm.swift */,
 				AEEBD1C0241D680C00A41300 /* Task.swift */,
 				AEEBD1C2241D6C1000A41300 /* Note.swift */,
+				3B375E3D2437C57D000BCBBC /* FacebookLogin.m */,
+				3B375E3C2437C57C000BCBBC /* RemindMe-Bridging-Header.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -270,6 +291,12 @@
 			dependencies = (
 			);
 			name = RemindMe;
+			packageProductDependencies = (
+				3B375E342437C4FA000BCBBC /* FacebookShare */,
+				3B375E362437C4FA000BCBBC /* FacebookCore */,
+				3B375E382437C4FA000BCBBC /* FacebookGamingServices */,
+				3B375E3A2437C4FA000BCBBC /* FacebookLogin */,
+			);
 			productName = RemindMe;
 			productReference = AEEBD19B241D5BDA00A41300 /* RemindMe.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +313,7 @@
 				TargetAttributes = {
 					AEEBD19A241D5BDA00A41300 = {
 						CreatedOnToolsVersion = 10.3;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -298,6 +326,9 @@
 				Base,
 			);
 			mainGroup = AEEBD192241D5BDA00A41300;
+			packageReferences = (
+				3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
 			productRefGroup = AEEBD19C241D5BDA00A41300 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,6 +372,7 @@
 				AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */,
 				AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
+				3B375E3E2437C57D000BCBBC /* FacebookLogin.m in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
 				AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */,
@@ -496,6 +528,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -508,6 +541,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bbqs.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RemindMe/Classes/RemindMe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -517,6 +552,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -529,6 +565,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bbqs.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RemindMe/Classes/RemindMe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -556,6 +593,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3B375E342437C4FA000BCBBC /* FacebookShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookShare;
+		};
+		3B375E362437C4FA000BCBBC /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		3B375E382437C4FA000BCBBC /* FacebookGamingServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookGamingServices;
+		};
+		3B375E3A2437C4FA000BCBBC /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3B375E332437C4FA000BCBBC /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AEEBD193241D5BDA00A41300 /* Project object */;
 }
