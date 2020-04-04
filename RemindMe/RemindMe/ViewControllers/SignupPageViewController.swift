@@ -73,7 +73,7 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
             }
             
             let alertController = UIAlertController(title: "Success", message: returnMsg, preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "SignUptoLoginSegue", sender: self) }
+           let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "SignUptoLoginSegue", sender: self) }
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
         }
