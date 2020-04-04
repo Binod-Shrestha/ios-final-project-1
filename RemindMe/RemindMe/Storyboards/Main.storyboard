@@ -287,6 +287,7 @@
                         <segue destination="KpI-au-vPC" kind="presentation" identifier="HomeToEditTaskSegue" id="CEi-xV-s7A"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="logOutSegue" id="5Ju-2v-4zC"/>
                         <segue destination="Ynz-J0-eI0" kind="presentation" identifier="HomeToCreateDueDateSegue" id="HiC-Nu-gXz"/>
+                        <segue destination="FhY-sY-OEc" kind="presentation" identifier="HomeToEditDueDatesSegue" id="3Ml-Dk-ZsD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HzD-EE-VYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1196,7 +1197,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Save Changes" id="IaK-CZ-WLA">
                                             <connections>
-                                                <action selector="insertDueDate:" destination="FhY-sY-OEc" id="pla-3I-ZBq"/>
+                                                <action selector="updateDueDate:" destination="FhY-sY-OEc" id="Ffw-XO-4bx"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -1238,6 +1239,10 @@
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWe-Z8-lza">
                                 <rect key="frame" x="124" y="179" width="269" height="94"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="FhY-sY-OEc" id="nSp-oa-qYe"/>
+                                    <outlet property="delegate" destination="FhY-sY-OEc" id="clM-FJ-jcH"/>
+                                </connections>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkV-Ci-VtZ">
                                 <rect key="frame" x="19" y="214" width="88" height="24"/>
@@ -1246,14 +1251,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter the due event" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KS3-iA-AlN">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter the due event" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KS3-iA-AlN">
                                 <rect key="frame" x="20" y="118" width="374" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l9K-ro-U0V">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="l9K-ro-U0V">
                                 <rect key="frame" x="27" y="415" width="360" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -1286,7 +1291,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter sub category " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MC8-cP-zaD">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter sub category " textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MC8-cP-zaD">
                                 <rect key="frame" x="20" y="305" width="374" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
@@ -1300,7 +1305,7 @@
                     <connections>
                         <outlet property="btnAlert" destination="Gvd-Qc-T5F" id="kE1-TL-gr1"/>
                         <outlet property="btnNotification" destination="XIE-AL-YFl" id="dUM-hF-HKd"/>
-                        <outlet property="pvCategory" destination="HWe-Z8-lza" id="9mQ-Yf-1fg"/>
+                        <outlet property="pvCategory" destination="HWe-Z8-lza" id="2cb-xb-Kus"/>
                         <outlet property="sgPriority" destination="X0G-AL-dzO" id="eff-M6-k8S"/>
                         <outlet property="swReminders" destination="ln2-UD-8bj" id="E94-yg-GxB"/>
                         <outlet property="tfDueDate" destination="l9K-ro-U0V" id="HZ1-5A-Hns"/>

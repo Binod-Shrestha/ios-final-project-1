@@ -16,13 +16,7 @@ class DueDateCell: UITableViewCell {
     let thirdLabel = UILabel()
     let fourthLabel = UILabel()
     let fifthLabel = UILabel()
-    let sixthLabel = UILabel()
-    let seventhLabel = UILabel()
-    let eighthLabel = UILabel()
-    
-
-    //let myImageView = UIImageView()
-    
+   
     //override the constructor
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
@@ -50,21 +44,7 @@ class DueDateCell: UITableViewCell {
         fifthLabel.font = UIFont.boldSystemFont(ofSize: 16)
         fifthLabel.backgroundColor = .clear
         fifthLabel.textColor = .blue
-        
-        sixthLabel.textAlignment = .left
-        sixthLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        sixthLabel.backgroundColor = .clear
-        sixthLabel.textColor = .blue
-        
-        seventhLabel.textAlignment = .left
-        seventhLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        seventhLabel.backgroundColor = .clear
-        seventhLabel.textColor = .blue
-        
-        eighthLabel.textAlignment = .left
-        eighthLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        eighthLabel.backgroundColor = .clear
-        eighthLabel.textColor = .blue
+
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         //add images
@@ -73,11 +53,6 @@ class DueDateCell: UITableViewCell {
         contentView.addSubview(thirdLabel)
         contentView.addSubview(fourthLabel)
         contentView.addSubview(fifthLabel)
-        contentView.addSubview(sixthLabel)
-        contentView.addSubview(seventhLabel)
-        contentView.addSubview(eighthLabel)
-
-      //  contentView.addSubview(myImageView)
     }
     
     //location of the items
@@ -87,19 +62,12 @@ class DueDateCell: UITableViewCell {
         thirdLabel.frame = CGRect(x: 10, y: 45, width: 460, height: 20)
         fourthLabel.frame = CGRect(x: 10, y: 65, width: 460, height: 20)
         fifthLabel.frame = CGRect(x: 10, y: 85, width: 460, height: 20)
-        sixthLabel.frame = CGRect(x: 10, y: 105, width: 460, height: 20)
-        seventhLabel.frame = CGRect(x: 10, y: 125, width: 460, height: 20)
-        eighthLabel.frame = CGRect(x: 10, y: 145, width: 460, height: 20)
-
-       // myImageView.frame = CGRect(x: 5, y: 5, width: 45, height: 45)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

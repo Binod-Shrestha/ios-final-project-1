@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var currentUser : User? = nil
     var currentTask : Task? = nil
+    var currentDueDate : DueDate? = nil
     
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
 
@@ -60,27 +61,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     //update function
-    func updateDueDateData(id:Int) {
+    func updateDueDateData(duedate : DueDate) -> Bool {
         var db : OpaquePointer? = nil
+        var returnCode = true
+        
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var updateStatement : OpaquePointer? = nil
-            var updateStatementString = "UPDATE duedates SET Name=?, Category=?, SubCategory=?, Date=?, Priority=?, Notes=? WHERE Id=?"
+            var updateStatementString = "UPDATE DueDates SET Name=?, Category=?, SubCategory=?, SelectedDate=?, Priority=? WHERE ID=?"
             if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK
             {
-                sqlite3_bind_int(updateStatement, 1, Int32(id))
+                
+                let cName = duedate.name as! NSString
+                let cCategory = duedate.category as! NSString
+                let cSubCategory = duedate.subCategory as! NSString
+                let cDate = duedate.date as! NSString
+                let cPriority = duedate.priority as! NSString
+                
+                //TODO: Update Note and Reminder here
+                
+                sqlite3_bind_text(updateStatement, 1, cName.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 2, cCategory.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 3, cSubCategory.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 4, cDate.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 5, cPriority.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 6, Int32(duedate.id!))
+                
                 if sqlite3_step(updateStatement) == SQLITE_DONE
                 {
                     print("Successfully updated row.")
                 } else {
                     print("Could not update row.")
+                    returnCode = false
                 }
             } else {
                 print("UPDATE statement could not be prepared")
+                returnCode = false
             }
             sqlite3_finalize(updateStatement)
             
+        } else {
+            print("Could not open database")
+            returnCode = false
         }
+        
+        return returnCode
     }
     
     func getDueDatesByUserId(userId : Int)

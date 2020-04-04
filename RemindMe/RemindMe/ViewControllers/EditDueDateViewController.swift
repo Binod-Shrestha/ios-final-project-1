@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditDueDateViewController: UIViewController {
+class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
 
     @IBOutlet weak var tfEventName: UITextField!
     
@@ -28,14 +28,20 @@ class EditDueDateViewController: UIViewController {
     var duedates:[DueDate] = []
     var pickerData: [String] = [String]()
     let datePicker = UIDatePicker()
+    
+    
 
     
     @IBOutlet weak var swReminders: UISwitch!
+    
     // setReminders
-    @IBAction func setNotification(_ sender: Any) {
+    @IBAction func setNotification(_ sender: Any)
+    {
+        
     }
     // uiswitch for setting reminder
-    @IBAction func setReminders(_ sender: Any) {
+    @IBAction func setReminders(_ sender: Any)
+    {
         let onState = swReminders.isOn
         if onState {
             status = "Active"
@@ -50,7 +56,8 @@ class EditDueDateViewController: UIViewController {
         
     }
     // segments function
-    @IBAction func indexChanaged(_ sender: Any) {
+    @IBAction func indexChanaged(_ sender: Any)
+    {
         switch sgPriority.selectedSegmentIndex
         {
         case 0:
@@ -65,9 +72,69 @@ class EditDueDateViewController: UIViewController {
     }
     
     // pickerview
+    
+    
+    //MARK: update DueDate
+    @IBAction func updateDueDate(_ sender: Any)
+    {
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        let currentUser : User = mainDelegate.currentUser!
+        let currentDueDate : DueDate = mainDelegate.currentDueDate!
+        
+        var eventName = tfEventName.text!
+        var sbCategory = tfSCategory.text!
+        var dateFromDatabase = tfDueDate.text!
+        
+        //TODO: Update note and reminder
+        let note : Note? = nil
+        let reminder : Reminder? = nil
+
+        currentDueDate.name = eventName
+        currentDueDate.category = selectedCategory
+        currentDueDate.subCategory =  sbCategory
+        currentDueDate.date = dateFromDatabase
+        currentDueDate.priority = selectedPriority
+        currentDueDate.note = note
+        currentDueDate.reminder = reminder
+        
+        //TODO: change insertDueDate to updateDueDate
+        let returnCode = mainDelegate.updateDueDateData(duedate: currentDueDate)
+        if returnCode == true
+        {
+            var returnMsg : String = "Due Date updated"
+            //performSegue(withIdentifier: "VCDueDateSegue", sender: self)
+        }
+        else  if returnCode == false
+        {
+            var  returnMsg = "Due Date update Failed"
+        }
+    }
+    
+    // go away the keyboard after return key
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        let duedate : DueDate = DueDate.init()
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        var currentDueDate = mainDelegate.currentDueDate
+        
+        tfEventName.text = currentDueDate!.name
+        tfSCategory.text = currentDueDate!.subCategory
+        tfDueDate.text = currentDueDate!.date
+        selectedCategory = currentDueDate!.category
+        selectedPriority = currentDueDate!.priority
+        createDatePicker()
+        pickerData = ["Business", "Personal", "School"]
+    }
+    
+    // pickerview
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
-        
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -78,48 +145,13 @@ class EditDueDateViewController: UIViewController {
     }
     // Capture the picker view selection
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        // This method is triggered whenever the user makes a change to the picker selection.
-        // The parameter named row and component represents what was selected.
         selectedCategory = pickerData[row]
     }
-
-    @IBAction func insertDueDate(_ sender: Any) {
-        
-        let duedate : DueDate = DueDate.init()
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        var currentUser : User = mainDelegate.currentUser!
-        
-        // TODO: Update note and reminder
-        var note : Note? = nil
-        var reminder : Reminder? = nil
-        
-        duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventName.text!, theCategory: selectedCategory!, theSubCategory: tfSCategory.text!, theDate: selectedDate, thePriority: selectedPriority!, theNote: note, theReminder: reminder)
-        
-        let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
-        
-        if returnCode == true
-            
-        {        var returnMsg : String = "Due Date Added"
-            performSegue(withIdentifier: "VCDueDateSegue", sender: self)
-            print("HI")
-        }
-            
-        else  if returnCode == false
-        {
-            var  returnMsg = "Due Date Add Failed"
-            //performSegue(withIdentifier: "dueDateSegue", sender: self)
-        }
-    }
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     // date function
-    func createDatePicker(){
+    func createDatePicker()
+    {
         //format date
         tfDueDate.textAlignment = .center
         
@@ -133,25 +165,15 @@ class EditDueDateViewController: UIViewController {
         tfDueDate.inputView = datePicker
         
     }
-    @objc func donePressed(){
+    //MARK: done button for date picker
+    @objc func donePressed()
+    {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .long
         self.tfDueDate.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         selectedDate = tfDueDate.text
-        
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

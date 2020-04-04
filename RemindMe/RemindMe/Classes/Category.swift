@@ -9,10 +9,11 @@
 import UIKit
 
 class Category: NSObject {
-   var category_title:[String] = []
-    init(category_title:[String]) {
-        
-        self.category_title = category_title
+    var id : Int?
+    var category_name: String?
+    func initWithData(theRow i: Int, theCategoryName cn: String){
+        id = i
+        category_name = cn
     }
-
+   
 }

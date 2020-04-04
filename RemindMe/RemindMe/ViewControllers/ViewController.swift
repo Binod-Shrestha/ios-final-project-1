@@ -166,7 +166,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            height = 180
+            height = 110
             break
         case 1:
             height = 95
@@ -192,10 +192,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             (cell as! DueDateCell).primaryLabel.text = "Event: " + mainDelegate.duedates[rowNum].name!
             (cell as! DueDateCell).secondaryLabel.text = "Category: \(mainDelegate.duedates[rowNum].category!)"
             (cell as! DueDateCell).thirdLabel.text = "Sub Category: \(mainDelegate.duedates[rowNum].subCategory!)"
-            (cell as! DueDateCell).fourthLabel.text = "Category: " + mainDelegate.duedates[rowNum].category!
-            (cell as! DueDateCell).fifthLabel.text = "Sub Category: " + mainDelegate.duedates[rowNum].subCategory!
-            (cell as! DueDateCell).sixthLabel.text = "Due Date: " + mainDelegate.duedates[rowNum].date!
-            (cell as! DueDateCell).seventhLabel.text = "Priority: " + mainDelegate.duedates[rowNum].priority!
+            (cell as! DueDateCell).fourthLabel.text = "Priority: " + mainDelegate.duedates[rowNum].priority!
+            (cell as! DueDateCell).fifthLabel.text = "Due Date: " + mainDelegate.duedates[rowNum].date!
             
             cell.accessoryType = .disclosureIndicator
             break
@@ -236,6 +234,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         switch segmentControl.selectedSegmentIndex {
         case 0:
             // Peofrm the segue to Edit the selected duedate
+            
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            var currentUser : User = mainDelegate.currentUser!
+            mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+            let duedates = mainDelegate.duedates
+            
+            let row = indexPath.row
+            mainDelegate.currentDueDate = duedates[row]
+            
+            performSegue(withIdentifier: "HomeToEditDueDatesSegue", sender: nil)
             break
         case 1:
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -259,8 +267,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
         // Long Press Gesture
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 1.0
@@ -283,7 +289,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // If user clicks Modify-> go to the corresponding Edit View
         let modify = UIContextualAction(style: .normal, title: "Modify") { (action, view, success) in
             
-            switch self.segmentControl.selectedSegmentIndex {
+            switch self.segmentControl.selectedSegmentIndex
+            {
             case 0:
                 // Perform segue to go to EditDueDateVC
                 break

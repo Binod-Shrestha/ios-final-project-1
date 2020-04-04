@@ -10,7 +10,6 @@ import UIKit
 
 class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
    
-    @IBOutlet weak var ntes: UITextField!
     @IBOutlet var tfEventTitle : UITextField!
    
     @IBOutlet weak var picker: UIPickerView!
@@ -19,26 +18,18 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     
     @IBOutlet weak var btnNotification: UIButton!
     
-    @IBOutlet weak var AlarmNotificationTblVW: UITableView!
-    @IBOutlet weak var notesTextArea: UITextView!
     @IBOutlet weak var reminderSwitch: UISwitch!
   
-    
-    @IBOutlet weak var alarmNotification: UITableView!
-    
     //for date
     let datePicker = UIDatePicker()
     var pickerData: [String] = [String]()
-    @IBOutlet weak var duedatesTable: UITableView!
     let cellReuseIdentifier = "cell"
     var duedates:[DueDate] = []
     
 
     @IBOutlet weak var tfsubCategory : UITextField!
-    @IBOutlet weak var lbPickerView: UILabel!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var prioritySC: UISegmentedControl!
-    @IBOutlet weak var lblPriority: UILabel!
     
     // variables to hold selected value from UI
     var status: String!
@@ -86,7 +77,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             break
         }
     }
-    
+    //MARK: save dueDate
     @IBAction func insertDueDate(_ sender: Any) {
         
         let duedate : DueDate = DueDate.init()
@@ -110,26 +101,32 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             
         else  if returnCode == false
         {
-            var  returnMsg = "Due Date Add Failed"
+            var returnMsg = "Due Date Add Failed"
            //performSegue(withIdentifier: "dueDateSegue", sender: self)
         }
+        
+        
     }
   
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         //call method for done
         createDatePicker()
         pickerData = ["Business", "Personal", "School"]
+        
 
         // Do any additional setup after loading the view.
     }
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     // pickerview
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
+    {
         return 1
         
     }
@@ -160,7 +157,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         
         return cell
     }
-    
+    //MARK: create date
     func createDatePicker(){
         //format date
         dateTextField.textAlignment = .center
@@ -175,6 +172,8 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         dateTextField.inputView = datePicker
         
     }
+    
+    //MARK: date selection
     @objc func donePressed(){
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
