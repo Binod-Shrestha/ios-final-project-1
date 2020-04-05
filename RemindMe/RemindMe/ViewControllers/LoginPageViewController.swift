@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import FacebookCore
-import FacebookLogin
+//import FacebookCore
+//import FacebookLogin
 
 class LoginPageViewController: UIViewController ,UITextFieldDelegate{
     
@@ -21,7 +21,7 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var loginButton = FBLoginButton(permissions: [ .publicProfile ])
+       /* var loginButton = FBLoginButton(permissions: [ .publicProfile ])
        //view.addSubview(loginButton)
     //    loginButton.center = view.center
       
@@ -33,9 +33,10 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
             print(accessToken)
             performSegue(withIdentifier: "LogIntoHomeSegue", sender: self)
         }
+ */
     }
     
-    func loginManagerDidComplete(_ result: LoginResult) {
+    /*func loginManagerDidComplete(_ result: LoginResult) {
          let alertController: UIAlertController
          switch result {
          case .cancelled:
@@ -65,6 +66,7 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
               self.loginManagerDidComplete(result)
           }
       }
+ */
     
     func textFieldShouldReturn(_ textField: UITextField)-> Bool {
         

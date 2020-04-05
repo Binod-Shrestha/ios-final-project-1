@@ -9,7 +9,7 @@
 import UIKit
 import SQLite3
 
-class DueDateViewController1: UIViewController {
+class DueDateViewController1: UIViewController ,EKCalendarItem{
     
     
     
@@ -98,7 +98,17 @@ class DueDateViewController1: UIViewController {
         //displaying a success message
         print("DueDate saved successfully")
     }
-
+    
+    func createReminder(){
+        
+        let reminder = EKReminder(eventStore: AppDelegate.eventStore!)
+        
+        
+        
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Connect data:

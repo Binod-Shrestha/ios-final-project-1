@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import FacebookLogin
-import FacebookCore
+//import FacebookLogin
+//import FacebookCore
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
@@ -31,8 +31,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             indexPath = nil
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            let loginManager = LoginManager()
-            loginManager.logOut()
+           // let loginManager = LoginManager()
+         //   loginManager.logOut()
             mainDelegate.logOut()
             
             
