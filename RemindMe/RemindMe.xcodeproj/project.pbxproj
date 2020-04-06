@@ -11,11 +11,16 @@
 		3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */; };
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
+		AE01B39A2438853E00BE6BA7 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE01B3992438853E00BE6BA7 /* RemindMe.db */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
 		AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */; };
 		AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */; };
 		AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D42432D04A006E9166 /* EditContactViewController.swift */; };
 		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
+		AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5023882437ACF50050B4F1 /* ContactCell.swift */; };
+		AE50238F2437E8AB0050B4F1 /* blue_fade.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */; };
+		AE5023902437E8AB0050B4F1 /* grey_fog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */; };
+		AE5023912437E8AB0050B4F1 /* lite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238E2437E8AB0050B4F1 /* lite.jpg */; };
 		AE75FEA92423B06000F55C60 /* DueDateViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */; };
 		AE75FEAB2423B07B00F55C60 /* DueDateViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */; };
 		AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* icon_camera.png */; };
@@ -27,7 +32,6 @@
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
-		AEC47EC62432F84E00430D83 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEC47EC52432F84D00430D83 /* RemindMe.db */; };
 		AEEBD19F241D5BDA00A41300 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */; };
 		AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1A0241D5BDA00A41300 /* ViewController.swift */; };
 		AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A2241D5BDA00A41300 /* Main.storyboard */; };
@@ -49,11 +53,16 @@
 		3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
+		AE01B3992438853E00BE6BA7 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
 		AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D42432D04A006E9166 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		AE5023882437ACF50050B4F1 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blue_fade.jpg; sourceTree = "<group>"; };
+		AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grey_fog.jpg; sourceTree = "<group>"; };
+		AE50238E2437E8AB0050B4F1 /* lite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lite.jpg; sourceTree = "<group>"; };
 		AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController2.swift; sourceTree = "<group>"; };
 		AE75FEAA2423B07B00F55C60 /* DueDateViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueDateViewController1.swift; sourceTree = "<group>"; };
 		AE7C85572423FEBC00EA6CBC /* icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_camera.png; sourceTree = "<group>"; };
@@ -65,7 +74,6 @@
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
-		AEC47EC52432F84D00430D83 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD19E241D5BDA00A41300 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEEBD1A0241D5BDA00A41300 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,9 +110,18 @@
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				AEC47EC52432F84D00430D83 /* RemindMe.db */,
+				AE01B3992438853E00BE6BA7 /* RemindMe.db */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		AE5023862437AB490050B4F1 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A35D42432D04A006E9166 /* EditContactViewController.swift */,
+				AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		AE7C85542423FE8F00EA6CBC /* Icons */ = {
@@ -127,6 +144,9 @@
 		AE7C855C2423FFD900EA6CBC /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */,
+				AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */,
+				AE50238E2437E8AB0050B4F1 /* lite.jpg */,
 				AE7C855D2423FFE900EA6CBC /* gg-background.jpg */,
 			);
 			path = Testing;
@@ -158,6 +178,7 @@
 			children = (
 				AEAE018F24328A0C003365F7 /* NoteCell.swift */,
 				AE83217A242F3A8600666B90 /* TaskCell.swift */,
+				AE5023882437ACF50050B4F1 /* ContactCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -240,11 +261,10 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
+				AE5023862437AB490050B4F1 /* Contacts */,
 				AE832173242F2F5800666B90 /* Tasks */,
 				AE7C85592423FF4600EA6CBC /* Notes */,
-				AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */,
-				AE2A35D42432D04A006E9166 /* EditContactViewController.swift */,
-				AEEBD1A0241D5BDA00A41300 /* ViewController.swift */,
 				3B6606DA2423938700160572 /* SignupPageViewController.swift */,
 				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
 				AE75FEA82423B06000F55C60 /* DueDateViewController2.swift */,
@@ -312,10 +332,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEC47EC62432F84E00430D83 /* RemindMe.db in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
+				AE50238F2437E8AB0050B4F1 /* blue_fade.jpg in Resources */,
+				AE01B39A2438853E00BE6BA7 /* RemindMe.db in Resources */,
+				AE5023912437E8AB0050B4F1 /* lite.jpg in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
+				AE5023902437E8AB0050B4F1 /* grey_fog.jpg in Resources */,
 				AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */,
 				AEEBD1A4241D5BDA00A41300 /* Main.storyboard in Resources */,
 			);
@@ -328,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */,
 				AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */,
 				AEEBD1A1241D5BDA00A41300 /* ViewController.swift in Sources */,
 				AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */,

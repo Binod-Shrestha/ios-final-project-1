@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var indexPath : IndexPath?
     
+    var contacts : [Contact] = []
+    
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
         if btnLogOut.title == "Cancel" {
@@ -55,7 +57,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 mainDelegate.currentTask = nil
                 performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
                 break
-            case 2:
+            case 2: // When Contacts selected in SegmentedController
+                let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                mainDelegate.currentContact = Contact() //Current contact se to empty contact object
+                mainDelegate.updateContact = false // No existing contact to update
+                performSegue(withIdentifier: "HometoEditContactSegue", sender: nil)
                 break
             default:
                 break
@@ -124,6 +130,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func segmentSelectValueChanged(sender:UISegmentedControl) {
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        mainDelegate.getContactsByUserId()
         self.tableView.reloadData()
     }
     
@@ -140,13 +148,33 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             count = tasks.count
             break
         case 2:
+            mainDelegate.getContactsByUserId() //Refresh contacts from db
+            count = mainDelegate.contacts.count
             break
         default:
             break
         }
-        
         return count
     }
+    
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+            let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler:
+            {action, index in
+                print("Delete swiped")
+                
+                let row = indexPath.row
+                let id = mainDelegate.contacts[row].id
+                mainDelegate.deleteContact(id: id!)
+                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+                self.tableView.reloadData()
+            })
+            return [delete]
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height : CGFloat = 0
@@ -158,6 +186,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             height = 95
             break
         case 2:
+            height = 85
             break
         default:
             break
@@ -165,7 +194,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return height
     }
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -175,6 +206,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break
         case 1:
             //TODO: Change UserId
+            print("Calling getTasksByUser()...")
             var tasks = mainDelegate.getTasksByUser(user_id: 1)
             
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TaskCell ?? TaskCell(style: .default, reuseIdentifier: "cell")
@@ -198,11 +230,34 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
             break
         case 2:
+            //Select background image:
+            let backgroundImage = UIImage(named: "lite.jpg")
+            
+            //Remove extra empty cells from view
+            let imageView = UIImageView(image: backgroundImage)
+            self.tableView.backgroundView = imageView
+            tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            imageView.contentMode = .scaleAspectFit
+            
+            // Populate Contacts list by user for view
+             mainDelegate.getContactsByUserId()
+            
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? ContactCell ?? ContactCell(style: .default, reuseIdentifier: "cell")
+            
+            // Populate cell
+            let row = indexPath.row
+            
+            
+            (cell as! ContactCell).nameLabel.text = mainDelegate.contacts[row].name
+            (cell as! ContactCell).organizationLabel.text = mainDelegate.contacts[row].organization
+            (cell as! ContactCell).phoneLabel.text = mainDelegate.contacts[row].phone
+            (cell as! ContactCell).emailLabel.text = mainDelegate.contacts[row].email
+
+            cell.accessoryType = .disclosureIndicator
             break
         default:
             break
         }
-
         return cell
     }
     
@@ -220,6 +275,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             performSegue(withIdentifier: "HomeToEditTaskSegue", sender: nil)
             break
         case 2:
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            mainDelegate.getContactsByUserId()
+            
+            let row = indexPath.row
+            mainDelegate.currentContact = mainDelegate.contacts[row]
+            
+            performSegue(withIdentifier: "HomeToContactDetailSegue", sender: nil)
             break
         default:
             break
@@ -227,7 +289,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
-        
+        self.tableView.reloadData()
     }
 
     override func viewDidLoad() {
@@ -239,6 +301,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         longPressGesture.minimumPressDuration = 1.0
         longPressGesture.delegate = self
         self.tableView.addGestureRecognizer(longPressGesture)
+        self.tableView.reloadData()
     }
     
     @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {

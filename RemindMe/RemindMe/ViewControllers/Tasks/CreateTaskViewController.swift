@@ -20,7 +20,7 @@ class CreateTaskViewController: UIViewController {
         
         if noteFrame.contains(touchPoint) {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            var currentUser = mainDelegate.currentUser
+            let currentUser = mainDelegate.currentUser
             
             //TODO: Update the task
             var currentTask : Task? = mainDelegate.currentTask

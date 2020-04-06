@@ -19,12 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var currentUser : User? = nil
     var currentTask : Task? = nil
+    var contacts : [Contact] = []
+    var currentContact : Contact? = nil
+    var updateContact : Bool = false
+    let tempUserId = 0
     
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
-
-    var contacts : [Contact] = []
     
-    //MARK: Database functions for Tasks
+    //MARK: Tasks Database functions
     func deleteTask(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -145,7 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func getTasksByUser(user_id: Int) -> [Task] {
         var tasks : [Task] = []
-        
+    
         var db : OpaquePointer? = nil
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
@@ -193,7 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return tasks
     }
     
-    //MARK: Database functions for Notes
+    //MARK: Notes Database functions
     func deleteNote(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -415,7 +417,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return returnCode
     }
 
-    //MARK: Database functions for Users
+    //MARK: Users Database functions
     func resetPassword(user: User, newPassword : String) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
@@ -463,7 +465,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if sqlite3_open(self.databasePath!, &db) == SQLITE_OK {
             
             var findUserStatement : OpaquePointer? = nil
-            var findUserStatementString : String = "select Id, Email, Question, Answer from Users where Email = ?"
+            let findUserStatementString : String = "select Id, Email, Question, Answer from Users where Email = ?"
             
             if sqlite3_prepare_v2(db, findUserStatementString, -1, &findUserStatement, nil) == SQLITE_OK {
                 
@@ -534,24 +536,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let answer = String(cString: cAnswer!)
                     
                     currentUser = User(row: id, email: email, password: password, name: name, securityQuestion: question, securityAnswer: answer)
-                    
                 } else {
                     NSLog("Successful failed")
                     returnCode = false
                 }
-                
                 sqlite3_finalize(checkStatement)
             } else {
                 print("Could not prepare login statement")
                 returnCode = false
 	    }
-
             sqlite3_close(db)
         } else {
             print("Could not open the database")
             returnCode = false
         }
-        
         return  returnCode
     }
     
@@ -597,8 +595,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return returnCode
     }
-
-    //MARK: Database Functions for Contacts
+    //MARK: =======BRIAN'S_CODE_BLOCK=================
+    //MARK: Contacts Database Functions
     func insertContactIntoDatabase(contact : Contact) -> Bool
     {
         var db : OpaquePointer? = nil
@@ -607,29 +605,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var insertStatement : OpaquePointer? = nil
-            let insertStatementString : String = "insert into contacts values(NULL,?,?,?,?,?,?,?,?)"
+            let insertStatementString : String = "insert into contacts values(NULL,?,?,?,?,?,?,?,?,?)"
             
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK{
-                let nameStr = contact.name! as NSString
-                let organizationStr = contact.organization! as NSString
-                let titleStr = contact.title! as NSString
-                let phoneStr = contact.phone! as NSString
-                let emailStr = contact.email! as NSString
-                let discordStr = contact.discord! as NSString
-                let slackStr = contact.slack! as NSString
-                let notesStr = contact.notes! as NSString
-                sqlite3_bind_text(insertStatement, 1, nameStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 2, organizationStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 3, titleStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 4, phoneStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 4, emailStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 6, discordStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 7, slackStr.utf8String, -1, nil)
-                sqlite3_bind_text(insertStatement, 4, notesStr.utf8String, -1, nil)
+                
+                let userInt = contact.user! as NSInteger
+                let cName = contact.name! as NSString
+                let cOrganization = contact.organization! as NSString
+                let cTitle = contact.title! as NSString
+                let cPhone = contact.phone! as NSString
+                let cEmail = contact.email! as NSString
+                let cDiscord = contact.discord! as NSString
+                let cSlack = contact.slack! as NSString
+                let cNotes = contact.notes! as NSString
+                
+                sqlite3_bind_int(insertStatement, 1, Int32(userInt))
+                sqlite3_bind_text(insertStatement, 2, cName.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 3, cOrganization.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 4, cTitle.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 5, cPhone.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 6, cEmail.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 7, cDiscord.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 8, cSlack.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 9, cNotes.utf8String, -1, nil)
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
                     let rowID = sqlite3_last_insert_rowid(db)
-                    print("Successfully inserted row \(rowID)")
+                    print("Successfully inserted into row# \(rowID):")
+                    print("\(rowID) | \(userInt) | \(contact.name!) | \(String(describing: contact.organization)) | \(String(describing: contact.title)) | \(contact.phone) | \(String(describing: contact.email)) | \(String(describing: contact.discord)) | \(String(describing: contact.slack)) | \(String(describing: contact.notes))")
                 }else{
                     print("Counld not insert row")
                     returnCode = false
@@ -647,57 +650,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Unable to open database")
             returnCode = false
         }
+        refreshDatabaseFromApp()
+        getContactsByUserId()
         return returnCode
     }
     
-    func readContactDataFromDatabase(){
+    func getContactsByUserId(){
+        print("> getContactsByUserId() started...")
         //prep
         contacts.removeAll()
+        print(">>>> called contacts.removeAll()")
+        
         var db : OpaquePointer? = nil
+        
         //action
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
-            print("Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
+            print("> Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
             
             var queryStatement : OpaquePointer? = nil
-            let queryStatementString : String = "select * from contacts"
+            let queryStatementString : String = "select * from Contacts where user = ?"
             
             print("Testing if SQLite is Ok....")
             
             if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
                 print("SQLite is ok.")
-                
+                //let user : Int = Int(sqlite3_column_int(queryStatement, 1))
+                sqlite3_bind_int(queryStatement, 1, Int32(tempUserId))
+                print("Contacts retrieved from db for user (\(tempUserId)):" )
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    print(".........................")
-                    print("Row data being stored....")
                     
                     let id : Int = Int(sqlite3_column_int(queryStatement, 0))
-                    let cname = sqlite3_column_text(queryStatement, 1)
-                    let corganization = sqlite3_column_text(queryStatement, 2)
-                    let ctitle = sqlite3_column_text(queryStatement, 3)
-                    let cphone = sqlite3_column_text(queryStatement, 4)
-                    let cemail = sqlite3_column_text(queryStatement, 5)
-                    let cdiscord = sqlite3_column_text(queryStatement, 6)
-                    let cslack = sqlite3_column_text(queryStatement, 7)
-                    let cnotes = sqlite3_column_text(queryStatement, 8)
+                    let user : Int = Int(sqlite3_column_int(queryStatement, 1))
+                    let cName = sqlite3_column_text(queryStatement, 2)
+                    let cOrganization = sqlite3_column_text(queryStatement, 3)
+                    let cTitle = sqlite3_column_text(queryStatement, 4)
+                    let cPhone = sqlite3_column_text(queryStatement, 5)
+                    let cEmail = sqlite3_column_text(queryStatement, 6)
+                    let cDiscord = sqlite3_column_text(queryStatement, 7)
+                    let cSlack = sqlite3_column_text(queryStatement, 8)
+                    let cNotes = sqlite3_column_text(queryStatement, 9)
                     
-                    let name = String(cString: cname!)
-                    let organization = String(cString: corganization!)
-                    let title = String(cString: ctitle!)
-                    let phone = String(cString: cphone!)
-                    let email = String(cString: cemail!)
-                    let discord = String(cString: cdiscord!)
-                    let slack = String(cString: cslack!)
-                    let notes = String(cString: cnotes!)
+                    let name = String(cString: cName!)
+                    let organization = String(cString: cOrganization!)
+                    let title = String(cString: cTitle!)
+                    let phone = String(cString: cPhone!)
+                    let email = String(cString: cEmail!)
+                    let discord = String(cString: cDiscord!)
+                    let slack = String(cString: cSlack!)
+                    let notes = String(cString: cNotes!)
                     
+                    let newContact : Contact = Contact.init(theRow: id, theOwerUser: user, theName: name, theOrganization: organization, theTitle: title, thePhone: phone, theEmail: email, theDiscord: discord, theSlack: slack, theNotes: notes)
                     
-                    let contact : Contact = Contact.init()
-                    contact.initWithData(theRow: id, theName: name, theOrganization: organization, theTitle: title, thePhone: phone, theEmail: email, theDiscord: discord, theSlack: slack, theNotes: notes)
-                    contacts.append(contact)
-                    print("Row data stored")
-                    print(".........................")
-                    print("Query result:" )
-                    print("\(id) | \(name) | \(organization) | \(title) | \(phone) | \(email) | \(discord) | \(slack) | \(notes)")
+                    contacts.append(newContact)
+                    
+                   print("\(id) | \(user) | \(name) | \(organization) | \(title) | \(phone) | \(email) | \(discord) | \(slack) | \(notes)")
                 }
                 sqlite3_finalize(queryStatement)
             }else{
@@ -706,84 +713,123 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             print("Closing DB connection...")
             sqlite3_close(db)
-            
         }
         else{
             print("Unable to open database")
         }
     }
     
-    func getContactDataFromDatabaseByID(int id: Int){
-        //prep
-        contacts.removeAll()
+    func updateContact(contact: Contact)->Bool
+    {
         var db : OpaquePointer? = nil
-        //action
+        var returnCode : Bool = true
+        
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
-            print("Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
+            var updateStatement : OpaquePointer? = nil
+            let updateStatementString : String = "UPDATE contacts SET Name = ?, Organization = ?, Title = ?, Phone = ?, Email = ?, Discord = ?, Slack = ?, Notes = ? WHERE ID = ?"
             
-            var queryStatement : OpaquePointer? = nil
-            let queryStatementString : String = "select * from contacts WHERE id = ?)"
-            
-            print("Testing if SQLite is Ok....")
-            
-            if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
-                print("SQLite is ok.")
+            if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK{
                 
-                sqlite3_bind_int(db, 1, Int32(id))
+                let contactID = currentContact!.id! as NSInteger
+                let cName = contact.name! as NSString
+                let cOrganization = contact.organization! as NSString
+                let cTitle = contact.title! as NSString
+                let cPhone = contact.phone! as NSString
+                let cEmail = contact.email! as NSString
+                let cDiscord = contact.discord! as NSString
+                let cSlack = contact.slack! as NSString
+                let cNotes = contact.notes! as NSString
                 
-                while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    print(".........................")
-                    print("Row data being stored....")
-                    
-                    let id : Int = Int(sqlite3_column_int(queryStatement, 0))
-                    let cname = sqlite3_column_text(queryStatement, 1)
-                    let corganization = sqlite3_column_text(queryStatement, 2)
-                    let ctitle = sqlite3_column_text(queryStatement, 3)
-                    let cphone = sqlite3_column_text(queryStatement, 4)
-                    let cemail = sqlite3_column_text(queryStatement, 5)
-                    let cdiscord = sqlite3_column_text(queryStatement, 6)
-                    let cslack = sqlite3_column_text(queryStatement, 7)
-                    let cnotes = sqlite3_column_text(queryStatement, 8)
-                    
-                    let name = String(cString: cname!)
-                    let organization = String(cString: corganization!)
-                    let title = String(cString: ctitle!)
-                    let phone = String(cString: cphone!)
-                    let email = String(cString: cemail!)
-                    let discord = String(cString: cdiscord!)
-                    let slack = String(cString: cslack!)
-                    let notes = String(cString: cnotes!)
-                    
-                    
-                    let contact : Contact = Contact.init()
-                    contact.initWithData(theRow: id, theName: name, theOrganization: organization, theTitle: title, thePhone: phone, theEmail: email, theDiscord: discord, theSlack: slack, theNotes: notes)
-                    contacts.append(contact)
-                    print("Row data stored")
-                    print(".........................")
-                    print("Query result:" )
-                    print("\(id) | \(name) | \(organization) | \(title) | \(phone) | \(email) | \(discord) | \(slack) | \(notes)")
+                
+                sqlite3_bind_text(updateStatement, 1, cName.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 2, cOrganization.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 3, cTitle.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 4, cPhone.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 5, cEmail.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 6, cDiscord.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 7, cSlack.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 8, cNotes.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 9, Int32(contactID))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    let rowID = sqlite3_last_insert_rowid(db)
+                    print("Successfully updated row \(rowID)")
+                }else{
+                    print("Counld not insert row")
+                    returnCode = false
                 }
-                sqlite3_finalize(queryStatement)
+                sqlite3_finalize(updateStatement)
+                
             }else{
-                print("SQLite is not ok.")
-                print("Select statement could not be prepared")
+                print("Insert statement could not be prepared")
+                returnCode = false
             }
-            print("Closing DB connection...")
             sqlite3_close(db)
-            
         }
-        else{
+        else
+        {
             print("Unable to open database")
+            returnCode = false
         }
+        currentContact = contact
+        refreshDatabaseFromApp()
+        getContactsByUserId()
+        return returnCode
+    }
+    
+    func deleteContact(id: Int) {
+        var db : OpaquePointer? = nil
+        var returnCode = false
         
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var deleteStatement : OpaquePointer? = nil
+            let deleteQuery : String = "delete from Contacts where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("Deleted contact \(id)")
+                    returnCode = true
+                } else {
+                    print("Could not delete contact \(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete contact")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
     }
 
-    func deleteContactDataFromDatabaseByID(int id: Int){
+    //MARK: =============END_OF_BLOCK=================
+    
+    func refreshDatabaseFromApp()
+    {
+        var success = false
+        let fileManager = FileManager.default
         
+        success = fileManager.fileExists(atPath: databasePath!)
+        
+        if success{
+            print("Database exists...")
+           
+        }
+        print("Building Database from resources...")
+        let databasePathFromApp = Bundle.main.resourcePath?.appending("/" + databaseName!)
+        
+        try?fileManager.copyItem(atPath: databasePathFromApp!, toPath: databasePath!)
+        
+        return
     }
-
-    //MARK: Prepare Database
+    //MARK: CreateAndCheck Database
     func checkAndCreateDatabase(){
         var success = false
         let fileManager = FileManager.default
@@ -807,6 +853,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDir = documentPaths[0]
+        print("Documents directory: \(documentsDir)")
         databasePath = documentsDir.appending("/" + databaseName!)
         
         checkAndCreateDatabase()

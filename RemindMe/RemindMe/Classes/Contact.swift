@@ -14,6 +14,7 @@ import UIKit
 class Contact: NSObject {
     
     var id : Int?
+    var user : Int?
     var name : String?
     var organization : String?
     var title : String?
@@ -23,9 +24,39 @@ class Contact: NSObject {
     var slack : String?
     var notes : String?
     
-    func initWithData(theRow i: Int, theName n : String, theOrganization o : String, theTitle t : String, thePhone p: String, theEmail e : String, theDiscord d : String, theSlack s : String, theNotes no : String){
+    override init() {
+        super.init()
+    }
+    
+    init(theOwerUser u : Int, theName n : String, theOrganization o : String, theTitle t : String, thePhone p: String, theEmail e : String, theDiscord d : String, theSlack s : String, theNotes no : String) {
+        self.user = u
+        self.name = n
+        self.organization = o
+        self.title = t
+        self.phone = p
+        self.email = e
+        self.discord = d
+        self.slack = s
+        self.notes = no
+    }
+    
+    init(theRow i: Int, theOwerUser u : Int, theName n : String, theOrganization o : String, theTitle t : String, thePhone p: String, theEmail e : String, theDiscord d : String, theSlack s : String, theNotes no : String) {
+        self.id = i
+        self.user = u
+        self.name = n
+        self.organization = o
+        self.title = t
+        self.phone = p
+        self.email = e
+        self.discord = d
+        self.slack = s
+        self.notes = no
+    }
+    
+    func initWithData(theRow i: Int, theOwerUser u : Int, theName n : String, theOrganization o : String, theTitle t : String, thePhone p: String, theEmail e : String, theDiscord d : String, theSlack s : String, theNotes no : String){
         
         id = i
+        user = u
         name = n
         organization = o
         title = t
@@ -34,7 +65,5 @@ class Contact: NSObject {
         discord = d
         slack = s
         notes = no
-        
     }
-    
 }
