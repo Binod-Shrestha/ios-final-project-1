@@ -171,25 +171,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return count
     }
     
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-            let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler:
-            {action, index in
-                print("Delete swiped")
-                
-                let row = indexPath.row
-                let id = mainDelegate.contacts[row].id
-                mainDelegate.deleteContact(id: id!)
-                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-                self.tableView.reloadData()
-            })
-            return [delete]
-    }
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height : CGFloat = 0
         
@@ -372,23 +353,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         modify.backgroundColor = .blue
         return UISwipeActionsConfiguration(actions: [modify])
     }
-    
+
     // Swipe from right to left
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .normal, title: "Delete", handler: {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             action, index in
-            
+
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let row = indexPath.row
-            
+
             var currentUser : User = mainDelegate.currentUser!
-            
+
             switch self.segmentControl.selectedSegmentIndex {
             case 0:
                 // Delete the selected due date
                 let duedates = mainDelegate.duedates
                 var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
-                
+
                 if returnCode {
                     mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
                     tableView.reloadData()
@@ -399,6 +380,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 break
             case 2:
                 // Delete the selected contact
+                print("Delete swiped")
+
+                let row = indexPath.row
+                let id = mainDelegate.contacts[row].id
+                mainDelegate.deleteContact(id: id!)
+                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+                self.tableView.reloadData()
                 break
             default:
                 break

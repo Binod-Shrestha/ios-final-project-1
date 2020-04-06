@@ -240,8 +240,8 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="Y4Z-vD-myZ" id="yA9-R0-vKh"/>
-                                    <outlet property="delegate" destination="Y4Z-vD-myZ" id="Pqn-wb-7OB"/>
+                                    <outlet property="dataSource" destination="Y4Z-vD-myZ" id="hhW-LK-ksm"/>
+                                    <outlet property="delegate" destination="Y4Z-vD-myZ" id="f2J-96-Bro"/>
                                 </connections>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VUf-xa-IrU">
@@ -1463,14 +1463,12 @@
         <image name="icon_camera.png" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wq7-Eh-7za"/>
-        <segue reference="7Y3-60-BNd"/>
-        <segue reference="b0r-j3-dfb"/>
-        <segue reference="nZg-RF-Pw0"/>
-        <segue reference="mCK-Bi-4fi"/>
-        <segue reference="UjR-ol-RWs"/>
+        <segue reference="HiC-Nu-gXz"/>
+        <segue reference="mQX-yV-Rlx"/>
+        <segue reference="BmH-SF-h7c"/>
         <segue reference="H3D-Qg-JGp"/>
         <segue reference="NeN-c6-YH1"/>
+        <segue reference="mCK-Bi-4fi"/>
         <segue reference="XkP-zO-8gJ"/>
         <segue reference="5Ju-2v-4zC"/>
     </inferredMetricsTieBreakers>
