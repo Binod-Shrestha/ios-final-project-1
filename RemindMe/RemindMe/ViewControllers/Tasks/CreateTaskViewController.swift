@@ -44,7 +44,12 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             var title : String = ""
             var cancelAction = UIAlertAction()
             
-            if note == nil {
+            if (note?.id == nil && (note?.content == nil || note?.content == "")) {
+                note = nil
+            }
+            
+            if (note == nil) {
+                currentTask!.note = note
                 let taskReturnCode = mainDelegate.insertTask(task: currentTask!)
                 if taskReturnCode {
                     title = "Successfully"
@@ -59,7 +64,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
                     cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 }
             } else {
-                let note_id = mainDelegate.insertNote(note: note!)
+                var note_id = mainDelegate.insertNote(note: note!)
                 
                 if note_id != nil {
                     currentTask!.note!.id = note_id

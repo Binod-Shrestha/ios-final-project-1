@@ -95,6 +95,8 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         btnDone.tintColor = nil
         btnDone.title = "Done"
         
+        btnUpdate.isEnabled = false
+        
         textView.textColor = UIColor.black
     }
     
