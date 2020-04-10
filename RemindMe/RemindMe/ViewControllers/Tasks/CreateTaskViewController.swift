@@ -39,25 +39,53 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             currentTask = Task(user_id: currentUser!.id!, title: tfTitle.text!, status: swStatus.isOn, priority: sgmPriority.selectedSegmentIndex, taskDueDate: date, daysInAdvance: 3, note: note)
             mainDelegate.currentTask = currentTask
             
-            if note != nil {
-                let taskRowID = mainDelegate.insertTask(task: currentTask!)
-                if taskRowID != nil {
-                    print("Inserted task")
+            //TODO: Add Alert
+            var message : String = ""
+            var title : String = ""
+            var cancelAction = UIAlertAction()
+            
+            if note == nil {
+                let taskReturnCode = mainDelegate.insertTask(task: currentTask!)
+                if taskReturnCode {
+                    title = "Successfully"
+                    message = "Created \(currentTask!.title!)!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel) {
+                        action in
+                        self.performSegue(withIdentifier: "UnwindFromCreateTaskToHomeVCSegue", sender: nil)
+                    }
                 } else {
-                    print("Error insert task")
+                    title = "Error"
+                    message = "Could not create \(currentTask!.title!). Please try again!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 }
             } else {
-                let taskRowID = mainDelegate.insertTask(task: currentTask!)
-                if taskRowID != nil {
-                    print("Inserted task")
-                    
-                    //TODO: Add Note
+                let note_id = mainDelegate.insertNote(note: note!)
+                
+                if note_id != nil {
+                    currentTask!.note!.id = note_id
+                    let taskReturnCode = mainDelegate.insertTask(task: currentTask!)
+                    if taskReturnCode {
+                        title = "Successfully"
+                        message = "Created \(currentTask!.title!)!"
+                        cancelAction  = UIAlertAction(title: "OK", style: .cancel) {
+                            action in
+                            self.performSegue(withIdentifier: "UnwindFromCreateTaskToHomeVCSegue", sender: nil)
+                        }
+                    } else {
+                        title = "Error"
+                        message = "Could not create \(currentTask!.title!). Please try again!"
+                        cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    }
                 } else {
-                    print("Error insert task")
+                    title = "Error"
+                    message = "Could not create \(currentTask!.title!). Please try again!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 }
             }
             
-            performSegue(withIdentifier: "CreateTaskToHomeSegue", sender: nil)
+            var alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
         }
     }
     
@@ -84,7 +112,7 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         currentTask = Task(user_id: currentUser!.id!, title: tfTitle.text!, status: swStatus.isOn, priority: sgmPriority.selectedSegmentIndex, taskDueDate: date, daysInAdvance: 3, note: note)
         mainDelegate.currentTask = currentTask
         
-        if note == nil {
+        if note?.content == nil {
             // Create new note
             performSegue(withIdentifier: "CreateTaskToCreateNoteSegue", sender: self)
         } else {
@@ -92,6 +120,10 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             performSegue(withIdentifier: "CreateTaskToEditNoteSegue", sender: self)
         }
     }
+    
+    @IBAction func unwindFromCreateNote(sender: UIStoryboardSegue) {}
+    
+    @IBAction func unwindFromEditNote(sender:UIStoryboardSegue) {}
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
@@ -101,6 +133,9 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentTask = mainDelegate.currentTask
         
@@ -114,27 +149,15 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
             let date = dateFormatter.date(from: currentTask!.taskDueDate!)
             
-            if currentTask?.note == nil {
+            if currentTask?.note?.content == nil {
                 btnNote.setTitle("Add Note", for: .normal)
             } else {
                 var tempNote = mainDelegate.currentTask!.note
                 btnNote.setTitle("\u{2022} " + tempNote!.content!, for: .normal)
-                btnNote.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
             }
         } else {
             swStatus.isOn = true
             lbStatus.text = "Active"
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

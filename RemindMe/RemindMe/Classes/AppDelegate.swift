@@ -316,7 +316,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=? where Id=?"
+            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=?, Note_Id = ? where Id=?"
             
             if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
@@ -330,7 +330,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_text(updateStatement, 4, cTaskDueDate.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 5, Int32(task.daysInAdvance!))
                 
-                sqlite3_bind_int(updateStatement, 6, Int32(task.id!))
+                if task.note == nil {
+                    sqlite3_bind_null(updateStatement, 6)
+                } else {
+                    sqlite3_bind_int(updateStatement, 6, Int32(task.note!.id!))
+                }
+                
+                sqlite3_bind_int(updateStatement, 7, Int32(task.id!))
                 
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
                     print("Updated task \(task.id) | \(task.title)")
@@ -374,7 +380,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let priority = Int(sqlite3_column_int(selectStatement, 4))
                     let cTaskDueDate = sqlite3_column_text(selectStatement, 5)
                     let daysInAdvance = Int(sqlite3_column_int(selectStatement, 6))
-                    let note = getNoteByTask(task_id: id)
+                    
+                    let note_id : Int? = Int(sqlite3_column_int(selectStatement, 7))
+                    var note : Note? = nil
+                    if (note_id != nil) {
+                        note = getNoteById(id: note_id!)
+                    }
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
@@ -418,7 +429,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let priority = Int(sqlite3_column_int(selectStatement, 4))
                     let cTaskDueDate = sqlite3_column_text(selectStatement, 5)
                     let daysInAdvance = Int(sqlite3_column_int(selectStatement, 6))
-                    let note = getNoteByTask(task_id: id)
+                    
+                    let note_id : Int? = Int(sqlite3_column_int(selectStatement, 7))
+                    var note : Note? = nil
+                    if (note_id != nil) {
+                        note = getNoteById(id: note_id!)
+                    }
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
@@ -429,13 +445,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     tasks.append(task)
                     
                     print("Result tasks:")
-                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note?.id)")
+                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note_id)")
                 }
                 
                 sqlite3_finalize(selectStatement)
             } else {
                 print("Could not prepare select tasks by user statement")
-
             }
             
             sqlite3_close(db)
@@ -446,20 +461,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return tasks
     }
     
-    func insertTask(task: Task) -> Int? {
+    func insertTask(task: Task) -> Bool {
         var db : OpaquePointer? = nil
-        var rowID : Int? = nil
+        var returnCode : Bool = false
         //var returnCode : Bool = false
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?)"
+            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 
-                let cTitle = task.title as! NSString
-                let cDueDate = task.taskDueDate as! NSString
-                let intStatus = task.status as! NSNumber
+                let cTitle = task.title! as NSString
+                let cDueDate = task.taskDueDate! as NSString
+                let intStatus = task.status! as NSNumber
                 
                 sqlite3_bind_int(insertStatement, 1, Int32(task.user_id!))
                 sqlite3_bind_text(insertStatement, 2, cTitle.utf8String, -1, nil)
@@ -467,10 +482,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_int(insertStatement, 4, Int32(task.priority!))
                 sqlite3_bind_text(insertStatement, 5, cDueDate.utf8String, -1, nil)
                 sqlite3_bind_int(insertStatement, 6, Int32(task.daysInAdvance!))
+                if task.note == nil {
+                    sqlite3_bind_null(insertStatement, 7)
+                } else {
+                    sqlite3_bind_int(insertStatement, 7, Int32(task.note!.id!))
+                }
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
-                    rowID = Int(sqlite3_last_insert_rowid(db))
+                    returnCode = true
+                    let rowID = Int(sqlite3_last_insert_rowid(db))
                     print("Successfully inserted note into id: \(rowID)")
+                    
+                    currentTask = nil
                 } else {
                     print("Could not insert note")
                 }
@@ -484,7 +507,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open the database")
         }
         
-        return rowID
+        return returnCode
     }
     
     //MARK: Database functions for Notes
@@ -555,8 +578,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return returnCode
     }
     
-    func getNoteById(id: Int) -> Note {
-        var note : Note = Note()
+    func getNoteById(id: Int) -> Note? {
+        var note : Note? = nil
         
         var db : OpaquePointer? = nil
         
@@ -571,13 +594,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if sqlite3_step(selectStatement) == SQLITE_ROW {
                     let id : Int = Int(sqlite3_column_int(selectStatement, 0))
                     let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
                     
                     let content = String(cString: cContent!)
                     
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
+                    note = Note.init(row: id, content: content)
                 }
                 
                 sqlite3_finalize(selectStatement)
@@ -592,107 +612,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return note
     }
     
-    func getNoteByDueDate(duedate_id: Int) -> Note? {
-        var note : Note? = nil
-        
+    func insertNote(note: Note) -> Int? {
         var db : OpaquePointer? = nil
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Notes where DueDate_Id = ?"
-            
-            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(selectStatement, 1, Int32(duedate_id))
-                
-                if sqlite3_step(selectStatement) == SQLITE_ROW {
-                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
-                    let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
-                    
-                    let content = String(cString: cContent!)
-                    
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
-                }
-                
-                sqlite3_finalize(selectStatement)
-            } else {
-                print("Could not prepare select note by task statement")
-            }
-            sqlite3_close(db)
-        } else {
-            print("Could not open the database")
-        }
-        
-        return note
-    }
-    
-    func getNoteByTask(task_id : Int) -> Note? {
-        var note : Note? = nil
-        
-        var db : OpaquePointer? = nil
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Notes where Task_Id = ?"
-            
-            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(selectStatement, 1, Int32(task_id))
-                
-                if sqlite3_step(selectStatement) == SQLITE_ROW {
-                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
-                    let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
-                    
-                    let content = String(cString: cContent!)
-                    
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
-                }
-                sqlite3_finalize(selectStatement)
-            } else {
-                print("Could not prepare select note by task statement")
-            }
-            sqlite3_close(db)
-        } else {
-            print("Could not open the database")
-        }
-        
-        return note
-    }
-    
-    func insertNote(note: Note) -> Bool {
-        var db : OpaquePointer? = nil
-        var returnCode : Bool = false
+        var noteId : Int? = nil
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Notes values(NULL, ?, ?, ?, ?)"
+            var insertQuery : String = "insert into Notes values(NULL, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 let cContent = note.content! as NSString
                 
                 sqlite3_bind_text(insertStatement, 1, cContent.utf8String, -1, nil)
-                if note.task_id == nil {
-                    sqlite3_bind_null(insertStatement, 2)
-                } else {
-                    sqlite3_bind_int(insertStatement, 2, Int32(note.task_id!))
-                }
-                if note.duedate_id == nil {
-                    sqlite3_bind_null(insertStatement, 3)
-                } else {
-                    sqlite3_bind_int(insertStatement, 3, Int32(note.duedate_id!))
-                }
-                sqlite3_bind_int(insertStatement, 4, Int32(note.user_id!))
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
-                    let rowID = sqlite3_last_insert_rowid(db)
-                    print("Successfully inserted note into id: \(rowID)")
-                    returnCode = true
+                    noteId = Int(sqlite3_last_insert_rowid(db))
+                    print("Successfully inserted note into id: \(noteId)")
                 } else {
                     print("Could not insert note")
                 }
@@ -706,7 +641,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open the database")
         }
         
-        return returnCode
+        return noteId
     }
 
     //MARK: Database functions for Users
