@@ -19,7 +19,6 @@
 		AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* icon_camera.png */; };
 		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
-		AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9415242231F60002B853 /* WebKit.framework */; };
 		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
 		AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217A242F3A8600666B90 /* TaskCell.swift */; };
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
@@ -59,7 +58,6 @@
 		AE7C85572423FEBC00EA6CBC /* icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_camera.png; sourceTree = "<group>"; };
 		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
-		AE7D9415242231F60002B853 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AE83217A242F3A8600666B90 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				3B0EBE27243112F90024B86E /* libsqlite3.0.tbd in Frameworks */,
 				AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */,
 				AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */,
-				AE7D9416242231F60002B853 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +140,6 @@
 				3B0EBE26243112F90024B86E /* libsqlite3.0.tbd */,
 				AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */,
 				AE7D9417242232140002B853 /* libsqlite3.tbd */,
-				AE7D9415242231F60002B853 /* WebKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
