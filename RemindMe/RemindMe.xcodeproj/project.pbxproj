@@ -17,6 +17,8 @@
 		AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */; };
 		AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D42432D04A006E9166 /* EditContactViewController.swift */; };
 		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
+		AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE770C1924412E0E00F64EA0 /* remindme_logo.png */; };
+		AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */; };
 		AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* icon_camera.png */; };
 		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
@@ -57,6 +59,8 @@
 		AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D42432D04A006E9166 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		AE770C1924412E0E00F64EA0 /* remindme_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remindme_logo.png; sourceTree = "<group>"; };
+		AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remindme_noname_logo.png; sourceTree = "<group>"; };
 		AE7C85572423FEBC00EA6CBC /* icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_camera.png; sourceTree = "<group>"; };
 		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 		AEEBD1B0241D5BF200A41300 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */,
+				AE770C1924412E0E00F64EA0 /* remindme_logo.png */,
 				AE7C855C2423FFD900EA6CBC /* Testing */,
 				AE7C85542423FE8F00EA6CBC /* Icons */,
 			);
@@ -319,6 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE2A0EB8243D215000C2B68E /* RemindMe.db in Resources */,
+				AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */,
+				AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
 				AEFAD2D52436CD570078640F /* Main.storyboard in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
