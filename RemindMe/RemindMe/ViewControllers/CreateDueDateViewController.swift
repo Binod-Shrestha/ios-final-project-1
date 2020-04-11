@@ -38,8 +38,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedCategory: String!
     var selectedPriority: String!
 
-    @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){}
-    
     //alert function
     @IBAction func setAlert(_ sender: Any) {
     }
@@ -240,6 +238,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
+    }
+    
+    @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){
+        self.loadView()
     }
 
     /*
