@@ -72,7 +72,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // pickerview
     
     func UpdateReminder()
-    
     {
         let maindelegate = UIApplication.shared.delegate as! AppDelegate
         var eventStore = EKEventStore()

@@ -12,7 +12,6 @@
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
-		AE2A0EB8243D215000C2B68E /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE2A0EB7243D215000C2B68E /* RemindMe.db */; };
 		AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */; };
 		AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */; };
 		AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D42432D04A006E9166 /* EditContactViewController.swift */; };
@@ -27,6 +26,7 @@
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
+		AEB480F62441707300EC7782 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEB480F52441707300EC7782 /* RemindMe.db */; };
 		AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */; };
 		AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */; };
 		AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B6241D65D800A41300 /* Contact.swift */; };
@@ -53,7 +53,6 @@
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
-		AE2A0EB7243D215000C2B68E /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D42432D04A006E9166 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
+		AEB480F52441707300EC7782 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEEBD1A8241D5BDB00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				AE2A0EB7243D215000C2B68E /* RemindMe.db */,
+				AEB480F52441707300EC7782 /* RemindMe.db */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -320,7 +320,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE2A0EB8243D215000C2B68E /* RemindMe.db in Resources */,
+				AEB480F62441707300EC7782 /* RemindMe.db in Resources */,
 				AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */,
 				AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,

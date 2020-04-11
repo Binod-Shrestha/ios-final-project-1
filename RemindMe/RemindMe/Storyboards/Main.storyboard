@@ -62,7 +62,7 @@
                                 <rect key="frame" x="113" y="353" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Ynn-8E-PsU"/>
                                 </connections>
@@ -81,14 +81,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rxC-nd-5nW">
-                                <rect key="frame" x="355" y="832" width="33" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Note"/>
-                                <connections>
-                                    <segue destination="2mP-PH-0jb" kind="presentation" id="pM4-0e-fB4"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOn-Qj-q44">
                                 <rect key="frame" x="113" y="417" width="122" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -826,7 +818,7 @@
                                 <rect key="frame" x="170" y="237" width="149" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="btA-VY-mbt" id="A87-V2-jZO"/>
                                 </connections>
@@ -835,7 +827,7 @@
                                 <rect key="frame" x="170" y="290" width="149" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="btA-VY-mbt" id="pDF-XT-Rbz"/>
                                 </connections>
@@ -1455,10 +1447,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="NeN-c6-YH1"/>
         <segue reference="mCK-Bi-4fi"/>
-        <segue reference="XkP-zO-8gJ"/>
-        <segue reference="5Ju-2v-4zC"/>
-        <segue reference="H3D-Qg-JGp"/>
-        <segue reference="pM4-0e-fB4"/>
         <segue reference="oFL-2j-Aep"/>
         <segue reference="cKO-ze-OpF"/>
     </inferredMetricsTieBreakers>
