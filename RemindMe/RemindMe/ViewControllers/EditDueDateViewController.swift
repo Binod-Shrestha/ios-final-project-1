@@ -73,10 +73,10 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         var eventStore = EKEventStore()
         let reminder = EKReminder(eventStore: eventStore)
         let reminderName = tfEventName.text!
-        let reminderDate = selectedDate
+        let reminderDate = tfDueDate.text!
         reminder.calendar = eventStore.defaultCalendarForNewReminders()!
 
-        let reminderData : Reminder = Reminder(row: 0, reminderName: reminderName, reminderDate: selectedDate)
+        let reminderData : Reminder = Reminder(row: 0, reminderName: reminderName, reminderDate: reminderDate)
         let returnCode = maindelegate.updateReminder(reminder: reminderData)
     }
 
@@ -155,9 +155,10 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         createDatePicker()
         // pickerview loaded from the past duedate
         
-        var selectedCategory : Int? = pickerData.index(of: currentDueDate!.category!)
+        var intSelectedCategory : Int? = pickerData.index(of: currentDueDate!.category!)
+        selectedCategory = pickerData[intSelectedCategory!]
         
-        self.pvCategory.selectRow(selectedCategory!, inComponent: 0, animated: true)
+        self.pvCategory.selectRow(intSelectedCategory!, inComponent: 0, animated: true)
     }
     
     // pickerview

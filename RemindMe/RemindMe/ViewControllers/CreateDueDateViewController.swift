@@ -140,6 +140,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             var returnMsg:String=""
             if returnCode == true
             {
+                if reminderSwitch.isOn{
+                    self.createReminder()
+                }
+                
                  returnMsg = "Due Date Added"
                 performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
             }
