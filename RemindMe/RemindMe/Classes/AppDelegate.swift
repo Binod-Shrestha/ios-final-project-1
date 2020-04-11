@@ -9,23 +9,22 @@
 import UIKit
 import SQLite3
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-
     var databaseName : String? = "RemindMe.db"
     var databasePath : String?
-    
     var currentUser : User? = nil
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
-    
+    var currentNotification: Notification? = nil
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
 
     var contacts : [Contact] = []
-    
     var duedates : [DueDate] = []
+    var notifications:[Notification] = []
     
     //MARK: Database functions for DueDates
     //delete method
@@ -1063,6 +1062,144 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         checkAndCreateDatabase()
         //readContactDataFromDatabase()
         return true
+    }
+    //MARK: insert notification
+    func insertNotificationIntoDatabase(notification : Notification) -> Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var insertStatement : OpaquePointer? = nil
+            var insertStatementString = "insert into Notifications values(NULL,?,?)"
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
+            {
+                let statusStr = notification.status! as NSString
+                let dateStr = notification.date! as NSString
+                sqlite3_bind_text(insertStatement, 1, statusStr.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, dateStr.utf8String, -1, nil)
+                if sqlite3_step(insertStatement) == SQLITE_DONE{
+                    let rowId = sqlite3_last_insert_rowid(db)
+                    print("succefull inserted \(rowId)")
+                }
+                else{
+                    print("couldnt insert notification")
+                    returnCode = false
+                }
+                sqlite3_finalize(insertStatement)
+            }
+            else {
+                print("statement could not be prepared")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else {
+            print("unable to open Db")
+            returnCode = false
+        }
+        return returnCode
+    }
+    
+    //MARK: update the notification
+    func updateNotification(notification : Notification) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Notifications set  Status = ?, Date = ? where Id = ?"
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                var cStatus = notification.status! as NSString
+                var cDate = notification.date! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cStatus.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 4, cDate.utf8String, -1, nil)
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated notification \(notification.id) | \(notification.status)")
+                    returnCode = true
+                } else {
+                    print("Could not update notification \(notification.id) | \(notification.status)")
+                }
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update notification statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+
+        return returnCode
+    }
+    //MARK: get notification by id
+    func getNotificationById(id: Int) -> Notification {
+        var notification : Notification = Notification()
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Notification where Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
+                
+                if sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let cStatus = sqlite3_column_text(selectStatement, 1)
+                    let cDate = sqlite3_column_text(selectStatement, 2)
+                    let status = String(cString: cStatus!)
+                    let date = String(cString: cDate!)
+                    
+                    notification.initWithData(theRow: id, theStatus: status, theDate: date)
+                    
+                }
+                
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select notification by id")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return notification
+    }
+    //MARK: delete notificatin by id
+    func deleteNotification(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery : String = "delete from Notification where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("Deleted notification \(id)")
+                    returnCode = true
+                } else {
+                    print("Could not delete notification \(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete notification statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

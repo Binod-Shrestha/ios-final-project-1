@@ -280,7 +280,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return true
     }
     
-    //method:2 right to left
+    //method:2 left to right
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -310,25 +310,36 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     // Swipe from right to left
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
+    {
         let delete = UITableViewRowAction(style: .normal, title: "Delete", handler: {
             action, index in
             
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let row = indexPath.row
             
-            var currentUser : User = mainDelegate.currentUser!
-            
-            switch self.segmentControl.selectedSegmentIndex {
+            let currentUser : User = mainDelegate.currentUser!
+            switch self.segmentControl.selectedSegmentIndex
+            {
             case 0:
                 // Delete the selected due date
-                let duedates = mainDelegate.duedates
-                var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                let alertController = UIAlertController(title: "Warning", message: "Do you want to delete the due date ?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
+                    
+                    let duedates = mainDelegate.duedates
+                    let returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                    if returnCode
+                    {
+                        mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+                        tableView.reloadData()
+                    }}
                 
-                if returnCode {
-                    mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
-                    tableView.reloadData()
-                }
+                    alertController.addAction(okAction)
+                    alertController.addAction(cancelAction)
+                
+                    self.present(alertController,animated: true)
+            
                 break
             case 1:
                 // Delete the selected task
@@ -341,6 +352,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
 
         })
+        delete.backgroundColor = .red
         return [delete]
     }
     
