@@ -2,8 +2,8 @@
 //  SiteCell.swift
 //  Exam_Assignment1
 //
-//  Created by Xcode User on 2020-04-01.
-//  Copyright © 2020 Brian Holmes. All rights reserved.
+//  Created by Brian Holmes on 2020-04-01.
+//  Copyright © 2020 BBQs. All rights reserved.
 //
 
 import UIKit

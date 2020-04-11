@@ -183,6 +183,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         selectedDate = dateTextField.text
         
     }
+    
+    @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){
+        self.loadView()
+    }
 
     /*
     // MARK: - Navigation

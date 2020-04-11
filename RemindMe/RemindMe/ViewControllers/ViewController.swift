@@ -140,7 +140,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func segmentSelectValueChanged(sender:UISegmentedControl) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        mainDelegate.getContactsByUserId()
+        mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
         self.tableView.reloadData()
     }
     
@@ -162,7 +162,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             count = tasks.count
             break
         case 2:
-            mainDelegate.getContactsByUserId() //Refresh contacts from db
+            mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!) //Refresh contacts from db
             count = mainDelegate.contacts.count
             break
         default:
@@ -246,7 +246,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             imageView.contentMode = .scaleAspectFit
             
             // Populate Contacts list by user for view
-             mainDelegate.getContactsByUserId()
+             mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
             
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? ContactCell ?? ContactCell(style: .default, reuseIdentifier: "cell")
             
@@ -270,7 +270,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            // Peofrm the segue to Edit the selected duedate
+            // Perform the segue to Edit the selected duedate
             
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             var currentUser : User = mainDelegate.currentUser!
@@ -293,7 +293,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break
         case 2:
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            mainDelegate.getContactsByUserId()
+            mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
             
             let row = indexPath.row
             mainDelegate.currentContact = mainDelegate.contacts[row]

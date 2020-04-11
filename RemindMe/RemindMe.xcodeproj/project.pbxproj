@@ -28,6 +28,10 @@
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
+		AEDD82A3243ADB7000A90522 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82A1243ADB6F00A90522 /* EditContactViewController.swift */; };
+		AEDD82A4243ADB7000A90522 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82A2243ADB6F00A90522 /* ContactDetailsViewController.swift */; };
+		AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82B5243EC8A200A90522 /* Alert.swift */; };
+		AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */; };
 		AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */; };
 		AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */; };
 		AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B6241D65D800A41300 /* Contact.swift */; };
@@ -37,8 +41,6 @@
 		AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BE241D662F00A41300 /* Alarm.swift */; };
 		AEEBD1C1241D680C00A41300 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C0241D680C00A41300 /* Task.swift */; };
 		AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C2241D6C1000A41300 /* Note.swift */; };
-		AEECB7EF243AC76E0098F0F1 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECB7ED243AC76E0098F0F1 /* ContactDetailsViewController.swift */; };
-		AEECB7F0243AC76E0098F0F1 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECB7EE243AC76E0098F0F1 /* EditContactViewController.swift */; };
 		AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */; };
 		AEFAD2C82436CC860078640F /* EditDueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */; };
 		AEFAD2C92436CC860078640F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C62436CC860078640F /* ViewController.swift */; };
@@ -72,6 +74,10 @@
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
+		AEDD82A1243ADB6F00A90522 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactViewController.swift; path = "../../../../../../../Downloads/ios-final-project-brian-testing/RemindMe/RemindMe/ViewControllers/Contacts/EditContactViewController.swift"; sourceTree = "<group>"; };
+		AEDD82A2243ADB6F00A90522 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactDetailsViewController.swift; path = "../../../../../../../Downloads/ios-final-project-brian-testing/RemindMe/RemindMe/ViewControllers/Contacts/ContactDetailsViewController.swift"; sourceTree = "<group>"; };
+		AEDD82B5243EC8A200A90522 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEEBD1A8241D5BDB00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -83,8 +89,6 @@
 		AEEBD1BE241D662F00A41300 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		AEEBD1C0241D680C00A41300 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		AEEBD1C2241D6C1000A41300 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		AEECB7ED243AC76E0098F0F1 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactDetailsViewController.swift; path = "../../../../../../../Downloads/ios-final-project-brian-holmes/RemindMe/RemindMe/ViewControllers/Contacts/ContactDetailsViewController.swift"; sourceTree = "<group>"; };
-		AEECB7EE243AC76E0098F0F1 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditContactViewController.swift; path = "../../../../../../../Downloads/ios-final-project-brian-holmes/RemindMe/RemindMe/ViewControllers/Contacts/EditContactViewController.swift"; sourceTree = "<group>"; };
 		AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDueDateViewController.swift; sourceTree = "<group>"; };
 		AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDueDateViewController.swift; sourceTree = "<group>"; };
 		AEFAD2C62436CC860078640F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -122,8 +126,8 @@
 		AE5023862437AB490050B4F1 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				AEECB7ED243AC76E0098F0F1 /* ContactDetailsViewController.swift */,
-				AEECB7EE243AC76E0098F0F1 /* EditContactViewController.swift */,
+				AEDD82A2243ADB6F00A90522 /* ContactDetailsViewController.swift */,
+				AEDD82A1243ADB6F00A90522 /* EditContactViewController.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -196,6 +200,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		AEDD82B7243ECEEC00A90522 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +263,7 @@
 				AEEBD1BE241D662F00A41300 /* Alarm.swift */,
 				AEEBD1C0241D680C00A41300 /* Task.swift */,
 				AEEBD1C2241D6C1000A41300 /* Note.swift */,
+				AEDD82B5243EC8A200A90522 /* Alert.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -267,6 +280,7 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				AEDD82B7243ECEEC00A90522 /* Alerts */,
 				AE5023862437AB490050B4F1 /* Contacts */,
 				AE832173242F2F5800666B90 /* Tasks */,
 				AE7C85592423FF4600EA6CBC /* Notes */,
@@ -357,7 +371,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEECB7EF243AC76E0098F0F1 /* ContactDetailsViewController.swift in Sources */,
 				AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */,
 				AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */,
 				AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */,
@@ -366,7 +379,9 @@
 				3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */,
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */,
+				AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */,
 				AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */,
+				AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
@@ -378,11 +393,12 @@
 				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,
 				AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */,
 				AEFAD2CB2436CCA20078640F /* DueDateCell.swift in Sources */,
+				AEDD82A3243ADB7000A90522 /* EditContactViewController.swift in Sources */,
 				AEFAD2C92436CC860078640F /* ViewController.swift in Sources */,
 				AEFAD2CF2436CD050078640F /* DueDate.swift in Sources */,
 				AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */,
+				AEDD82A4243ADB7000A90522 /* ContactDetailsViewController.swift in Sources */,
 				AEFAD2C82436CC860078640F /* EditDueDateViewController.swift in Sources */,
-				AEECB7F0243AC76E0098F0F1 /* EditContactViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

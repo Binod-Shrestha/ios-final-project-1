@@ -8,10 +8,11 @@
 
 import UIKit
 import SQLite3
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
-    
+    //MARK: ========================= DECLARATIONS ================================
     var window: UIWindow?
 
     var databaseName : String? = "RemindMe.db"
@@ -20,16 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var currentUser : User? = nil
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
+    var currentAlert : Alert? = nil
+    var newAlert : Alert? = nil
 
     var contacts : [Contact] = []
     var currentContact : Contact? = nil
     var updateContact : Bool = false
-    let tempUserId = 0
 
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
     
     var duedates : [DueDate] = []
-    
+     //MARK: =================END OF DECLARATIONS ================================
     //MARK: Database functions for DueDates
     //delete method
     func deleteDueDate(id: Int) -> Bool {
@@ -890,8 +892,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
         return returnCode
     }
-    //MARK: =======BRIAN'S_CODE_BLOCK=================
-    //MARK: Contacts Database Functions
+    //MARK: =====================BRIAN'S_CODE_BLOCK==============================================
+    //MARK: ========== Contacts Database Functions ==============
     func insertContactIntoDatabase(contact : Contact) -> Bool
     {
         var db : OpaquePointer? = nil
@@ -927,7 +929,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
                     let rowID = sqlite3_last_insert_rowid(db)
                     print("Successfully inserted into row# \(rowID):")
-                    print("\(rowID) | \(userInt) | \(contact.name!) | \(String(describing: contact.organization)) | \(String(describing: contact.title)) | \(contact.phone) | \(String(describing: contact.email)) | \(String(describing: contact.discord)) | \(String(describing: contact.slack)) | \(String(describing: contact.notes))")
+                    print("\(rowID) | \(userInt) | \(contact.name!) | \(String(describing: contact.organization)) | \(String(describing: contact.title)) | \(String(describing: contact.phone)) | \(String(describing: contact.email)) | \(String(describing: contact.discord)) | \(String(describing: contact.slack)) | \(String(describing: contact.notes))")
                 }else{
                     print("Counld not insert row")
                     returnCode = false
@@ -946,11 +948,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             returnCode = false
         }
         refreshDatabaseFromApp()
-        getContactsByUserId()
+        getContactsByUserId(userID: currentUser!.id!)
         return returnCode
     }
     
-    func getContactsByUserId(){
+    func getContactsByUserId(userID : Int){
         print("> getContactsByUserId() started...")
         //prep
         contacts.removeAll()
@@ -970,9 +972,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             
             if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
                 print("SQLite is ok.")
-                //let user : Int = Int(sqlite3_column_int(queryStatement, 1))
-                sqlite3_bind_int(queryStatement, 1, Int32(tempUserId))
-                print("Contacts retrieved from db for user (\(tempUserId)):" )
+                sqlite3_bind_int(queryStatement, 1, Int32(userID))
+                print("Contacts retrieved from db for user (\(userID)):")
+                
                 while sqlite3_step(queryStatement) == SQLITE_ROW {
                     
                     let id : Int = Int(sqlite3_column_int(queryStatement, 0))
@@ -1014,7 +1016,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
     }
     
-    func updateContact(contact: Contact)->Bool
+    func UpdateContact(contact: Contact)->Bool
     {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
@@ -1067,15 +1069,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Unable to open database")
             returnCode = false
         }
+        //MARK : Troublesooting
         currentContact = contact
         refreshDatabaseFromApp()
-        getContactsByUserId()
+        getContactsByUserId(userID: currentUser!.id!)
         return returnCode
     }
     
     func deleteContact(id: Int) {
         var db : OpaquePointer? = nil
-        var returnCode = false
+       // var returnCode = false
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
@@ -1088,7 +1091,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 
                 if sqlite3_step(deleteStatement) == SQLITE_DONE {
                     print("Deleted contact \(id)")
-                    returnCode = true
+                   // returnCode = true
                 } else {
                     print("Could not delete contact \(id)")
                 }
@@ -1104,8 +1107,182 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
     }
 
-    //MARK: =============END_OF_BLOCK=================
+    //MARK: ============ 'Alerts' ==== Database Functions  ==================
     
+    func insertAlertIntoDatabase(alert : Alert) -> Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var insertStatement : OpaquePointer? = nil
+            let insertStatementString : String = "insert into alerts values(NULL,?,?)"
+            
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK{
+                
+                let cName = alert.name as NSString
+                let time = alert.time as NSInteger
+                
+                sqlite3_bind_text(insertStatement, 1, cName.utf8String, -1, nil)
+                sqlite3_bind_int(insertStatement, 2, Int32(time))
+                
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE {
+                    let rowID = sqlite3_last_insert_rowid(db)
+                    print("Successfully inserted into row# \(rowID):")
+                    newAlert?.alertID = Int(rowID)
+                    print("\(rowID) | \(alert.name) | \(alert.time)")
+                }else{
+                    print("Counld not insert row")
+                    returnCode = false
+                }
+                sqlite3_finalize(insertStatement)
+                
+            }else{
+                print("Insert statement could not be prepared")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else
+        {
+            print("Unable to open database")
+            returnCode = false
+        }
+        refreshDatabaseFromApp()
+        
+        //getAlertsByUserId()
+        
+        return returnCode
+    }
+    
+    func getAlertbyId(id : Int)->Alert{
+        
+        var db : OpaquePointer? = nil
+        var newAlert : Alert? = nil
+        
+        //action
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            print("> Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
+            
+            var queryStatement : OpaquePointer? = nil
+            let queryStatementString : String = "select * from Alerts where AlertID = ?"
+            
+            print("Testing if SQLite is Ok....")
+            
+            if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+                print("SQLite is ok.")
+                sqlite3_bind_int(queryStatement, 1, Int32(id))
+                
+                while sqlite3_step(queryStatement) == SQLITE_ROW {
+                    
+                    let id : Int = Int(sqlite3_column_int(queryStatement, 0))
+                    let cName = sqlite3_column_text(queryStatement, 1)
+                    let date : Int = Int(sqlite3_column_int(queryStatement, 2))
+                    
+                    let name = String(cString: cName!)
+                   
+                    
+                    newAlert = Alert.init(alertID: id, name: name, time: date)
+                    
+                    print("\(id) | \(name) | \(date)")
+                }
+                sqlite3_finalize(queryStatement)
+            }else{
+                print("SQLite is not ok.")
+                print("Select statement could not be prepared")
+            }
+            print("Closing DB connection...")
+            sqlite3_close(db)
+        }
+        else{
+            print("Unable to open database")
+        }
+        return newAlert!
+    }
+    
+    
+    func UpdateAlert(alert: Alert)->Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var updateStatement : OpaquePointer? = nil
+            let updateStatementString : String = "UPDATE Alerts SET Name = ?, Date = ? WHERE ID = ?"
+            
+            if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK{
+                
+                let alertID = alert.alertID! as NSInteger
+                let cName = alert.name as NSString
+                let date = alert.time as NSInteger
+                
+                sqlite3_bind_text(updateStatement, 1, cName.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 2, Int32(date))
+                sqlite3_bind_int(updateStatement, 3, Int32(alertID))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    let rowID = sqlite3_last_insert_rowid(db)
+                    print("Successfully updated row \(rowID)")
+                }else{
+                    print("Counld not update row")
+                    returnCode = false
+                }
+                sqlite3_finalize(updateStatement)
+                
+            }else{
+                print("Insert statement could not be prepared")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else
+        {
+            print("Unable to open database")
+            returnCode = false
+        }
+        currentAlert = alert
+        refreshDatabaseFromApp()
+        return returnCode
+    }
+    
+    func deleteAlert(id: Int) {
+        var db : OpaquePointer? = nil
+        // var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var deleteStatement : OpaquePointer? = nil
+            let deleteQuery : String = "delete from Alerts where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("Deleted alert \(id)")
+                    // returnCode = true
+                } else {
+                    print("Could not delete alert \(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete alert")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+    }
+    
+    
+    //MARK: =================END_OF_BRIAN'S_CODE_BLOCK==============================================
+    //MARK: ========================= SETUP FUNCTIONS ================================
     func refreshDatabaseFromApp()
     {
         var success = false
@@ -1151,6 +1328,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         print("Documents directory: \(documentsDir)")
         databasePath = documentsDir.appending("/" + databaseName!)
         
+        //MARK: 1 Brian Addition for Notification Authorization
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.alert, .badge, .sound]){(granted, error) in
+            if granted {
+                print("Granted authorization for notifications")
+            } else {
+                print("Authorization for notifications denied")
+            }
+        }
+        
+        // End of Mark 1
+        
+        
         checkAndCreateDatabase()
         //readContactDataFromDatabase()
         return true
@@ -1177,5 +1367,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    //MARK: ========================= END OF SETUP FUNCTIONS ================================
+    
+    
 }
 
