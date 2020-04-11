@@ -9,29 +9,40 @@
 import UIKit
 import SQLite3
 import UserNotifications
+import EventKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
+
     //MARK: ========================= DECLARATIONS ================================
     var window: UIWindow?
 
     var databaseName : String? = "RemindMe.db"
     var databasePath : String?
-    
     var currentUser : User? = nil
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
+
     var currentAlert : Alert? = nil
     var newAlert : Alert? = nil
 
-    var contacts : [Contact] = []
     var currentContact : Contact? = nil
     var updateContact : Bool = false
 
+    var currentNotification: Notification? = nil
+    var calendars: [EKCalendar] =  [EKCalendar]()
+
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
-    
+
+    var contacts : [Contact] = []
     var duedates : [DueDate] = []
-     //MARK: =================END OF DECLARATIONS ================================
+    var notifications:[Notification] = []
+    
+    var reminders : [Reminder] = []
+    var eventStore : EKEventStore? = nil
+    
+    //MARK: =================END OF DECLARATIONS ================================
+
     //MARK: Database functions for DueDates
     //delete method
     func deleteDueDate(id: Int) -> Bool {
@@ -321,7 +332,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=? where Id=?"
+            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=?, Note_Id = ? where Id=?"
             
             if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
@@ -335,7 +346,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_text(updateStatement, 4, cTaskDueDate.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 5, Int32(task.daysInAdvance!))
                 
-                sqlite3_bind_int(updateStatement, 6, Int32(task.id!))
+                if task.note == nil {
+                    sqlite3_bind_null(updateStatement, 6)
+                } else {
+                    sqlite3_bind_int(updateStatement, 6, Int32(task.note!.id!))
+                }
+                
+                sqlite3_bind_int(updateStatement, 7, Int32(task.id!))
                 
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
                     print("Updated task \(task.id) | \(task.title)")
@@ -379,7 +396,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let priority = Int(sqlite3_column_int(selectStatement, 4))
                     let cTaskDueDate = sqlite3_column_text(selectStatement, 5)
                     let daysInAdvance = Int(sqlite3_column_int(selectStatement, 6))
-                    let note = getNoteByTask(task_id: id)
+                    
+                    let note_id : Int? = Int(sqlite3_column_int(selectStatement, 7))
+                    var note : Note? = nil
+                    if (note_id != nil) {
+                        note = getNoteById(id: note_id!)
+                    }
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
@@ -423,7 +445,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let priority = Int(sqlite3_column_int(selectStatement, 4))
                     let cTaskDueDate = sqlite3_column_text(selectStatement, 5)
                     let daysInAdvance = Int(sqlite3_column_int(selectStatement, 6))
-                    let note = getNoteByTask(task_id: id)
+                    
+                    let note_id : Int? = Int(sqlite3_column_int(selectStatement, 7))
+                    var note : Note? = nil
+                    if (note_id != nil) {
+                        note = getNoteById(id: note_id!)
+                    }
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
@@ -434,13 +461,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     tasks.append(task)
                     
                     print("Result tasks:")
-                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note?.id)")
+                    print("Id: \(id) | UserId: \(user_id) | Title: \(title) | NoteId: \(note_id)")
                 }
                 
                 sqlite3_finalize(selectStatement)
             } else {
                 print("Could not prepare select tasks by user statement")
-
             }
             
             sqlite3_close(db)
@@ -451,20 +477,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return tasks
     }
     
-    func insertTask(task: Task) -> Int? {
+    func insertTask(task: Task) -> Bool {
         var db : OpaquePointer? = nil
-        var rowID : Int? = nil
+        var returnCode : Bool = false
         //var returnCode : Bool = false
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?)"
+            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 
-                let cTitle = task.title as! NSString
-                let cDueDate = task.taskDueDate as! NSString
-                let intStatus = task.status as! NSNumber
+                let cTitle = task.title! as NSString
+                let cDueDate = task.taskDueDate! as NSString
+                let intStatus = task.status! as NSNumber
                 
                 sqlite3_bind_int(insertStatement, 1, Int32(task.user_id!))
                 sqlite3_bind_text(insertStatement, 2, cTitle.utf8String, -1, nil)
@@ -472,10 +498,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_int(insertStatement, 4, Int32(task.priority!))
                 sqlite3_bind_text(insertStatement, 5, cDueDate.utf8String, -1, nil)
                 sqlite3_bind_int(insertStatement, 6, Int32(task.daysInAdvance!))
+                if task.note == nil {
+                    sqlite3_bind_null(insertStatement, 7)
+                } else {
+                    sqlite3_bind_int(insertStatement, 7, Int32(task.note!.id!))
+                }
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
-                    rowID = Int(sqlite3_last_insert_rowid(db))
+                    returnCode = true
+                    let rowID = Int(sqlite3_last_insert_rowid(db))
                     print("Successfully inserted note into id: \(rowID)")
+                    
+                    currentTask = nil
                 } else {
                     print("Could not insert note")
                 }
@@ -489,7 +523,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open the database")
         }
         
-        return rowID
+        return returnCode
     }
     
     //MARK: Database functions for Notes
@@ -560,8 +594,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return returnCode
     }
     
-    func getNoteById(id: Int) -> Note {
-        var note : Note = Note()
+    func getNoteById(id: Int) -> Note? {
+        var note : Note? = nil
         
         var db : OpaquePointer? = nil
         
@@ -576,13 +610,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if sqlite3_step(selectStatement) == SQLITE_ROW {
                     let id : Int = Int(sqlite3_column_int(selectStatement, 0))
                     let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
                     
                     let content = String(cString: cContent!)
                     
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
+                    note = Note.init(row: id, content: content)
                 }
                 
                 sqlite3_finalize(selectStatement)
@@ -597,107 +628,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return note
     }
     
-    func getNoteByDueDate(duedate_id: Int) -> Note? {
-        var note : Note? = nil
-        
+    func insertNote(note: Note) -> Int? {
         var db : OpaquePointer? = nil
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Notes where DueDate_Id = ?"
-            
-            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(selectStatement, 1, Int32(duedate_id))
-                
-                if sqlite3_step(selectStatement) == SQLITE_ROW {
-                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
-                    let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
-                    
-                    let content = String(cString: cContent!)
-                    
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
-                }
-                
-                sqlite3_finalize(selectStatement)
-            } else {
-                print("Could not prepare select note by task statement")
-            }
-            sqlite3_close(db)
-        } else {
-            print("Could not open the database")
-        }
-        
-        return note
-    }
-    
-    func getNoteByTask(task_id : Int) -> Note? {
-        var note : Note? = nil
-        
-        var db : OpaquePointer? = nil
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Notes where Task_Id = ?"
-            
-            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(selectStatement, 1, Int32(task_id))
-                
-                if sqlite3_step(selectStatement) == SQLITE_ROW {
-                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
-                    let cContent = sqlite3_column_text(selectStatement, 1)
-                    let task_id : Int = Int(sqlite3_column_int(selectStatement, 2))
-                    let duedate_id : Int = Int(sqlite3_column_int(selectStatement, 3))
-                    let user_id : Int = Int(sqlite3_column_int(selectStatement, 4))
-                    
-                    let content = String(cString: cContent!)
-                    
-                    note = Note.init(row: id, content: content, task_id: task_id, duedate_id: duedate_id, user_id: user_id)
-                }
-                sqlite3_finalize(selectStatement)
-            } else {
-                print("Could not prepare select note by task statement")
-            }
-            sqlite3_close(db)
-        } else {
-            print("Could not open the database")
-        }
-        
-        return note
-    }
-    
-    func insertNote(note: Note) -> Bool {
-        var db : OpaquePointer? = nil
-        var returnCode : Bool = false
+        var noteId : Int? = nil
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Notes values(NULL, ?, ?, ?, ?)"
+            var insertQuery : String = "insert into Notes values(NULL, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 let cContent = note.content! as NSString
                 
                 sqlite3_bind_text(insertStatement, 1, cContent.utf8String, -1, nil)
-                if note.task_id == nil {
-                    sqlite3_bind_null(insertStatement, 2)
-                } else {
-                    sqlite3_bind_int(insertStatement, 2, Int32(note.task_id!))
-                }
-                if note.duedate_id == nil {
-                    sqlite3_bind_null(insertStatement, 3)
-                } else {
-                    sqlite3_bind_int(insertStatement, 3, Int32(note.duedate_id!))
-                }
-                sqlite3_bind_int(insertStatement, 4, Int32(note.user_id!))
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE {
-                    let rowID = sqlite3_last_insert_rowid(db)
-                    print("Successfully inserted note into id: \(rowID)")
-                    returnCode = true
+                    noteId = Int(sqlite3_last_insert_rowid(db))
+                    print("Successfully inserted note into id: \(noteId)")
                 } else {
                     print("Could not insert note")
                 }
@@ -711,7 +657,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open the database")
         }
         
-        return returnCode
+        return noteId
     }
 
     //MARK: Users Database functions
@@ -892,6 +838,156 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
         return returnCode
     }
+
+    //MARK: Database functions for Reminders
+    func insertReminder(reminder : Reminder) -> Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var insertStatement : OpaquePointer? = nil
+            let insertStatementString = "insert into Reminders values(NULL,?,?)"
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
+            {
+                let namestr = reminder.reminderName! as NSString
+                let dateStr = reminder.reminderDate! as NSString
+  
+                
+                sqlite3_bind_text(insertStatement, 1, namestr.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, dateStr.utf8String, -1, nil)
+              
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE{
+                    let rowId = sqlite3_last_insert_rowid(db)
+                    print("Succeful inserted reminder into \(rowId)")
+                }
+                else{
+                    print("Could not insert user")
+                    returnCode = false
+                }
+                sqlite3_finalize(insertStatement)
+            }
+            else {print("Could not prepare insert user statement")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else {
+            print("Unable to open Db")
+            returnCode = false
+        }
+        return returnCode
+    }
+    
+    func updateReminder(reminder : Reminder) -> Bool {
+        
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Reminders set ReminderName = ? ,ReminderDate = ? where Id = ?"
+            
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                
+                var cReminderName = reminder.reminderName! as NSString
+                 var cReminderDate = reminder.reminderDate! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cReminderName.utf8String, -1, nil)
+                  sqlite3_bind_text(updateStatement, 2, cReminderDate.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 2, Int32(reminder.id!))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated reminder")
+                    returnCode = true 
+                } else {
+                    print("Could not update reminder \(reminder.id) | \(reminder.reminderName)")
+                }
+                
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update reminder statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
+    }
+    
+    func getReminderById(id : Int) -> Reminder? {
+        var reminder : Reminder? = nil
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Reminders where Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
+                
+                if sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let creminderName = sqlite3_column_text(selectStatement, 1)
+                    let creminderDate = sqlite3_column_text(selectStatement, 2)
+                  
+                    
+                    let contentReminderName = String(cString: creminderName!)
+                    let contentReminderDate = String(cString: creminderDate!)
+                    
+                    reminder = Reminder.init(row: id, reminderName: contentReminderName, reminderDate: contentReminderDate);
+                }
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select reminder by id statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return reminder
+    }
+    
+    
+    func deleteReminder(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery: String = "delete from Reminders where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    returnCode = true
+                    print("Successfully deleted reminder id: \(id)")
+                } else {
+                    print("Could not delete the reminder id:\(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete reminder statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return returnCode
+    }
+
+
     //MARK: =====================BRIAN'S_CODE_BLOCK==============================================
     //MARK: ========== Contacts Database Functions ==============
     func insertContactIntoDatabase(contact : Contact) -> Bool
@@ -931,7 +1027,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     print("Successfully inserted into row# \(rowID):")
                     print("\(rowID) | \(userInt) | \(contact.name!) | \(String(describing: contact.organization)) | \(String(describing: contact.title)) | \(String(describing: contact.phone)) | \(String(describing: contact.email)) | \(String(describing: contact.discord)) | \(String(describing: contact.slack)) | \(String(describing: contact.notes))")
                 }else{
-                    print("Counld not insert row")
+                    print("Could not insert row")
                     returnCode = false
                 }
                 sqlite3_finalize(insertStatement)
@@ -1279,10 +1375,98 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open database")
         }
     }
-    
-    
+
     //MARK: =================END_OF_BRIAN'S_CODE_BLOCK==============================================
     //MARK: ========================= SETUP FUNCTIONS ================================
+
+    //MARK: Prepare Database and Check Permissions
+    func loadCalendars() {
+        let calendars = self.eventStore!.calendars(for: .reminder)
+        
+        for calendar in calendars as [EKCalendar] {
+            print("Calendar = \(calendar.title)")
+        }
+        print("Default Calendars: \(self.eventStore!.defaultCalendarForNewReminders())")
+    }
+    
+    func checkRemindersPermission() {
+        print("Checking access permission to Reminders ...")
+        
+        switch EKEventStore.authorizationStatus(for: .reminder) {
+        case .authorized:
+            print("Already granted access to Reminders")
+            self.loadCalendars()
+        case .notDetermined:
+            print("Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: EKEntityType.reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Reminders")
+        case .denied:
+            print("Access to Reminders is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    
+    func checkCalendarsPermission() {
+        print("Checking access permission to Calendars ...")
+
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .authorized:
+            print("Already granted access to Calendars")
+            self.checkRemindersPermission()
+        case .notDetermined:
+            print ("Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .event, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendats is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Calendars")
+        case .denied:
+            print("Access to Calendars is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendars is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    
     func refreshDatabaseFromApp()
     {
         var success = false
@@ -1301,6 +1485,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         return
     }
+
     //MARK: CreateAndCheck Database
     func checkAndCreateDatabase(){
         var success = false
@@ -1322,12 +1507,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
     //MARK: Default functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
         let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDir = documentPaths[0]
         print("Documents directory: \(documentsDir)")
         databasePath = documentsDir.appending("/" + databaseName!)
-        
+
         //MARK: 1 Brian Addition for Notification Authorization
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options:[.alert, .badge, .sound]){(granted, error) in
@@ -1340,10 +1525,153 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         // End of Mark 1
         
-        
         checkAndCreateDatabase()
+        
+        self.eventStore = EKEventStore()
+        checkCalendarsPermission()
+        
         //readContactDataFromDatabase()
         return true
+    }
+
+    //MARK: insert notification
+    func insertNotificationIntoDatabase(notification : Notification) -> Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var insertStatement : OpaquePointer? = nil
+            var insertStatementString = "insert into Notifications values(NULL,?,?)"
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
+            {
+                let statusStr = notification.status! as NSString
+                let dateStr = notification.date! as NSString
+                sqlite3_bind_text(insertStatement, 1, statusStr.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, dateStr.utf8String, -1, nil)
+                if sqlite3_step(insertStatement) == SQLITE_DONE{
+                    let rowId = sqlite3_last_insert_rowid(db)
+                    print("succefull inserted \(rowId)")
+                }
+                else{
+                    print("couldnt insert notification")
+                    returnCode = false
+                }
+                sqlite3_finalize(insertStatement)
+            }
+            else {
+                print("statement could not be prepared")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else {
+            print("unable to open Db")
+            returnCode = false
+        }
+        return returnCode
+    }
+    
+    //MARK: update the notification
+    func updateNotification(notification : Notification) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Notifications set  Status = ?, Date = ? where Id = ?"
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                var cStatus = notification.status! as NSString
+                var cDate = notification.date! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cStatus.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 4, cDate.utf8String, -1, nil)
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated notification \(notification.id) | \(notification.status)")
+                    returnCode = true
+                } else {
+                    print("Could not update notification \(notification.id) | \(notification.status)")
+                }
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update notification statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+
+        return returnCode
+    }
+
+    //MARK: get notification by id
+    func getNotificationById(id: Int) -> Notification {
+        var notification : Notification = Notification()
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Notification where Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
+                
+                if sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let cStatus = sqlite3_column_text(selectStatement, 1)
+                    let cDate = sqlite3_column_text(selectStatement, 2)
+                    let status = String(cString: cStatus!)
+                    let date = String(cString: cDate!)
+                    
+                    notification.initWithData(theRow: id, theStatus: status, theDate: date)
+                    
+                }
+                
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select notification by id")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return notification
+    }
+    //MARK: delete notificatin by id
+    func deleteNotification(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery : String = "delete from Notification where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    print("Deleted notification \(id)")
+                    returnCode = true
+                } else {
+                    print("Could not delete notification \(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete notification statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

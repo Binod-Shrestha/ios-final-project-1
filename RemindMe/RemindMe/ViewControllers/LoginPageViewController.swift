@@ -8,9 +8,11 @@
 
 import UIKit
 
+
 class LoginPageViewController: UIViewController ,UITextFieldDelegate{
     @IBOutlet var tfemail : UITextField!
     @IBOutlet var tfpassword : UITextField!
+  
     
     @IBAction func unwindToLoginVC(sender:UIStoryboardSegue){
         
@@ -18,7 +20,7 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
     }
     func textFieldShouldReturn(_ textField: UITextField)-> Bool {
@@ -39,8 +41,8 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
         
         if returnCode == true
         {
-            var returnMsg : String = "Login Successful"
-            let alertController = UIAlertController(title: "SQl Lite Add", message: returnMsg, preferredStyle: .alert)
+            let returnMsg : String = "Login Successful"
+            let alertController = UIAlertController(title: "Success", message: returnMsg, preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "LogIntoHomeSegue", sender: self) }
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
@@ -48,21 +50,13 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
             
         else if  returnCode == false
         {
-            let alertController = UIAlertController(title: "SQl Lite Add", message: "Login Faileed Please try again", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Sucess", message: "Login failed please try again", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
         }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }

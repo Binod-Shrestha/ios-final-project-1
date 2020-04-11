@@ -16,8 +16,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var tableView : UITableView!
     
     var indexPath : IndexPath?
-    
     var contacts : [Contact] = []
+    var reminders : [Reminder] = []
+
     
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
@@ -71,6 +72,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
 
             var row = indexPath!.row
+        
 
             var currentUser : User = mainDelegate.currentUser!
             
@@ -90,12 +92,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
                     (action) in
-                    
-                    //TODO: Change user id
+
                     var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
-                    
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
+                    let reminder = self.reminders[row]
+                    //var reminders = mainDelegate.deleteReminder(id: reminder.id!)
+                
+                    
+                    
                     
                     var title : String = ""
                     var message : String = ""
@@ -104,6 +109,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if returnCode == true {
                         // Successfully delete task
                         title = "Successfully"
+                        mainDelegate.deleteReminder(id: reminder.id!)
                         message = "Deleted \(task.title!)"
                         action = UIAlertAction(title: "OK", style: .default) {
                             (action) in
@@ -157,11 +163,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             count = duedates.count
             break
         case 1:
-            //TODO: Change UserId
             let tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
             count = tasks.count
             break
         case 2:
+
             mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!) //Refresh contacts from db
             count = mainDelegate.contacts.count
             break
@@ -319,13 +325,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.tableView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     // swiping functions
     //method:1
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    //method:2 right to left
+    //method:2 left to right
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -355,28 +365,76 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     // Swipe from right to left
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             action, index in
 
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let row = indexPath.row
-
-            var currentUser : User = mainDelegate.currentUser!
-
-            switch self.segmentControl.selectedSegmentIndex {
+            let currentUser : User = mainDelegate.currentUser!
+            switch self.segmentControl.selectedSegmentIndex
+            {
             case 0:
                 // Delete the selected due date
-                let duedates = mainDelegate.duedates
-                var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
-
-                if returnCode {
-                    mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
-                    tableView.reloadData()
-                }
+                let alertController = UIAlertController(title: "Warning", message: "Do you want to delete the due date ?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
+                    
+                    let duedates = mainDelegate.duedates
+                    let returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                    if returnCode
+                    {
+                        mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+                        tableView.reloadData()
+                    }}
+                
+                    alertController.addAction(okAction)
+                    alertController.addAction(cancelAction)
+                
+                    self.present(alertController,animated: true)
                 break
             case 1:
                 // Delete the selected task
+                let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
+                    (action) in
+                    
+                    var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
+                    var task = tasks[row]
+                    
+                    let returnCode = mainDelegate.deleteTask(id: task.id!)
+                    
+                    var title : String = ""
+                    var message : String = ""
+                    var action = UIAlertAction()
+                    
+                    if returnCode == true {
+                        // Successfully delete task
+                        title = "Successfully"
+                        message = "Deleted \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .default) {
+                            (action) in
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        // Delete task failed
+                        title = "Error"
+                        message = "Could not delete \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    }
+                    
+                    var deleteAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                    deleteAlert.addAction(action)
+                    
+                    self.present(deleteAlert, animated: true)
+                }
+                
+                alert.addAction(cancelAction)
+                alert.addAction(confirmAction)
+                
+                self.present(alert, animated: true)
                 break
             case 2:
                 // Delete the selected contact
@@ -393,6 +451,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
 
         })
+        delete.backgroundColor = .red
         return [delete]
     }
     
