@@ -38,8 +38,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedCategory: String!
     var selectedPriority: String!
 
-    @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){}
-    
     //alert function
     @IBAction func setAlert(_ sender: Any) {
     }

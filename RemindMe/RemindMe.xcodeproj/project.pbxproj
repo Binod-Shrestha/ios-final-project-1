@@ -11,7 +11,6 @@
 		3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */; };
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
-		AE01B39A2438853E00BE6BA7 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE01B3992438853E00BE6BA7 /* RemindMe.db */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
 		AE1364F2243D1C0C00AE32CC /* CreateNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */; };
 		AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */; };
@@ -63,7 +62,6 @@
 		3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
-		AE01B3992438853E00BE6BA7 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
 		AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotificationViewController.swift; sourceTree = "<group>"; };
 		AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationViewController.swift; sourceTree = "<group>"; };
@@ -128,7 +126,7 @@
 /* Begin PBXGroup section */
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
-			children = 
+			children = (
 				AEB480F52441707300EC7782 /* RemindMe.db */,
 			);
 			path = Database;
@@ -374,7 +372,6 @@
 				AEFAD2D52436CD570078640F /* Main.storyboard in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
 				AE50238F2437E8AB0050B4F1 /* blue_fade.jpg in Resources */,
-				AE01B39A2438853E00BE6BA7 /* RemindMe.db in Resources */,
 				AE5023912437E8AB0050B4F1 /* lite.jpg in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
 				AE5023902437E8AB0050B4F1 /* grey_fog.jpg in Resources */,
