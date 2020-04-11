@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
    
@@ -19,13 +20,16 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     @IBOutlet weak var btnNotification: UIButton!
     
     @IBOutlet weak var reminderSwitch: UISwitch!
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
   
     //for date
     let datePicker = UIDatePicker()
     var pickerData: [String] = [String]()
     let cellReuseIdentifier = "cell"
     var duedates:[DueDate] = []
-    
+        let eventStore = EKEventStore()
+    var calendars: [EKCalendar] =  [EKCalendar]()
 
     @IBOutlet weak var tfsubCategory : UITextField!
     @IBOutlet weak var dateTextField: UITextField!
@@ -36,7 +40,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedDate: String!
     var selectedCategory: String!
     var selectedPriority: String!
-    
     
     
     //alert function
@@ -63,6 +66,45 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         }
         
     }
+
+    func createReminder()
+    {
+        var eventStore = EKEventStore()
+        
+        self.eventStore.requestAccess(to: EKEntityType.reminder, completion: {
+            (isAllowed, error) in
+            if isAllowed {
+                print("Access to Reminders is granted")
+            } else {
+                print("Access to Reminders is not granted")
+                print(error?.localizedDescription)
+            }
+        })
+        
+        if eventStore != nil {
+            let reminder = EKReminder(eventStore: eventStore)
+            reminder.title = tfEventTitle.text
+            reminder.calendar = eventStore.defaultCalendarForNewReminders()!
+
+            let date = datePicker.date
+            
+            let alarm = EKAlarm(absoluteDate: date)
+            reminder.addAlarm(alarm)
+            
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            let reminderData : Reminder = Reminder(row: 0, reminderName: reminder.title, reminderDate: selectedDate)
+            let returnCode = mainDelegate.insertReminder(reminder: reminderData)
+            
+            do {
+                try eventStore.save(reminder, commit: true)
+            } catch let error {
+                print("Reminder failed with error \(error.localizedDescription)")
+            }
+        } else {
+            print("Could not create reminder")
+        }
+    }
+    
     // segments function
     @IBAction func indexChanaged(_ sender: Any) {
         switch prioritySC.selectedSegmentIndex
@@ -95,6 +137,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         
         if returnCode == true
         {
+            if reminderSwitch.isOn{
+                 self.createReminder()
+            }
+    
             var returnMsg : String = "Due Date Added"
             performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
         }
@@ -114,10 +160,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         //call method for done
         createDatePicker()
         pickerData = ["Business", "Personal", "School"]
-        
 
         // Do any additional setup after loading the view.
     }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -181,6 +227,8 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             self.dateTextField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         selectedDate = dateTextField.text
+  
+
         
     }
 

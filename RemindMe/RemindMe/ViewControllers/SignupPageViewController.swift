@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerViewDelegate ,UIPickerViewDataSource{
     
     @IBOutlet var tfemail : UITextField!
@@ -16,6 +18,7 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
     @IBOutlet var tfconfirmPassword : UITextField!
     @IBOutlet weak var picker: UIPickerView!
     
+
     @IBOutlet weak var lblPickerTest: UILabel!
     @IBOutlet weak var tfsecurityAnswer: UITextField!
     
@@ -64,12 +67,12 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
         else{
             let returnCode = mainDelegate.signUp(user: user)
             
-            var returnMsg : String = "Person Added"
+            var returnMsg : String = "You Have successfully registered"
             
             
             if returnCode == false
             {
-                returnMsg = "Person Add Failed"
+                returnMsg = "User has not been added"
             }
             
             let alertController = UIAlertController(title: "Success", message: returnMsg, preferredStyle: .alert)
@@ -87,6 +90,7 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
         
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         securityQuestions = mainDelegate.securityQuestions
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField)-> Bool {

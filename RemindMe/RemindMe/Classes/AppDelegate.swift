@@ -8,25 +8,30 @@
 
 import UIKit
 import SQLite3
+import EventKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
     
     var window: UIWindow?
-
+    
     var databaseName : String? = "RemindMe.db"
     var databasePath : String?
     
     var currentUser : User? = nil
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
-    
+     var calendars: [EKCalendar] =  [EKCalendar]()
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
 
     var contacts : [Contact] = []
     
     var duedates : [DueDate] = []
     
+    var reminders : [Reminder] = []
+    var eventStore : EKEventStore? = nil
+    
+ 
     //MARK: Database functions for DueDates
     //delete method
     func deleteDueDate(id: Int) -> Bool {
@@ -826,6 +831,155 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
         return returnCode
     }
+    
+    
+    //MARK: Database functions for Reminders
+    func insertReminder(reminder : Reminder) -> Bool
+    {
+        var db : OpaquePointer? = nil
+        var returnCode : Bool = true
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+        {
+            var insertStatement : OpaquePointer? = nil
+            let insertStatementString = "insert into Reminders values(NULL,?,?)"
+            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
+            {
+                let namestr = reminder.reminderName! as NSString
+                let dateStr = reminder.reminderDate! as NSString
+  
+                
+                sqlite3_bind_text(insertStatement, 1, namestr.utf8String, -1, nil)
+                sqlite3_bind_text(insertStatement, 2, dateStr.utf8String, -1, nil)
+              
+                
+                if sqlite3_step(insertStatement) == SQLITE_DONE{
+                    let rowId = sqlite3_last_insert_rowid(db)
+                    print("Succeful inserted reminder into \(rowId)")
+                }
+                else{
+                    print("Could not insert user")
+                    returnCode = false
+                }
+                sqlite3_finalize(insertStatement)
+            }
+            else {print("Could not prepare insert user statement")
+                returnCode = false
+            }
+            sqlite3_close(db)
+        }
+        else {
+            print("Unable to open Db")
+            returnCode = false
+        }
+        return returnCode
+    }
+    
+    func updateReminder(reminder : Reminder) -> Bool {
+        
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            
+            var updateStatement : OpaquePointer? = nil
+            var updateQuery : String = "update Reminders set ReminderName = ? ,ReminderDate = ? where Id = ?"
+            
+            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+                
+                var cReminderName = reminder.reminderName! as NSString
+                 var cReminderDate = reminder.reminderDate! as NSString
+                
+                sqlite3_bind_text(updateStatement, 1, cReminderName.utf8String, -1, nil)
+                  sqlite3_bind_text(updateStatement, 2, cReminderDate.utf8String, -1, nil)
+                sqlite3_bind_int(updateStatement, 2, Int32(reminder.id!))
+                
+                if sqlite3_step(updateStatement) == SQLITE_DONE {
+                    print("Updated reminder")
+                    returnCode = true 
+                } else {
+                    print("Could not update reminder \(reminder.id) | \(reminder.reminderName)")
+                }
+                
+                sqlite3_finalize(updateStatement)
+            } else {
+                print("Could not prepare update reminder statement")
+            }
+            
+            sqlite3_close(db)
+        } else {
+            print("Could not open database")
+        }
+        
+        return returnCode
+    }
+    
+    func getReminderById(id : Int) -> Reminder? {
+        var reminder : Reminder? = nil
+        
+        var db : OpaquePointer? = nil
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var selectStatement : OpaquePointer? = nil
+            var selectQuery : String = "select * from Reminders where Id = ?"
+            
+            if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(selectStatement, 1, Int32(id))
+                
+                if sqlite3_step(selectStatement) == SQLITE_ROW {
+                    let id : Int = Int(sqlite3_column_int(selectStatement, 0))
+                    let creminderName = sqlite3_column_text(selectStatement, 1)
+                    let creminderDate = sqlite3_column_text(selectStatement, 2)
+                  
+                    
+                    let contentReminderName = String(cString: creminderName!)
+                    let contentReminderDate = String(cString: creminderDate!)
+                    
+                    reminder = Reminder.init(row: id, reminderName: contentReminderName, reminderDate: contentReminderDate);
+                }
+                sqlite3_finalize(selectStatement)
+            } else {
+                print("Could not prepare select reminder by id statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return reminder
+    }
+    
+    
+    func deleteReminder(id: Int) -> Bool {
+        var db : OpaquePointer? = nil
+        var returnCode = false
+        
+        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+            var deleteStatement : OpaquePointer? = nil
+            var deleteQuery: String = "delete from Reminders where Id = ?"
+            
+            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+                
+                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+                
+                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+                    returnCode = true
+                    print("Successfully deleted reminder id: \(id)")
+                } else {
+                    print("Could not delete the reminder id:\(id)")
+                }
+                
+                sqlite3_finalize(deleteStatement)
+            } else {
+                print("Could not prepare delete reminder statement")
+            }
+            sqlite3_close(db)
+        } else {
+            print("Could not open the database")
+        }
+        
+        return returnCode
+    }
 
     //MARK: Database Functions for Contacts
     func insertContactIntoDatabase(contact : Contact) -> Bool
@@ -1012,7 +1166,94 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
     }
 
-    //MARK: Prepare Database
+    //MARK: Prepare Database and Check Permissions
+    func loadCalendars() {
+        let calendars = self.eventStore!.calendars(for: .reminder)
+        
+        for calendar in calendars as [EKCalendar] {
+            print("Calendar = \(calendar.title)")
+        }
+        print("Default Calendars: \(self.eventStore!.defaultCalendarForNewReminders())")
+    }
+    
+    func checkRemindersPermission() {
+        print("Checking access permission to Reminders ...")
+        
+        switch EKEventStore.authorizationStatus(for: .reminder) {
+        case .authorized:
+            print("Already granted access to Reminders")
+            self.loadCalendars()
+        case .notDetermined:
+            print("Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: EKEntityType.reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Reminders")
+        case .denied:
+            print("Access to Reminders is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    
+    func checkCalendarsPermission() {
+        print("Checking access permission to Calendars ...")
+
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .authorized:
+            print("Already granted access to Calendars")
+            self.checkRemindersPermission()
+        case .notDetermined:
+            print ("Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .event, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendats is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Calendars")
+        case .denied:
+            print("Access to Calendars is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendars is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    
     func checkAndCreateDatabase(){
         var success = false
         let fileManager = FileManager.default
@@ -1033,16 +1274,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
     //MARK: Default functions
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
         let documentPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let documentsDir = documentPaths[0]
         databasePath = documentsDir.appending("/" + databaseName!)
-        
         checkAndCreateDatabase()
+        
+        self.eventStore = EKEventStore()
+        checkCalendarsPermission()
+        
         //readContactDataFromDatabase()
         return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

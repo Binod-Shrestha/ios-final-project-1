@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var indexPath : IndexPath?
     
+var reminders : [Reminder] = []
+    
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
         if btnLogOut.title == "Cancel" {
@@ -65,6 +67,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
 
             var row = indexPath!.row
+        
 
             var currentUser : User = mainDelegate.currentUser!
             
@@ -87,8 +90,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
                     var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
-                    
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
+                    let reminder = self.reminders[row]
+                    //var reminders = mainDelegate.deleteReminder(id: reminder.id!)
+                
+                    
+                    
                     
                     var title : String = ""
                     var message : String = ""
@@ -97,6 +104,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if returnCode == true {
                         // Successfully delete task
                         title = "Successfully"
+                        mainDelegate.deleteReminder(id: reminder.id!)
                         message = "Deleted \(task.title!)"
                         action = UIAlertAction(title: "OK", style: .default) {
                             (action) in
@@ -152,6 +160,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             count = tasks.count
             break
         case 2:
+            let remonderss = mainDelegate.getReminderById(id: currentUser.id!)
+     
             break
         default:
             break

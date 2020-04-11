@@ -62,6 +62,9 @@ class ResetPasswordViewController: UIViewController {
         }
     }
     
+    
+    
+    
     @IBAction func btnChangePasswordClicked(sender : UIButton) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -82,7 +85,7 @@ class ResetPasswordViewController: UIViewController {
             let password = tfNewPassword.text
             
             if password == nil || password == "" {
-                let alertController = UIAlertController(title: "Error", message: "Do not leave password field balnk", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Error", message: "Do not leave password field blank", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 present(alertController,animated: true)
