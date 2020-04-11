@@ -902,6 +902,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     //MARK: Database functions for Reminders
     func insertReminder(reminder : Reminder) -> Bool
+    {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
