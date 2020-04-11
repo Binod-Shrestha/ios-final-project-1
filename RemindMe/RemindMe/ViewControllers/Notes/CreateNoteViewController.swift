@@ -15,8 +15,6 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var btnBack : UIBarButtonItem!
     @IBOutlet var btnAddImage : UIButton!
     
-    @IBAction func unwindToCreateNote(sender : UIStoryboardSegue) {}
-    
     @IBAction func btnAddImageClicked(sender:UIButton) {
         attachImageToText()
     }
@@ -24,43 +22,45 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     @IBAction func btnBackClicked(sender : UIBarButtonItem) {
         performSegue(withIdentifier: "CreateNoteToCreateTaskSegue", sender: nil)
     }
-    
-    //TODO: Fix CreateNote function
+
     @IBAction func btnDoneClicked(sender : UIBarButtonItem) {
         // End editing
         if btnDone.title == "Done" {
+            var content = textView.text
+            
+            if (content == "" || content == nil) {
+                btnDone.isEnabled = false
+                btnDone.tintColor = UIColor.clear
+            } else {
+                btnDone.isEnabled = true
+                btnDone.tintColor = nil
+                btnDone.title = "Add"
+            }
+            
             textView.resignFirstResponder()
+            textView.textColor = UIColor.lightGray
         } else {
+            
             // Save note to task
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let currentUser : User = mainDelegate.currentUser!
             let task : Task = mainDelegate.currentTask!
             
-            let content = textView.text
-            
-            var returnCode = false
-            
-            // Fix note content
-            if(content != "") {
-                let note = Note.init(content: content!, task_id: task.id, duedate_id: nil, user_id: currentUser.id!)
+            var content = textView.text
+
+            if (content == "" || content == nil) {
+                var alert = UIAlertController(title: "Warning", message: "Please enter note content!", preferredStyle: .alert)
+                var cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                
+                alert.addAction(cancelAction)
+                present(alert, animated: true)
+            } else {
+                let note = Note.init(content: content!)
                 
                 let mainDelegate = UIApplication.shared.delegate as! AppDelegate
                 mainDelegate.currentTask!.note = note
-                performSegue(withIdentifier: "CreateNoteToCreateTaskSegue", sender: self)
-//                returnCode = mainDelegate.insertNote(note: note)
+                performSegue(withIdentifier: "UnwindFromCreateNoteSeugue", sender: self)
             }
-            
-//            var returnMesage = "Successfully Inserted Note"
-//
-//            if returnCode == false {
-//                returnMesage = "Insert Note Failed"
-//            }
-//
-//            let alertController = UIAlertController(title: "Insert Note", message: returnMesage, preferredStyle: .alert)
-//            let  cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//
-//            alertController.addAction(cancelAction)
-//            present(alertController, animated: true)
         }
     }
     
@@ -86,36 +86,39 @@ class CreateNoteViewController: UIViewController, UITextViewDelegate {
     }
     
     // When the user begins to enter the note
-    // Set the color to black
-    // Change the title of BarItem from 'Add' to 'Done'
     func textViewDidBeginEditing(_ textView: UITextView) {
-        textView.textColor = UIColor.black
+        btnDone.isEnabled = true
+        btnDone.tintColor = nil
         btnDone.title = "Done"
+        
+        textView.textColor = UIColor.black
     }
     
-    // After the user finishes editing the note
-    // Set text color to light gray
-    // Change BarItem from 'Done' to 'Add'
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.textColor = UIColor.lightGray
-        }
-        textView.textColor = UIColor.lightGray
-        btnDone.title = "Add"
-    }
-    
-    // Dismiss the keyboard when the user touches outside the textview and the keyboard
+    // Dismiss the keyboard when the user touches outside the textview
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        var content = textView.text
+        
+        if (content == "" || content == nil) {
+            btnDone.isEnabled = false
+            btnDone.tintColor = UIColor.clear
+        } else {
+            btnDone.isEnabled = true
+            btnDone.tintColor = nil
+            btnDone.title = "Add"
+        }
+
         textView.resignFirstResponder()
+        textView.textColor = UIColor.lightGray
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        // Hide btnDone
+        btnDone.isEnabled = false
+        btnDone.tintColor = UIColor.clear
         
-        var currentNote = mainDelegate.currentTask!.note
-        
-        textView.text = currentNote?.content
+        // Show keyboard for textview
+        textView.becomeFirstResponder()
     }
 }

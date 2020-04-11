@@ -10,4 +10,34 @@ import UIKit
 
 class Reminder: NSObject {
 
+    
+    var id: Int?
+    var reminderName : String?
+    var reminderDate : String?
+
+    
+    var notification : Notification?
+    var alarm : Alarm?
+    
+    init(row: Int, reminderName: String, reminderDate: String) {
+        self.id = row
+        self.reminderDate = reminderDate
+        self.reminderName = reminderName
+//        self.notification = notification
+//        self.alarm  = alarm
+    }
+    
+    
+    init(row: Int, reminderName: String, reminderDate: String, notification :Notification, alarm :Alarm) {
+        self.id = row
+        self.reminderDate = reminderDate
+        self.reminderName = reminderName
+      self.notification = notification
+     self.alarm  = alarm
+    }
+    
+    
+    
+    
+
 }

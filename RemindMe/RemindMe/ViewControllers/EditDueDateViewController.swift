@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
     @IBOutlet weak var tfEventName: UITextField!
@@ -24,6 +25,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var duedates:[DueDate] = []
     let datePicker = UIDatePicker()
     var pickerData = ["Business", "Personal", "School"]
+
     @IBOutlet weak var swReminders: UISwitch!
     
     // setReminders
@@ -63,7 +65,21 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
             break
         }
     }
-    
+
+    // Update reminder
+    func UpdateReminder()
+    {
+        let maindelegate = UIApplication.shared.delegate as! AppDelegate
+        var eventStore = EKEventStore()
+        let reminder = EKReminder(eventStore: eventStore)
+        let reminderName = tfEventName.text!
+        let reminderDate = selectedDate
+        reminder.calendar = eventStore.defaultCalendarForNewReminders()!
+
+        let reminderData : Reminder = Reminder(row: 0, reminderName: reminderName, reminderDate: selectedDate)
+        let returnCode = maindelegate.updateReminder(reminder: reminderData)
+    }
+
     //MARK: update DueDate
     @IBAction func updateDueDate(_ sender: Any)
     {
@@ -85,11 +101,19 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         currentDueDate.note = note
         currentDueDate.reminder = reminder
         
+        
+        
         //TODO: change insertDueDate to updateDueDate
         let returnCode = mainDelegate.updateDueDateData(duedate: currentDueDate)
         if returnCode == true
         {
             var returnMsg : String = "Due Date updated"
+
+            if swReminders.isOn
+            {
+ 
+            	UpdateReminder() 
+            }
         }
         else  if returnCode == false
         {
@@ -126,6 +150,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
            sgPriority.selectedSegmentIndex = 2
             
         }
+
         // Date loaded from past duedate
         createDatePicker()
         // pickerview loaded from the past duedate

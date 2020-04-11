@@ -8,75 +8,161 @@
 
 import UIKit
 
-class CreateTaskViewController: UIViewController {
+class CreateTaskViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet var lbNote : UILabel!
+    @IBOutlet var tfTitle : UITextField!
+    @IBOutlet var sgmPriority : UISegmentedControl!
+    @IBOutlet var swStatus : UISwitch!
+    @IBOutlet var lbStatus : UILabel!
+    @IBOutlet var btnNote : UIButton!
+    @IBOutlet var btnCreate : UIBarButtonItem!
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch : UITouch = touches.first!
-        let touchPoint : CGPoint = touch.location(in: self.view!)
-        
-        let noteFrame : CGRect = lbNote.frame
-        
-        if noteFrame.contains(touchPoint) {
+    @IBOutlet var dpDeadline :  UIDatePicker!
+    
+    @IBAction func btnCreateClicked(sender : UIBarButtonItem) {
+        if tfTitle.text == "" || tfTitle.text == nil {
+            var alert = UIAlertController(title: "Warning", message: "Please enter required field(s)!", preferredStyle: .alert)
+            var cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+        } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             var currentUser = mainDelegate.currentUser
-            
-            //TODO: Update the task
             var currentTask : Task? = mainDelegate.currentTask
-            if currentTask?.note == nil {
-                currentTask = Task(user_id: currentUser!.id!, title: "Testing Create Note from Create Task", status: true, priority: 0, taskDueDate: "04-01-2020 15:30", daysInAdvance: 3, note: nil)
-                mainDelegate.currentTask = currentTask
-                performSegue(withIdentifier: "CreateTaskToCreateNoteSegue", sender: self)
-            } else {
-                currentTask!.title = "Testing Edit Note from Create Task"
-                currentTask!.priority = 1
-                currentTask!.taskDueDate = "04-01-2020 16:30"
-                currentTask!.daysInAdvance = 2
-                performSegue(withIdentifier: "CreateTaskToEditNoteSegue", sender: self)
+            var note : Note?  =  currentTask?.note
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+            var date = dateFormatter.string(from: dpDeadline.date)
+            
+            currentTask = Task(user_id: currentUser!.id!, title: tfTitle.text!, status: swStatus.isOn, priority: sgmPriority.selectedSegmentIndex, taskDueDate: date, daysInAdvance: 3, note: note)
+            mainDelegate.currentTask = currentTask
+            
+            //TODO: Add Alert
+            var message : String = ""
+            var title : String = ""
+            var cancelAction = UIAlertAction()
+            
+            if (note?.id == nil && (note?.content == nil || note?.content == "")) {
+                note = nil
             }
+            
+            if (note == nil) {
+                currentTask!.note = note
+                let taskReturnCode = mainDelegate.insertTask(task: currentTask!)
+                if taskReturnCode {
+                    title = "Successfully"
+                    message = "Created \(currentTask!.title!)!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel) {
+                        action in
+                        self.performSegue(withIdentifier: "UnwindFromCreateTaskToHomeVCSegue", sender: nil)
+                    }
+                } else {
+                    title = "Error"
+                    message = "Could not create \(currentTask!.title!). Please try again!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                }
+            } else {
+                var note_id = mainDelegate.insertNote(note: note!)
+                
+                if note_id != nil {
+                    currentTask!.note!.id = note_id
+                    let taskReturnCode = mainDelegate.insertTask(task: currentTask!)
+                    if taskReturnCode {
+                        title = "Successfully"
+                        message = "Created \(currentTask!.title!)!"
+                        cancelAction  = UIAlertAction(title: "OK", style: .cancel) {
+                            action in
+                            self.performSegue(withIdentifier: "UnwindFromCreateTaskToHomeVCSegue", sender: nil)
+                        }
+                    } else {
+                        title = "Error"
+                        message = "Could not create \(currentTask!.title!). Please try again!"
+                        cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    }
+                } else {
+                    title = "Error"
+                    message = "Could not create \(currentTask!.title!). Please try again!"
+                    cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                }
+            }
+            
+            var alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
         }
+    }
+    
+    @IBAction func swStatusValueChanged(sender: UISwitch) {
+        var status : String = ""
+        if swStatus.isOn {
+            status = "Active"
+        } else {
+            status = "Inactive"
+        }
+        lbStatus.text = status
+    }
+    
+    @IBAction func btnNoteClicked(sender : UIButton) {
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        var currentUser = mainDelegate.currentUser
+        var currentTask : Task? = mainDelegate.currentTask
+        var note : Note?  =  currentTask?.note
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+        var date = dateFormatter.string(from: dpDeadline.date)
+        
+        currentTask = Task(user_id: currentUser!.id!, title: tfTitle.text!, status: swStatus.isOn, priority: sgmPriority.selectedSegmentIndex, taskDueDate: date, daysInAdvance: 3, note: note)
+        mainDelegate.currentTask = currentTask
+        
+        if note?.content == nil {
+            // Create new note
+            performSegue(withIdentifier: "CreateTaskToCreateNoteSegue", sender: self)
+        } else {
+            // Update the note
+            performSegue(withIdentifier: "CreateTaskToEditNoteSegue", sender: self)
+        }
+    }
+    
+    @IBAction func unwindFromCreateNote(sender: UIStoryboardSegue) {}
+    
+    @IBAction func unwindFromEditNote(sender:UIStoryboardSegue) {}
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        var currentTask = mainDelegate.currentTask
-        
-        // Set label for note
-        if currentTask?.note == nil {
-            lbNote.text = "Add Note"
-        } else {
-            var tempNote = mainDelegate.currentTask!.note
-            lbNote.text = tempNote!.content
-        }
-        lbNote.textColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        //TODO: Update Task fields
         var currentTask = mainDelegate.currentTask
         
+        // Set up task info
         if currentTask != nil {
-            lbNote.text = currentTask!.note?.content
+            tfTitle.text = currentTask!.title
+            swStatus.isOn = currentTask!.status!
+            sgmPriority.selectedSegmentIndex = currentTask!.priority!
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+            let date = dateFormatter.date(from: currentTask!.taskDueDate!)
+            
+            if currentTask?.note?.content == nil {
+                btnNote.setTitle("Add Note", for: .normal)
+            } else {
+                var tempNote = mainDelegate.currentTask!.note
+                btnNote.setTitle("\u{2022} " + tempNote!.content!, for: .normal)
+            }
+        } else {
+            swStatus.isOn = true
+            lbStatus.text = "Active"
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
