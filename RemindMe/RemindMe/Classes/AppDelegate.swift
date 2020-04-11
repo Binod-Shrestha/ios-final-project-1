@@ -10,8 +10,6 @@ import UIKit
 import SQLite3
 import EventKit
 
-
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
     
