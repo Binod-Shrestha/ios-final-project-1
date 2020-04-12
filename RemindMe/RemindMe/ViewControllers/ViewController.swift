@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
     
@@ -33,11 +34,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             mainDelegate.logOut()
-            
-            
+ 
             let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "logOutSegue", sender: self) }
+            let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
+                GIDSignIn.sharedInstance()?.signOut()
+                self.performSegue(withIdentifier: "logOutSegue", sender: self)
+            }
             alertController.addAction(cancelAction)
             alertController.addAction(okAction)
             

@@ -43,11 +43,6 @@
                                     <action selector="loginWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5XK-RJ-41R"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-YI-TUl">
-                                <rect key="frame" x="151" y="564" width="141" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login with Facebook"/>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="brg-Ss-xng">
                                 <rect key="frame" x="113" y="284" width="263" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -88,16 +83,22 @@
                                     <segue destination="tue-mt-3ds" kind="presentation" id="Dsj-jv-DCI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fga-Pc-k24">
-                                <rect key="frame" x="150" y="635" width="115" height="30"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atW-n9-f5a" customClass="GIDSignInButton">
+                                <rect key="frame" x="87" y="621" width="240" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Log With Google"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qUa-YI-TUl">
+                                <rect key="frame" x="137" y="564" width="141" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Login with Facebook"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="signInButton" destination="atW-n9-f5a" id="7KP-aB-2VE"/>
                         <outlet property="tfemail" destination="brg-Ss-xng" id="Ie4-0x-YZt"/>
                         <outlet property="tfpassword" destination="y7n-rK-yTS" id="5v5-Yd-D7A"/>
                         <segue destination="Y4Z-vD-myZ" kind="presentation" identifier="LogIntoHomeSegue" id="oFL-2j-Aep"/>
@@ -105,7 +106,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="199" y="137"/>
+            <point key="canvasLocation" x="198.55072463768118" y="136.60714285714286"/>
         </scene>
         <!--Reset Password View Controller-->
         <scene sceneID="0NN-2s-oFH">
@@ -1810,7 +1811,7 @@
         <segue reference="7Y3-60-BNd"/>
         <segue reference="NeN-c6-YH1"/>
         <segue reference="mCK-Bi-4fi"/>
-        <segue reference="XkP-zO-8gJ"/>
+        <segue reference="oFL-2j-Aep"/>
         <segue reference="cKO-ze-OpF"/>
     </inferredMetricsTieBreakers>
 </document>

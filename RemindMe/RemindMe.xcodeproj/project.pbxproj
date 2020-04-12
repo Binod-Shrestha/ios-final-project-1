@@ -12,6 +12,13 @@
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
+		AE09DCBC2442E40100857F86 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCBB2442E40100857F86 /* LocalAuthentication.framework */; };
+		AE09DCBE2442E40C00857F86 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCBD2442E40C00857F86 /* SafariServices.framework */; };
+		AE09DCC02442E41600857F86 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCBF2442E41600857F86 /* AuthenticationServices.framework */; };
+		AE09DCC22442E41E00857F86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCC12442E41E00857F86 /* SystemConfiguration.framework */; };
+		AE09DCCE2442EB9800857F86 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE09DCCD2442EB9800857F86 /* GoogleSignIn.bundle */; };
+		AE09DCD72442EC4B00857F86 /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCD52442EC4A00857F86 /* GoogleSignIn.framework */; };
+		AE09DCD82442EC4B00857F86 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCD62442EC4A00857F86 /* GoogleSignInDependencies.framework */; };
 		AE1364F2243D1C0C00AE32CC /* CreateNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */; };
 		AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */; };
 		AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */; };
@@ -62,6 +69,16 @@
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
+		AE09DCBB2442E40100857F86 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		AE09DCBD2442E40C00857F86 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		AE09DCBF2442E41600857F86 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		AE09DCC12442E41E00857F86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AE09DCC52442E97900857F86 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = ../../../Downloads/google_signin_sdk_5_0_0/GoogleSignIn.framework; sourceTree = "<group>"; };
+		AE09DCC62442E97900857F86 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignInDependencies.framework; path = ../../../Downloads/google_signin_sdk_5_0_0/GoogleSignInDependencies.framework; sourceTree = "<group>"; };
+		AE09DCCD2442EB9800857F86 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
+		AE09DCCF2442EBDE00857F86 /* Bundles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Bundles; sourceTree = "<group>"; };
+		AE09DCD52442EC4A00857F86 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignIn.framework; sourceTree = "<group>"; };
+		AE09DCD62442EC4A00857F86 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
 		AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotificationViewController.swift; sourceTree = "<group>"; };
 		AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationViewController.swift; sourceTree = "<group>"; };
 		AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
@@ -112,9 +129,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE09DCC22442E41E00857F86 /* SystemConfiguration.framework in Frameworks */,
+				AE09DCC02442E41600857F86 /* AuthenticationServices.framework in Frameworks */,
+				AE09DCBE2442E40C00857F86 /* SafariServices.framework in Frameworks */,
+				AE09DCBC2442E40100857F86 /* LocalAuthentication.framework in Frameworks */,
 				AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */,
 				3B0EBE27243112F90024B86E /* libsqlite3.0.tbd in Frameworks */,
 				AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */,
+				AE09DCD72442EC4B00857F86 /* GoogleSignIn.framework in Frameworks */,
+				AE09DCD82442EC4B00857F86 /* GoogleSignInDependencies.framework in Frameworks */,
 				AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,6 +145,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE09DCB02442E35500857F86 /* Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				AE09DCD52442EC4A00857F86 /* GoogleSignIn.framework */,
+				AE09DCD62442EC4A00857F86 /* GoogleSignInDependencies.framework */,
+			);
+			path = Bundles;
+			sourceTree = "<group>";
+		};
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +202,13 @@
 		AE7D9414242231F50002B853 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE09DCCF2442EBDE00857F86 /* Bundles */,
+				AE09DCC52442E97900857F86 /* GoogleSignIn.framework */,
+				AE09DCC62442E97900857F86 /* GoogleSignInDependencies.framework */,
+				AE09DCC12442E41E00857F86 /* SystemConfiguration.framework */,
+				AE09DCBF2442E41600857F86 /* AuthenticationServices.framework */,
+				AE09DCBD2442E40C00857F86 /* SafariServices.framework */,
+				AE09DCBB2442E40100857F86 /* LocalAuthentication.framework */,
 				AE37E427242B266700F32C86 /* libsqlite3.0.tbd */,
 				3B0EBE26243112F90024B86E /* libsqlite3.0.tbd */,
 				AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */,
@@ -217,6 +256,8 @@
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
+				AE09DCCD2442EB9800857F86 /* GoogleSignIn.bundle */,
+				AE09DCB02442E35500857F86 /* Bundles */,
 				AEEBD19D241D5BDA00A41300 /* RemindMe */,
 				AEEBD19C241D5BDA00A41300 /* Products */,
 				AE7D9414242231F50002B853 /* Frameworks */,
@@ -363,6 +404,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE09DCCE2442EB9800857F86 /* GoogleSignIn.bundle in Resources */,
 				AEB480F62441707300EC7782 /* RemindMe.db in Resources */,
 				AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */,
 				AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */,
@@ -556,11 +598,17 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Bundles",
 				);
 				INFOPLIST_FILE = RemindMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bbqs.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -577,11 +625,17 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Bundles",
 				);
 				INFOPLIST_FILE = RemindMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				NEW_SETTING = "";
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bbqs.RemindMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";

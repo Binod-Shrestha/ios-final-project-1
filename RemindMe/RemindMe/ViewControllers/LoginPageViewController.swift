@@ -7,27 +7,47 @@
 //
 
 import UIKit
+import GoogleSignIn
 
-
-class LoginPageViewController: UIViewController ,UITextFieldDelegate{
+class LoginPageViewController: UIViewController ,UITextFieldDelegate {
     @IBOutlet var tfemail : UITextField!
     @IBOutlet var tfpassword : UITextField!
-  
+    @IBOutlet weak var signInButton: GIDSignInButton!
     
     @IBAction func unwindToLoginVC(sender:UIStoryboardSegue){
         
     }
     
+    // Quynh: Refresh the interface after user completes google sign in
+    func refreshInterface() {
+        //check if the user is already signed in
+        print("Callback")
+        if let _ = GIDSignIn.sharedInstance()?.currentUser?.authentication {
+            self.performSegue(withIdentifier: "LogIntoHomeSegue", sender: self)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Quynh's Google Sign-In implementation
+        // Callback
+        refreshInterface()
+        (UIApplication.shared.delegate as! AppDelegate).signIncallback = refreshInterface
+        // Initialize Google sign-in
+        GIDSignIn.sharedInstance()!.presentingViewController = self
+        // Automatically sign in the user.
+        if(GIDSignIn.sharedInstance()!.hasPreviousSignIn()) {
+            GIDSignIn.sharedInstance()?.restorePreviousSignIn()
+            self.performSegue(withIdentifier: "LogIntoHomeSegue", sender: self)
+        }
     }
+    
     func textFieldShouldReturn(_ textField: UITextField)-> Bool {
         
         return textField.resignFirstResponder()
-        
     }
+
     @IBAction func login(sender : Any)
     {
         let email = tfemail.text
@@ -56,7 +76,5 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate{
             present(alertController,animated: true)
         }
     }
-    
 
-    
 }

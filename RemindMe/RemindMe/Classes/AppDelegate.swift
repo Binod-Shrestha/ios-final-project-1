@@ -10,9 +10,10 @@ import UIKit
 import SQLite3
 import UserNotifications
 import EventKit
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     //MARK: ========================= DECLARATIONS ================================
     var window: UIWindow?
@@ -40,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     var reminders : [Reminder] = []
     var eventStore : EKEventStore? = nil
+    
+    var signIncallback: (()->())?
     
     //MARK: =================END OF DECLARATIONS ================================
 
@@ -1530,9 +1533,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         self.eventStore = EKEventStore()
         checkCalendarsPermission()
         
+        // Initialize Google sign-in
+        GIDSignIn.sharedInstance()?.clientID = "472534012216-rc8s3uveu8buvh4qhbn0fjalba9p1srl.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance()?.delegate = self
+        
         //readContactDataFromDatabase()
         return true
     }
+    
+    //MARK: Methods for Google SignIn
+    @available(iOS 9.0, *)
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
+              withError error: Error!) {
+        if let error = error {
+            if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
+                print("The user has not signed in before or they have since signed out.")
+            } else {
+                print("\(error.localizedDescription)")
+            }
+            return
+        } else {
+            if(user?.userID != nil) {
+                currentUser = User(row: 04122020, email: user.profile.email, password: "temp", name: user.profile.name, securityQuestion: 0, securityAnswer: "temp")
+                
+                let idToken = user.authentication.idToken
+                signIncallback!()
+            }
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
+              withError error: Error!) {
+        currentUser = nil
+    }
+    
 
     //MARK: insert notification
     func insertNotificationIntoDatabase(notification : Notification) -> Bool
