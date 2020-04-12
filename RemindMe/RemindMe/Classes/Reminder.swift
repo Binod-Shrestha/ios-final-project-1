@@ -23,19 +23,21 @@ class Reminder: NSObject {
         self.id = row
         self.reminderDate = reminderDate
         self.reminderName = reminderName
-//        self.notification = notification
-//        self.alarm  = alarm
+
     }
     
     
-    init(row: Int, reminderName: String, reminderDate: String, notification :Notification, alarm :Alarm) {
+  /*  init(row: Int, reminderName: String, reminderDate: String, notification :Notification, alarm :Alarm) {
         self.id = row
         self.reminderDate = reminderDate
         self.reminderName = reminderName
       self.notification = notification
      self.alarm  = alarm
     }
-    
+    */
+    override init() {
+        super.init()
+    }
     
     
     

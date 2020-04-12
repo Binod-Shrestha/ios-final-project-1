@@ -70,21 +70,39 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     // pickerview
-    
+ 
     func UpdateReminder()
     
     {
-        let maindelegate = UIApplication.shared.delegate as! AppDelegate
+           let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        let reminders = Reminder.init()
+       //  let currentReminder : Reminder = mainDelegate.curentReminder!
+        
+        
+        
         var eventStore = EKEventStore()
         let reminder = EKReminder(eventStore: eventStore)
-        let reminderName = tfEventName.text!
-        let reminderDate = selectedDate
+        
+     
+         reminders.reminderName = tfEventName.text!
+        
+         reminders.reminderDate = tfDueDate.text
+      
+ 
         reminder.calendar = eventStore.defaultCalendarForNewReminders()!
 
-        let reminderData : Reminder = Reminder(row: 0, reminderName: reminderName, reminderDate: selectedDate)
-        let returnCode = maindelegate.updateReminder(reminder: reminderData)
+       
+       let returnCode = mainDelegate.updateReminder(reminder:reminders)
         
-        
+        if returnCode == true
+    
+        {}
+        else{
+            
+            print("Null")
+        }
+            
+     
         
     }
     
@@ -128,8 +146,9 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
             }
             
             
-            //performSegue(withIdentifier: "VCDueDateSegue", sender: self)
+           // performSegue(withIdentifier: "VCDueDateSegue", sender: self)
         }
+            
         else  if returnCode == false
         {
             var  returnMsg = "Due Date update Failed"
@@ -145,9 +164,15 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     {
         super.viewDidLoad()
         let duedate : DueDate = DueDate.init()
+        
+   
+        
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
         var currentDueDate = mainDelegate.currentDueDate
+        ///var currentReminde = mainDelegate.curentReminder
+        
+    
         
         tfEventName.text = currentDueDate!.name
         tfSCategory.text = currentDueDate!.subCategory
@@ -180,7 +205,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     {
         //format date
         tfDueDate.textAlignment = .center
-        
         //toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()

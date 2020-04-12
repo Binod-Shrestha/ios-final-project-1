@@ -19,6 +19,8 @@ class DueDate: NSObject {
     var note : Note?
     var reminder : Reminder?
     
+    
+    
     func initWithData(theRow i: Int, theUserId ui: Int, theName n: String, theCategory ct: String, theSubCategory sb: String, theDate d: String, thePriority p: String, theNote note: Note?, theReminder reminder: Reminder?)
     {
         id = i
