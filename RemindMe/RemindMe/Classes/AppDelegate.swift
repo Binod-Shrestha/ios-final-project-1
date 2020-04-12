@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var updateContact : Bool = false
 
     var currentNotification: Notification? = nil
-    var calendars: [EKCalendar] =  [EKCalendar]()
+   // var calendars: [EKCalendar] =  [EKCalendar]()
 
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
 

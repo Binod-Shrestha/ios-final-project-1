@@ -1397,7 +1397,11 @@
                                                 <segue destination="wPI-W2-866" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="6Hh-AY-X2t"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="DQH-qK-RSv"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="DQH-qK-RSv">
+                                            <connections>
+                                                <action selector="insertDueDate:" destination="Ynz-J0-eI0" id="Eto-T6-S3e"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1576,6 +1580,17 @@
                                     <outlet property="delegate" destination="FhY-sY-OEc" id="rrY-de-z8P"/>
                                 </connections>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yoc-ps-jNa">
+                                <rect key="frame" x="340" y="608" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set Reminder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7p-Ak-kTL">
+                                <rect key="frame" x="25" y="615" width="127" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fSR-i3-9i5"/>
@@ -1583,6 +1598,7 @@
                     <connections>
                         <outlet property="pvCategory" destination="HWe-Z8-lza" id="2cb-xb-Kus"/>
                         <outlet property="sgPriority" destination="X0G-AL-dzO" id="eff-M6-k8S"/>
+                        <outlet property="swReminders" destination="Yoc-ps-jNa" id="Skc-g8-O3f"/>
                         <outlet property="tfDueDate" destination="l9K-ro-U0V" id="HZ1-5A-Hns"/>
                         <outlet property="tfEventName" destination="KS3-iA-AlN" id="1qr-eC-Kxb"/>
                         <outlet property="tfSCategory" destination="MC8-cP-zaD" id="eMN-gG-jEv"/>
