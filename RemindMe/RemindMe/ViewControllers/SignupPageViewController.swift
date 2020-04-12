@@ -73,6 +73,12 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
             if returnCode == false
             {
                 returnMsg = "User has not been added"
+                
+                
+                let alertController = UIAlertController(title: "Error", message: returnMsg, preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                present(alertController,animated: true)
             }
             
             let alertController = UIAlertController(title: "Success", message: returnMsg, preferredStyle: .alert)

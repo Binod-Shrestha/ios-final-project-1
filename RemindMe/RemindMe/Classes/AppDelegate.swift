@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var currentUser : User? = nil
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
+    var curentReminder : Reminder? = nil
+    
      var calendars: [EKCalendar] =  [EKCalendar]()
     var securityQuestions = ["What is your mothers name?", "What is your best friend's name?", "Which school do you study at?"]
 
@@ -939,45 +941,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         return returnCode
     }
     
+ 
     func updateReminder(reminder : Reminder) -> Bool {
-        
         var db : OpaquePointer? = nil
         var returnCode = false
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Reminders set ReminderName = ? ,ReminderDate = ? where Id = ?"
+            var updateQuery : String = "update Reminders set ReminderName = ?, ReminderDate = ? where ID = ?"
             
-            if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
+            if sqlite3_prepare(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
-                var cReminderName = reminder.reminderName! as NSString
-                 var cReminderDate = reminder.reminderDate! as NSString
+                let cReminderName = reminder.reminderName! as NSString
+                let cReminderDate = reminder.reminderDate! as NSString
                 
-                sqlite3_bind_text(updateStatement, 1, cReminderName.utf8String, -1, nil)
-                  sqlite3_bind_text(updateStatement, 2, cReminderDate.utf8String, -1, nil)
-                sqlite3_bind_int(updateStatement, 2, Int32(reminder.id!))
+                sqlite3_bind_text(updateStatement, 1,  cReminderName.utf8String, -1, nil)
+                sqlite3_bind_text(updateStatement, 2, cReminderDate.utf8String, -1, nil)
+            
                 
                 if sqlite3_step(updateStatement) == SQLITE_DONE {
-                    print("Updated reminder")
-                    returnCode = true 
+                    returnCode = true
+                   
+                    print("Updated Reminder ")
                 } else {
-                    print("Could not update reminder \(reminder.id) | \(reminder.reminderName)")
+                    print("Could not update reminders")
                 }
                 
                 sqlite3_finalize(updateStatement)
             } else {
-                print("Could not prepare update reminder statement")
+                print("Could not prepare Update for reminders")
             }
             
             sqlite3_close(db)
         } else {
-            print("Could not open database")
+            print("Could not open the database")
         }
         
         return returnCode
     }
-    
+
     func getReminderById(id : Int) -> Reminder? {
         var reminder : Reminder? = nil
         
