@@ -24,6 +24,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var pickerData: [String] = [String]()
     let cellReuseIdentifier = "cell"
     var duedates:[DueDate] = []
+    var duedate : DueDate = DueDate()
 
     let eventStore = EKEventStore()
     var calendars: [EKCalendar] =  [EKCalendar]()
@@ -114,8 +115,8 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     }
     //MARK: save dueDate
     @IBAction func insertDueDate(_ sender: Any) {
-        
-        let duedate : DueDate = DueDate.init()
+        appDelegate.saveAlertToDbAndRegister()
+        duedate = DueDate.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         let currentUser : User = mainDelegate.currentUser!
         
@@ -132,7 +133,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             createAlert(title: "Warning", message: "Please select the priority.")
         }
         else{
-            duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theNote: note, theReminder: reminder)
+            duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theAlert: appDelegate.newAlert?.alertID)
             
             let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
             var returnMsg:String=""
@@ -160,6 +161,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         pickerData = ["Business", "Personal", "School"]
 
         createDatePicker()
+        
 
         // Do any additional setup after loading the view.
     }
