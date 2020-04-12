@@ -28,7 +28,9 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             present(alert, animated: true)
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+
             var currentUser = mainDelegate.currentUser
+
             var currentTask : Task? = mainDelegate.currentTask
             var note : Note?  =  currentTask?.note
             

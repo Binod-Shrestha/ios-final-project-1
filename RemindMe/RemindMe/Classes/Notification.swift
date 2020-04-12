@@ -9,5 +9,16 @@
 import UIKit
 
 class Notification: NSObject {
+    var id: Int?
+    var status: String?
+    var date: String?
+    
+    func initWithData(theRow i: Int, theStatus s: String, theDate d: String)
+    {
+        id = i
+        status = s
+        date = d
+        
+    }
 
 }

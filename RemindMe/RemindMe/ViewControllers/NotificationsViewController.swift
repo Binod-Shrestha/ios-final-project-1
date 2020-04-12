@@ -1,14 +1,14 @@
 //
-//  EditContactViewController.swift
+//  NotificationsViewController.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-30.
+//  Created by Xcode User on 2020-04-07.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
 import UIKit
 
-class EditContactViewController: UIViewController {
+class NotificationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +26,5 @@ class EditContactViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
-    
 
 }
