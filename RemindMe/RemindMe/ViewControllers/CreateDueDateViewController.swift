@@ -1,34 +1,39 @@
 //
 //  pickerViewController.swift
 //  RemindMe
-//
+//  Binod Shrestha
 //  Created by Xcode User on 2020-03-24.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
 import UIKit
+import UserNotifications
 import EventKit
 
 class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
-   
     @IBOutlet var tfEventTitle : UITextField!
-   
     @IBOutlet weak var picker: UIPickerView!
-    
     @IBOutlet weak var btnAlert: UIButton!
-    
     @IBOutlet weak var btnNotification: UIButton!
-    
     @IBOutlet weak var reminderSwitch: UISwitch!
+    
+    
+    
+    
+    
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
   
+  
+    
     //for date
     let datePicker = UIDatePicker()
     var pickerData: [String] = [String]()
     let cellReuseIdentifier = "cell"
     var duedates:[DueDate] = []
-        let eventStore = EKEventStore()
+    var duedate : DueDate = DueDate()
+
+    let eventStore = EKEventStore()
     var calendars: [EKCalendar] =  [EKCalendar]()
 
     @IBOutlet weak var tfsubCategory : UITextField!
@@ -41,32 +46,21 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedCategory: String!
     var selectedPriority: String!
     
-    
-    //alert function
-    
-    @IBAction func setAlert(_ sender: Any) {
-    }
-    
-    //notification function
-    
-    @IBAction func setNotification(_ sender: Any) {
-    }
+   
     // uiswitch for setting reminder
-    @IBAction func setReminders(_ sender: Any) {
-        let onState = reminderSwitch.isOn
-        if onState {
-           status = "Active"
-            btnNotification.isHidden = false
-            btnAlert.isHidden = false
-        }else{
-            
-            status = "Disabled"
-            btnNotification.isHidden = true
-            btnAlert.isHidden = true
-        }
-        
-    }
-
+//    @IBAction func setReminders(_ sender: Any) {
+//        let onState = reminderSwitch.isOn
+//        if onState {
+//           status = "Active"
+//            btnNotification.isHidden = false
+//            btnAlert.isHidden = false
+//        }else{
+//            status = "Disabled"
+//            btnNotification.isHidden = true
+//            btnAlert.isHidden = true
+//        }
+//    }
+    
     func createReminder()
     {
         var eventStore = EKEventStore()
@@ -105,7 +99,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         }
     }
     
-    // segments function
+    //MARK: ----------------- segments function-----By Binod---------------
     @IBAction func indexChanaged(_ sender: Any) {
         switch prioritySC.selectedSegmentIndex
         {
@@ -119,47 +113,52 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             break
         }
     }
-    //MARK: save dueDate
+    //MARK: ----------------save dueDate By Binod -------------------------
     @IBAction func insertDueDate(_ sender: Any) {
-        
-        let duedate : DueDate = DueDate.init()
+        duedate = DueDate.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        let currentUser : User = mainDelegate.currentUser!
         
-        var currentUser : User = mainDelegate.currentUser!
-        
-        // TODO: Update note and reminder
-        var note : Note? = nil
-        var reminder : Reminder? = nil
-        
-        duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theNote: note, theReminder: reminder)
-        
-        let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
-        
-        if returnCode == true
-        {
-            if reminderSwitch.isOn{
-                 self.createReminder()
-            }
-    
-            var returnMsg : String = "Due Date Added"
-            performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
+        if(tfEventTitle.text! == ""){
+            createAlert(title: "Warning", message: "Please fill in the due date title")
+        } else if (selectedCategory == nil){
+            createAlert(title: "Warning", message: "Please select a category.")
+        } else if(selectedDate == nil){
+            createAlert(title: "Warning", message: "Please select due date.")
+        }else if(selectedPriority == nil){
+            createAlert(title: "Warning", message: "Please select the priority.")
         }
+        else{
+            duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theAlert: appDelegate.notification.id)
             
-        else  if returnCode == false
-        {
-            var returnMsg = "Due Date Add Failed"
-           //performSegue(withIdentifier: "dueDateSegue", sender: self)
+            let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
+            
+            var returnMsg:String=""
+            if returnCode == true
+            {
+                if reminderSwitch.isOn{
+                    self.createReminder()
+                }
+                
+                 returnMsg = "Due Date Added"
+               // performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
+            }
+            else  if returnCode == false
+            {
+                returnMsg = "Due Date Add Failed"
+            }
+            print(returnMsg)
         }
-        
-        
     }
   
     override func viewDidLoad()
     {
         super.viewDidLoad()
         //call method for done
-        createDatePicker()
         pickerData = ["Business", "Personal", "School"]
+
+        createDatePicker()
+        
 
         // Do any additional setup after loading the view.
     }
@@ -170,11 +169,10 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    // pickerview
+    //MARK:------------------- pickerview-----------------By Binod----------------------
     func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return 1
-        
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -190,7 +188,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         selectedCategory = pickerData[row]
     }
 
-    //table view of due details
+    //MARK:---------------table view of due details---------By Binod
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return duedates.count
@@ -199,18 +197,18 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)!
-
-        
         return cell
     }
-    //MARK: create date
+    //MARK: ------------create date-----------By Binod----------------------
     func createDatePicker(){
         //format date
         dateTextField.textAlignment = .center
+        if(dateTextField.text == ""){createAlert(title: "Warning", message: "Please select a date!")}
         
         //toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        
         //done button for toobar
         let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressed))
         toolbar.setItems([done], animated: true)
@@ -219,7 +217,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         
     }
     
-    //MARK: date selection
+    //MARK: -----------------------date selection by Binod ---------------------------
     @objc func donePressed(){
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
@@ -227,10 +225,39 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             self.dateTextField.text = dateFormatter.string(from: datePicker.date)
         self.view.endEditing(true)
         selectedDate = dateTextField.text
-  
-
-        
     }
+    
+    //MARK: -----------------------Alert function by Binod---------------------------
+    func createAlert(title: String, message: String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present (alertController, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){
+        self.loadView()
+    }
+    
+    ///////////-------Passing data to create notification view controller-------------by Binod-----------///////////////
+   /*  func onButtonTap()
+    {
+        let vc = CreateNotificationViewController(nibName: "CreateNotificationViewController", bundle: nil)
+        vc.text = "Hello"
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }*/
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? CreateNotificationViewController{
+            destination.text = tfEventTitle.text!
+        }
+    }
+
 
     /*
     // MARK: - Navigation

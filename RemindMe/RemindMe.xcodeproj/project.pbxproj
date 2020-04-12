@@ -12,19 +12,28 @@
 		3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DA2423938700160572 /* SignupPageViewController.swift */; };
 		3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6606DC2423939E00160572 /* LoginPageViewController.swift */; };
 		AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0656642431403200DE4C92 /* EditTaskViewController.swift */; };
+		AE1364F2243D1C0C00AE32CC /* CreateNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */; };
+		AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */; };
+		AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */; };
 		AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */; };
-		AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */; };
-		AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2A35D42432D04A006E9166 /* EditContactViewController.swift */; };
 		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
+		AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5023882437ACF50050B4F1 /* ContactCell.swift */; };
+		AE50238F2437E8AB0050B4F1 /* blue_fade.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */; };
+		AE5023902437E8AB0050B4F1 /* grey_fog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */; };
+		AE5023912437E8AB0050B4F1 /* lite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE50238E2437E8AB0050B4F1 /* lite.jpg */; };
+		AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE770C1924412E0E00F64EA0 /* remindme_logo.png */; };
+		AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */; };
 		AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7C85572423FEBC00EA6CBC /* icon_camera.png */; };
 		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
 		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
 		AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217A242F3A8600666B90 /* TaskCell.swift */; };
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
-		AE86E7912438279A00EDBDA9 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AE86E7902438279A00EDBDA9 /* RemindMe.db */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
+		AEB480F62441707300EC7782 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEB480F52441707300EC7782 /* RemindMe.db */; };
+		AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82B5243EC8A200A90522 /* Alert.swift */; };
+		AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */; };
 		AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */; };
 		AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */; };
 		AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B6241D65D800A41300 /* Contact.swift */; };
@@ -42,6 +51,8 @@
 		AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D02436CD230078640F /* AppDelegate.swift */; };
 		AEFAD2D32436CD240078640F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D12436CD230078640F /* Category.swift */; };
 		AEFAD2D52436CD570078640F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEFAD2D42436CD570078640F /* Main.storyboard */; };
+		AEFDD36B2442CA54000B8E40 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFDD3692442CA54000B8E40 /* ContactDetailsViewController.swift */; };
+		AEFDD36C2442CA54000B8E40 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFDD36A2442CA54000B8E40 /* EditContactViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,19 +62,28 @@
 		3B6606DA2423938700160572 /* SignupPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupPageViewController.swift; sourceTree = "<group>"; };
 		3B6606DC2423939E00160572 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		AE0656642431403200DE4C92 /* EditTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskViewController.swift; sourceTree = "<group>"; };
+		AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotificationViewController.swift; sourceTree = "<group>"; };
+		AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationViewController.swift; sourceTree = "<group>"; };
+		AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
-		AE2A35D42432D04A006E9166 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		AE5023882437ACF50050B4F1 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blue_fade.jpg; sourceTree = "<group>"; };
+		AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grey_fog.jpg; sourceTree = "<group>"; };
+		AE50238E2437E8AB0050B4F1 /* lite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lite.jpg; sourceTree = "<group>"; };
+		AE770C1924412E0E00F64EA0 /* remindme_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remindme_logo.png; sourceTree = "<group>"; };
+		AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remindme_noname_logo.png; sourceTree = "<group>"; };
 		AE7C85572423FEBC00EA6CBC /* icon_camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_camera.png; sourceTree = "<group>"; };
 		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
 		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AE83217A242F3A8600666B90 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
-		AE86E7902438279A00EDBDA9 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
+		AEB480F52441707300EC7782 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
+		AEDD82B5243EC8A200A90522 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEEBD1A8241D5BDB00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -83,6 +103,8 @@
 		AEFAD2D02436CD230078640F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEFAD2D12436CD230078640F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		AEFAD2D42436CD570078640F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		AEFDD3692442CA54000B8E40 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
+		AEFDD36A2442CA54000B8E40 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +125,18 @@
 		AE37E429242B37ED00F32C86 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				AE86E7902438279A00EDBDA9 /* RemindMe.db */,
+				AEB480F52441707300EC7782 /* RemindMe.db */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		AE5023862437AB490050B4F1 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				AEFDD3692442CA54000B8E40 /* ContactDetailsViewController.swift */,
+				AEFDD36A2442CA54000B8E40 /* EditContactViewController.swift */,
+			);
+			path = Contacts;
 			sourceTree = "<group>";
 		};
 		AE7C85542423FE8F00EA6CBC /* Icons */ = {
@@ -128,6 +159,9 @@
 		AE7C855C2423FFD900EA6CBC /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				AE50238C2437E8AB0050B4F1 /* blue_fade.jpg */,
+				AE50238D2437E8AB0050B4F1 /* grey_fog.jpg */,
+				AE50238E2437E8AB0050B4F1 /* lite.jpg */,
 				AE7C855D2423FFE900EA6CBC /* gg-background.jpg */,
 			);
 			path = Testing;
@@ -159,6 +193,7 @@
 				AEFAD2CA2436CCA20078640F /* DueDateCell.swift */,
 				AEAE018F24328A0C003365F7 /* NoteCell.swift */,
 				AE83217A242F3A8600666B90 /* TaskCell.swift */,
+				AE5023882437ACF50050B4F1 /* ContactCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -169,6 +204,14 @@
 				3B0EBE24243112CE0024B86E /* RemindMe.db */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		AEDD82B7243ECEEC00A90522 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 		AEEBD192241D5BDA00A41300 = {
@@ -206,6 +249,8 @@
 		AEEBD1B0241D5BF200A41300 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AE770C1B24412F0B00F64EA0 /* remindme_noname_logo.png */,
+				AE770C1924412E0E00F64EA0 /* remindme_logo.png */,
 				AE7C855C2423FFD900EA6CBC /* Testing */,
 				AE7C85542423FE8F00EA6CBC /* Icons */,
 			);
@@ -226,6 +271,7 @@
 				AEEBD1BE241D662F00A41300 /* Alarm.swift */,
 				AEEBD1C0241D680C00A41300 /* Task.swift */,
 				AEEBD1C2241D6C1000A41300 /* Note.swift */,
+				AEDD82B5243EC8A200A90522 /* Alert.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -242,16 +288,19 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */,
-				AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */,
-				AEFAD2C62436CC860078640F /* ViewController.swift */,
+				AEDD82B7243ECEEC00A90522 /* Alerts */,
+				AE5023862437AB490050B4F1 /* Contacts */,
 				AE832173242F2F5800666B90 /* Tasks */,
 				AE7C85592423FF4600EA6CBC /* Notes */,
-				AE2A35D32432D04A006E9166 /* ContactDetailsViewController.swift */,
-				AE2A35D42432D04A006E9166 /* EditContactViewController.swift */,
+				AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */,
+				AEFAD2C52436CC860078640F /* EditDueDateViewController.swift */,
+				AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */,
+				AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */,
+				AEFAD2C62436CC860078640F /* ViewController.swift */,
 				3B6606DA2423938700160572 /* SignupPageViewController.swift */,
 				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
 				3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */,
+				AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -314,11 +363,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE86E7912438279A00EDBDA9 /* RemindMe.db in Resources */,
+				AEB480F62441707300EC7782 /* RemindMe.db in Resources */,
+				AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */,
+				AE770C1A24412E0E00F64EA0 /* remindme_logo.png in Resources */,
 				AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */,
 				AEFAD2D52436CD570078640F /* Main.storyboard in Resources */,
 				AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */,
+				AE50238F2437E8AB0050B4F1 /* blue_fade.jpg in Resources */,
+				AE5023912437E8AB0050B4F1 /* lite.jpg in Resources */,
 				AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */,
+				AE5023902437E8AB0050B4F1 /* grey_fog.jpg in Resources */,
 				AE7C85582423FEBC00EA6CBC /* icon_camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */,
 				AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */,
 				AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */,
 				AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */,
@@ -337,16 +392,21 @@
 				3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */,
 				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */,
+				AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */,
 				AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */,
-				AE2A35D62432D04A006E9166 /* EditContactViewController.swift in Sources */,
-				AE2A35D52432D04A006E9166 /* ContactDetailsViewController.swift in Sources */,
+				AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
+				AE1364F2243D1C0C00AE32CC /* CreateNotificationViewController.swift in Sources */,
 				AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */,
 				3B6606DD2423939E00160572 /* LoginPageViewController.swift in Sources */,
+				AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */,
+				AEFDD36C2442CA54000B8E40 /* EditContactViewController.swift in Sources */,
 				AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */,
 				AEFAD2D32436CD240078640F /* Category.swift in Sources */,
+				AEFDD36B2442CA54000B8E40 /* ContactDetailsViewController.swift in Sources */,
+				AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
 				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,
 				AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */,

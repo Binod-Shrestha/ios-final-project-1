@@ -8,14 +8,14 @@
 
 import UIKit
 
-class EditTaskViewController: UIViewController {
+class EditTaskViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var tfTitle : UITextField!
     @IBOutlet var sgmPriority : UISegmentedControl!
     @IBOutlet var swStatus : UISwitch!
     @IBOutlet var lbStatus : UILabel!
     @IBOutlet var btnNote : UIButton!
-    @IBOutlet var btnUpdate : UIBarButtonItem!
+    @IBOutlet var btnUpdate : UIButton!
     @IBOutlet var btnDelete : UIButton!
     
     @IBOutlet var dpDeadline :  UIDatePicker!
@@ -41,7 +41,7 @@ class EditTaskViewController: UIViewController {
                 message = "Deleted"
                 action = UIAlertAction(title: "OK", style: .default) {
                     action in
-                    self.performSegue(withIdentifier: "EditTaskToHomeSegue", sender: nil)
+                    self.performSegue(withIdentifier: "UnwindFromEditTaskToHomeVCSegue", sender: nil)
                 }
             } else {
                 // Delete task failed
@@ -62,8 +62,8 @@ class EditTaskViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    @IBAction func btnUpdateClicked(sender: UIBarButtonItem) {
-        if tfTitle.text == "" || tfTitle.text == nil {
+    @IBAction func btnUpdateClicked(sender: UIButton) {
+        if (tfTitle.text == "" || tfTitle.text == nil) {
             var alert = UIAlertController(title: "Warning", message: "Please enter required field(s)!", preferredStyle: .alert)
             var cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
@@ -76,50 +76,73 @@ class EditTaskViewController: UIViewController {
                 (action) in
                 
                 let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                var currentUser = mainDelegate.currentUser
                 var currentTask : Task? = mainDelegate.currentTask
-                var note : Note?  =  currentTask?.note
-                
-                var title : String = ""
-                var message : String = ""
-                var action = UIAlertAction()
-                
+
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
                 var date = dateFormatter.string(from: self.dpDeadline.date)
-
+                
                 currentTask!.title = self.tfTitle.text
                 currentTask!.status = self.swStatus.isOn
                 currentTask!.priority = self.sgmPriority.selectedSegmentIndex
                 currentTask!.taskDueDate = date
                 currentTask!.daysInAdvance = 2
-                currentTask!.note = note
                 
-                if note != nil {
-                    let taskRowID = mainDelegate.insertTask(task: currentTask!)
-                    if taskRowID != nil {
-                        print("Inserted task")
+                
+                var title : String = ""
+                var message : String = ""
+                var action = UIAlertAction()
+                
+                var note = currentTask!.note
+                var noteReturnCode : Bool = true
+                
+                if (note != nil) {
+                    if (note!.id == nil) {
+                        let note_id = mainDelegate.insertNote(note: note!)
+
+                        if(note_id != nil) {
+                            note!.id = note_id
+                            noteReturnCode = true
+                            currentTask!.note = note
+                        } else {
+                            noteReturnCode = false
+                        }
                     } else {
-                        print("Error insert task")
+                        if (note!.content == nil) {
+                            noteReturnCode = mainDelegate.deleteNote(id: note!.id!)
+                            currentTask!.note = nil
+                        } else {
+                            noteReturnCode = mainDelegate.updateNote(note: note!)
+                        }
                     }
-                } else {
-                    let returnCode = mainDelegate.updateTask(task: currentTask!)
-                    if returnCode == true {
-                        // Successfully delete task
+                }
+
+                if noteReturnCode {
+                    let taskReturnCode = mainDelegate.updateTask(task: currentTask!)
+                    
+                    if taskReturnCode {
                         title = "Successfully"
-                        message = "Updated"
-                        action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        message = "Updated \(currentTask!.title!)"
+                        action = UIAlertAction(title: "OK", style: .default) {
+                            action in
+                            self.performSegue(withIdentifier: "UnwindFromEditTaskToHomeVCSegue", sender: nil)
+                        }
                     } else {
-                        // Delete task failed
                         title = "Error"
-                        message = "Could not update the task"
+                        message = "Could not update \(currentTask!.title!). Please try again!"
                         action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                     }
-                    
-                    var deleteAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                    deleteAlert.addAction(action)
-                    
-                    self.present(deleteAlert, animated: true)
+                } else {
+                    title = "Error"
+                    message = "Could not update \(currentTask!.title!). Please try again!"
+                    action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 }
+
+                var updateAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                updateAlert.addAction(action)
+                
+                self.present(updateAlert, animated: true)
             }
             
             alert.addAction(cancelAction)
@@ -139,10 +162,15 @@ class EditTaskViewController: UIViewController {
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
         var date = dateFormatter.string(from: dpDeadline.date)
         
-        currentTask = Task(user_id: currentUser!.id!, title: tfTitle.text!, status: swStatus.isOn, priority: sgmPriority.selectedSegmentIndex, taskDueDate: date, daysInAdvance: 3, note: note)
+        currentTask!.title = self.tfTitle.text
+        currentTask!.status = self.swStatus.isOn
+        currentTask!.priority = self.sgmPriority.selectedSegmentIndex
+        currentTask!.taskDueDate = date
+
         mainDelegate.currentTask = currentTask
         
-        if note == nil {
+        // Check if task contains a note
+        if note?.content == nil {
             // Create new note
             performSegue(withIdentifier: "EditTaskToCreateNoteSegue", sender: self)
         } else {
@@ -151,10 +179,22 @@ class EditTaskViewController: UIViewController {
         }
     }
     
+    // Unwind from CreateNoteViewController
+    @IBAction func unwindFromCreateNote(sender: UIStoryboardSegue) {}
+    
+    // Unwind form EditNoteViewController
+    @IBAction func unwindFromEditNote(sender: UIStoryboardSegue) {}
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    // Set original data of the task before loading the view
+    override func viewWillAppear(_ animated: Bool) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentTask = mainDelegate.currentTask
         
@@ -172,24 +212,11 @@ class EditTaskViewController: UIViewController {
         let date = dateFormatter.date(from: currentTask!.taskDueDate!)
         dpDeadline.date = date!
         
-        if currentTask!.note == nil {
+        if currentTask!.note?.content == nil {
             btnNote.setTitle("Add Note", for: .normal)
         } else {
             var tempNote = mainDelegate.currentTask!.note
             btnNote.setTitle("\u{2022} \(tempNote!.content!)", for: .normal)
-            btnNote.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

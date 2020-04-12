@@ -16,8 +16,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet var tableView : UITableView!
     
     var indexPath : IndexPath?
-    
-var reminders : [Reminder] = []
+    var contacts : [Contact] = []
+    var reminders : [Reminder] = []
+
     
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
@@ -57,7 +58,11 @@ var reminders : [Reminder] = []
                 mainDelegate.currentTask = nil
                 performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
                 break
-            case 2:
+            case 2: // When Contacts selected in SegmentedController
+                let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                mainDelegate.currentContact = Contact() //Current contact se to empty contact object
+                mainDelegate.updateContact = false // No existing contact to update
+                performSegue(withIdentifier: "HometoEditContactSegue", sender: nil)
                 break
             default:
                 break
@@ -87,8 +92,7 @@ var reminders : [Reminder] = []
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
                     (action) in
-                    
-                    //TODO: Change user id
+
                     var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
@@ -141,6 +145,8 @@ var reminders : [Reminder] = []
     }
     
     @IBAction func segmentSelectValueChanged(sender:UISegmentedControl) {
+        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
         self.tableView.reloadData()
     }
     
@@ -157,18 +163,17 @@ var reminders : [Reminder] = []
             count = duedates.count
             break
         case 1:
-            //TODO: Change UserId
             let tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
             count = tasks.count
             break
         case 2:
-            let remonderss = mainDelegate.getReminderById(id: currentUser.id!)
-     
+
+            mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!) //Refresh contacts from db
+            count = mainDelegate.contacts.count
             break
         default:
             break
         }
-        
         return count
     }
     
@@ -183,6 +188,7 @@ var reminders : [Reminder] = []
             height = 95
             break
         case 2:
+            height = 85
             break
         default:
             break
@@ -190,7 +196,9 @@ var reminders : [Reminder] = []
         
         return height
     }
-    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -210,6 +218,7 @@ var reminders : [Reminder] = []
             break
         case 1:
             //TODO: Change UserId
+            print("Calling getTasksByUser()...")
             var tasks = mainDelegate.getTasksByUser(user_id: 1)
             
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TaskCell ?? TaskCell(style: .default, reuseIdentifier: "cell")
@@ -233,18 +242,41 @@ var reminders : [Reminder] = []
 
             break
         case 2:
+            //Select background image:
+            let backgroundImage = UIImage(named: "lite.jpg")
+            
+            //Remove extra empty cells from view
+            let imageView = UIImageView(image: backgroundImage)
+            self.tableView.backgroundView = imageView
+            tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            imageView.contentMode = .scaleAspectFit
+            
+            // Populate Contacts list by user for view
+             mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
+            
+            cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? ContactCell ?? ContactCell(style: .default, reuseIdentifier: "cell")
+            
+            // Populate cell
+            let row = indexPath.row
+            
+            
+            (cell as! ContactCell).nameLabel.text = mainDelegate.contacts[row].name
+            (cell as! ContactCell).organizationLabel.text = mainDelegate.contacts[row].organization
+            (cell as! ContactCell).phoneLabel.text = mainDelegate.contacts[row].phone
+            (cell as! ContactCell).emailLabel.text = mainDelegate.contacts[row].email
+
+            cell.accessoryType = .disclosureIndicator
             break
         default:
             break
         }
-
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            // Peofrm the segue to Edit the selected duedate
+            // Perform the segue to Edit the selected duedate
             
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             var currentUser : User = mainDelegate.currentUser!
@@ -266,6 +298,13 @@ var reminders : [Reminder] = []
             performSegue(withIdentifier: "HomeToEditTaskSegue", sender: nil)
             break
         case 2:
+            let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+            mainDelegate.getContactsByUserId(userID: mainDelegate.currentUser!.id!)
+            
+            let row = indexPath.row
+            mainDelegate.currentContact = mainDelegate.contacts[row]
+            
+            performSegue(withIdentifier: "HomeToContactDetailSegue", sender: nil)
             break
         default:
             break
@@ -273,7 +312,7 @@ var reminders : [Reminder] = []
     }
 
     @IBAction func unwindToHomeVC(sender:UIStoryboardSegue){
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 
     override func viewDidLoad() {
@@ -283,6 +322,11 @@ var reminders : [Reminder] = []
         longPressGesture.minimumPressDuration = 1.0
         longPressGesture.delegate = self
         self.tableView.addGestureRecognizer(longPressGesture)
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
     }
     
     // swiping functions
@@ -291,7 +335,7 @@ var reminders : [Reminder] = []
         return true
     }
     
-    //method:2 right to left
+    //method:2 left to right
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -319,39 +363,95 @@ var reminders : [Reminder] = []
         modify.backgroundColor = .blue
         return UISwipeActionsConfiguration(actions: [modify])
     }
-    
+
     // Swipe from right to left
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = UITableViewRowAction(style: .normal, title: "Delete", handler: {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             action, index in
-            
+
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let row = indexPath.row
-            
-            var currentUser : User = mainDelegate.currentUser!
-            
-            switch self.segmentControl.selectedSegmentIndex {
+            let currentUser : User = mainDelegate.currentUser!
+            switch self.segmentControl.selectedSegmentIndex
+            {
             case 0:
                 // Delete the selected due date
-                let duedates = mainDelegate.duedates
-                var returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                let alertController = UIAlertController(title: "Warning", message: "Do you want to delete the due date ?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
+                    
+                    let duedates = mainDelegate.duedates
+                    let returnCode = mainDelegate.deleteDueDate(id: duedates[row].id!)
+                    if returnCode
+                    {
+                        mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
+                        tableView.reloadData()
+                    }}
                 
-                if returnCode {
-                    mainDelegate.getDueDatesByUserId(userId: currentUser.id!)
-                    tableView.reloadData()
-                }
+                    alertController.addAction(okAction)
+                    alertController.addAction(cancelAction)
+                
+                    self.present(alertController,animated: true)
                 break
             case 1:
                 // Delete the selected task
+                let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
+                    (action) in
+                    
+                    var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
+                    var task = tasks[row]
+                    
+                    let returnCode = mainDelegate.deleteTask(id: task.id!)
+                    
+                    var title : String = ""
+                    var message : String = ""
+                    var action = UIAlertAction()
+                    
+                    if returnCode == true {
+                        // Successfully delete task
+                        title = "Successfully"
+                        message = "Deleted \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .default) {
+                            (action) in
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        // Delete task failed
+                        title = "Error"
+                        message = "Could not delete \(task.title!)"
+                        action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    }
+                    
+                    var deleteAlert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                    deleteAlert.addAction(action)
+                    
+                    self.present(deleteAlert, animated: true)
+                }
+                
+                alert.addAction(cancelAction)
+                alert.addAction(confirmAction)
+                
+                self.present(alert, animated: true)
                 break
             case 2:
                 // Delete the selected contact
+                print("Delete swiped")
+
+                let row = indexPath.row
+                let id = mainDelegate.contacts[row].id
+                mainDelegate.deleteContact(id: id!)
+                self.tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
+                self.tableView.reloadData()
                 break
             default:
                 break
             }
 
         })
+        delete.backgroundColor = .red
         return [delete]
     }
     
