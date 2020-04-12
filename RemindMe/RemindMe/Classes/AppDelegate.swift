@@ -131,7 +131,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         if sqlite3_open(self.databasePath, &db)==SQLITE_OK
         {
-            print("Successfully Opened database \(self.databasePath)")
+            print("Successfully Opened database \(String(describing: self.databasePath))")
             var queryStatement :OpaquePointer? = nil
             let queryStatementString : String = "select * from DueDates where UserId = ?"
             if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK
@@ -147,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let csubCategory = sqlite3_column_text(queryStatement, 4)
                     let cdate = sqlite3_column_text(queryStatement, 5)
                     let cpriority = sqlite3_column_text(queryStatement, 6)
+                    let alert : Int = Int(sqlite3_column_int(queryStatement, 7))
                     
                     let name = String(cString: cname!)
                     let category = String(cString: ccategory!)
@@ -163,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let reminder : Reminder? = nil
                     
                     let data : DueDate = DueDate.init()
-                    data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority, theNote: note, theReminder: reminder)
+                    data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority, theAlert: alert)
                     duedates.append(data)
                     print("Query Result")
                     print("\(id) | \(userId) | \(name) | \(category) | \(subCategory) | \(date) | \(priority)")
@@ -203,6 +204,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let csubCategory = sqlite3_column_text(queryStatement, 4)
                     let cdate = sqlite3_column_text(queryStatement, 5)
                     let cpriority = sqlite3_column_text(queryStatement, 6)
+                    let alertID : Int = Int(sqlite3_column_int(queryStatement, 7))
                     
                     let name = String(cString: cname!)
                     let category = String(cString: ccategory!)
@@ -210,16 +212,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let date = String(cString: cdate!)
                     let priority = String(cString: cpriority!)
                     
-                    //TODO: Call getNoteByDueDateId
-                    // Call getNoteByID here
-                    let note : Note? = nil
-                    
-                    //TODO: Call getReminderByDueDateId
-                    // Call getReminderByDueDateId here
-                    let reminder : Reminder? = nil
-                    
                     let data : DueDate = DueDate.init()
-                    data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority, theNote: note, theReminder: reminder)
+                    data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority,  theAlert: alertID)
                     
                     duedates.append(data)
                     print("Query Result")
@@ -246,7 +240,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var insertStatement : OpaquePointer? = nil
-            let insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?)"
+            var insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?,?)"
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
             {
                 
@@ -256,6 +250,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 let subCategoryStr = duedate.subCategory! as NSString
                 let dateStr = duedate.date! as NSString
                 let priorityStr = duedate.priority! as NSString
+                let alertID : Int = newAlert!.alertID!
+                
                 
                 sqlite3_bind_int(insertStatement, 1, Int32(userId))
                 sqlite3_bind_text(insertStatement, 2, nameStr.utf8String, -1, nil)
@@ -263,10 +259,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 sqlite3_bind_text(insertStatement, 4, subCategoryStr.utf8String, -1, nil)
                 sqlite3_bind_text(insertStatement, 5, dateStr.utf8String, -1, nil)
                 sqlite3_bind_text(insertStatement, 6, priorityStr.utf8String, -1, nil)
+                sqlite3_bind_int(insertStatement, 7, Int32(alertID))
                 
                 if sqlite3_step(insertStatement) == SQLITE_DONE{
                     let rowId = sqlite3_last_insert_rowid(db)
                     print("succefull inserted \(rowId)")
+                    newAlert = nil // clear newAlert
                 }
                 else{
                     print("couldnt insert row")
@@ -1375,9 +1373,144 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             print("Could not open database")
         }
     }
-
-    //MARK: =================END_OF_BRIAN'S_CODE_BLOCK==============================================
-    //MARK: ========================= SETUP FUNCTIONS ================================
+    //MARK: ============= ALERT & NOTIFICATION =========================
+    
+    // For DueDate saveFunction
+    func saveAlertToDbAndRegister() // Called when clicking SaveDueDate (before dueDate.db functions)
+    {
+        if currentAlert?.alertID == nil {
+            print("currentAlert?.alertID == nil")
+            // If dueDate has no currentAlert (only the case when creating a new dueDate, or updating a dueDate with no alert (adding and registering an Alert)
+            if newAlert == nil {
+                print("newAlert = nil")
+                return
+            }else{ // We are creating a duedate, and we have a new alert
+                if insertAlertIntoDatabase(alert: newAlert!) == true{
+                    print("Alert saved to db")
+                    currentAlert = newAlert
+                    print("currentAlert = newAlert")
+                    //MARK: DueDate needs an 'Alert :Int' property
+                    //currentDueDate.alert? = currentAlert?.alertID
+                    
+                    //Schedule and register new alert
+                    scheduleNotification()
+                    print("scheduled notification")
+                    registerCategories()
+                    
+                }else{
+                    print("Alert not saved to db")
+                }
+            }
+        }else{// If dueDate HAS a currentAlert (only the case when editing a dueDate (updating db unregistering previous alert and registering new Alert)
+            print("currentAlert?.alertID != nil")
+            // MARK: Logic for editing dueDate that had an Alert
+            if newAlert == nil {
+                print("newAlert == nil")
+                return
+            }else{
+                if insertAlertIntoDatabase(alert: newAlert!) == true{
+                    print("Alert saved to db")
+                    
+                    // unscheduleNotification(currentAlert.alertID)
+                    
+                    currentAlert = newAlert
+                    //MARK: DueDate needs an 'Alert :Int' property
+                    //currentDueDate.alert? = currentAlert?.alertID
+                    
+                    //Schedule and register new alert
+                    scheduleNotification()
+                    registerCategories()
+                    
+                    currentAlert = nil // clear currentAlert
+                    newAlert = nil // clear newAlert
+                }else{
+                    print("Alert not saved to db")
+                }
+            }
+        }
+    }
+    
+    
+    
+    func scheduleNotification(){
+        
+        let alertIdNumberForIdent = currentAlert?.alertID! as! NSNumber
+        let alertIdStringForIdent = alertIdNumberForIdent.stringValue
+        
+        //        let name = tfAlertTextField.text ?? ""
+        let center = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        content.title = "Alert for:  \(String(describing: currentDueDate))"
+        content.body = "Alert note: \(String(describing: currentAlert?.name))"
+        content.categoryIdentifier = "alarm"
+        content.userInfo = ["custom  data" : "Some data stored in dictionary"]
+        content.sound = UNNotificationSound.default
+        
+        // current time
+        let now = Date()
+        
+        // ensure trigger time is on the minute
+        let timeFromIntervalToAlarm = currentAlert?.time
+        let timeFromintervalToCurrent = Int(floor(now.timeIntervalSinceReferenceDate/60) * 60)
+        let intervalFromCurrentToAlarm = timeFromIntervalToAlarm! - timeFromintervalToCurrent
+        
+        //Sets trigger
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(intervalFromCurrentToAlarm), repeats: false)
+        
+        // (FOR TESTING) Show alert 10 seconds after being scheduled
+        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        
+        
+        // Builds UNNotification Request
+        let request = UNNotificationRequest(identifier: alertIdStringForIdent, content: content, trigger: trigger)
+        //Adding request to notification center
+        center.add(request)
+    }
+    
+    func registerCategories(){
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self as? UNUserNotificationCenterDelegate
+        
+        let show = UNNotificationAction(identifier: "show", title: "Tell me more...", options: .foreground)
+        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+        
+        center.setNotificationCategories([category])
+    }
+    
+    // schedule delivery
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didRecieve response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void){
+        
+        // pull out buried userInfo dictionary
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let customData = userInfo["customData"] as? String {
+            print("Custom data recieved; \(customData)")
+            
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier:
+                // the user swiped to unlock
+                print("Default identifier")
+                
+            case "show":
+                // the user tapped the "Tell me more..." button
+                break
+            default:
+                break
+                
+            }
+        }
+        completionHandler()
+    }
+    
+    //////////////////////////////////////
+    ////////// END OF MOVE ///////////////
+    /////////////////////////////////////
+    
+    //MARK: ============= END OF ALERT & NOTIFICATION =========================
+    
+    
+    //MARK: =================END_OF_BRIAN'S_CODE_BLOCK============================
+    //MARK: ========================= SETUP FUNCTIONS ===========================
 
     //MARK: Prepare Database and Check Permissions
     func loadCalendars() {

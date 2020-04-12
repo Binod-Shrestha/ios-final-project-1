@@ -84,22 +84,18 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBAction func updateDueDate(_ sender: Any)
     {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        let currentUser : User = mainDelegate.currentUser!
-        let currentDueDate : DueDate = mainDelegate.currentDueDate!
-        var eventName = tfEventName.text!
-        var sbCategory = tfSCategory.text!
-        var dateFromDatabase = tfDueDate.text!
         
-        //TODO: Update note and reminder
-        let note : Note? = nil
-        let reminder : Reminder? = nil
+        let currentDueDate : DueDate = mainDelegate.currentDueDate!
+        let eventName = tfEventName.text!
+        let sbCategory = tfSCategory.text!
+        let dateFromDatabase = tfDueDate.text!
+        
         currentDueDate.name = eventName
         currentDueDate.category = selectedCategory
         currentDueDate.subCategory =  sbCategory
         currentDueDate.date = dateFromDatabase
         currentDueDate.priority = selectedPriority
-        currentDueDate.note = note
-        currentDueDate.reminder = reminder
+        currentDueDate.alertID = mainDelegate.currentAlert?.alertID
         
         
         
@@ -130,7 +126,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     {
         super.viewDidLoad()
         createDatePicker()
-        let duedate : DueDate = DueDate.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentDueDate = mainDelegate.currentDueDate
         
@@ -202,5 +197,12 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.view.endEditing(true)
         selectedDate = tfDueDate.text
     }
+    
+    
+    @IBAction func unwindToEdittDueDateVC(sender:UIStoryboardSegue){
+        self.loadView()
+    }
+    
+    
 
 }
