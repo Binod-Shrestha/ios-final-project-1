@@ -19,6 +19,14 @@ class CreateNotificationViewController: UIViewController {
     @IBOutlet weak var statusSwitch: UISwitch!
     @IBOutlet weak var btnSave: UIBarButtonItem!
      let dateFormatter = DateFormatter()
+    var text: String = ""
+    let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+
+    @IBOutlet weak var currentEventName: UILabel!
+    
+    @IBOutlet weak var setNotifyingDate: UILabel!
+    
+    @IBOutlet weak var currentStatus: UILabel!
     
     //MARK: Switch function
     @IBAction func createStatus(_ sender: UISwitch) {
@@ -36,8 +44,6 @@ class CreateNotificationViewController: UIViewController {
     
     //MARK: alert function
     func setNotification(date : Date) {
-        let duedate : DueDate = DueDate.init()
-        let mainDelegate = UIApplication.shared.delegate as! AppDelegate
       //  var currentUser : User = mainDelegate.currentUser!
     
         //calculating remaining days:
@@ -45,8 +51,7 @@ class CreateNotificationViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MMMM-dd"
         let calendar = Calendar.current
-        var now = Date()
-         let dueDay = dateFormatter.date(from: strDate)
+        let now = Date()
         
         dateFormatter.dateFormat = "yyyy-MMMM-dd HH:mm:ss z"
         let Enddate = dateFormatter.date(from: strDate)
@@ -59,12 +64,11 @@ class CreateNotificationViewController: UIViewController {
         let center = UNUserNotificationCenter.current()
          let content = UNMutableNotificationContent()
          UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ], completionHandler: {didAllow, error in })
-         
-         // Step 2: Create the notification content
-         //content.title = "mainDelegate.duedates[currentUser.id!].name!"
-         //content.body = "\(mainDelegate.duedates[currentUser.id].name!) is \(remainingDay) day(s) away."
-        content.title = "This is a reminder."
-        content.body = "Your assignment is \(remainingDay) day(s) away."
+        
+        
+        content.title = text
+        content.body = "\(text) is \(remainingDay) day(s) away."
+        content.categoryIdentifier = "alarm"
          content.sound = .default
          
          // Step 3: Create the notification trigger
@@ -75,16 +79,26 @@ class CreateNotificationViewController: UIViewController {
          
          // Step 4: Create the request
          let request = UNNotificationRequest(identifier: "Reminder", content: content, trigger: trigger)
-         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+         //UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
          
          // Step 5: Register the request
-         center.add(request) { (error) in
+         center.add(request)
+         { (error) in
          if error != nil{
          print("Error = \(error?.localizedDescription ?? "error local notification")")
          }
-         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge ], completionHandler: {didAllow, error in })
          }
     }
+    
+    func  registerCategories(){
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self as? UNUserNotificationCenterDelegate
+        
+        let show = UNNotificationAction(identifier: "show", title: "Tell me more", options: .foreground)
+        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+        center.setNotificationCategories([category])
+    }
+    
     //MARK: save notification function
     @IBAction func saveNotification(_ sender: Any) {
         let notification : Notification = Notification.init()
@@ -105,8 +119,16 @@ class CreateNotificationViewController: UIViewController {
             notification.initWithData(theRow: 0, theStatus: status, theDate: tfnotifyDate.text!)
             
             setNotification(date: date!)
+            registerCategories()
             
             let returnCode = mainDelegate.insertNotificationIntoDatabase(notification: notification)
+            
+            //labels for recent notification
+            currentEventName.text = text
+            currentStatus.text = status
+            setNotifyingDate.text = strDate
+            
+            
             var returnMsg : String = ""
             if returnCode == true
             {
@@ -129,8 +151,10 @@ class CreateNotificationViewController: UIViewController {
         tfnotifyDate.inputView = notifyDate
         notifyDate.datePickerMode = .dateAndTime
         tfnotifyDate.text = dateFormatter.string(from: notifyDate.date)
-        statusSwitch.isSelected = true
-        lbStatus.text = "Notification is Enabled"
+        statusSwitch.isSelected = false
+        lbStatus.text = "Notification is disabled"
+        
+        self.dismiss(animated: true, completion: nil)
     
     }
     

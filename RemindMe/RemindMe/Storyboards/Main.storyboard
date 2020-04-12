@@ -1259,7 +1259,7 @@
                                 </connections>
                             </datePicker>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqr-s8-bxd">
-                                <rect key="frame" x="347" y="608" width="49" height="31"/>
+                                <rect key="frame" x="348" y="494" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="createStatus:" destination="fVY-Oh-vTF" eventType="valueChanged" id="0kl-I6-Ofw"/>
@@ -1273,7 +1273,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pP-x6-gFt">
-                                <rect key="frame" x="28" y="667" width="359" height="28"/>
+                                <rect key="frame" x="29" y="553" width="359" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
@@ -1287,10 +1287,59 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdt-Yd-i50">
-                                <rect key="frame" x="28" y="609" width="70" height="30"/>
+                                <rect key="frame" x="29" y="495" width="70" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recent Notification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49T-qd-5Tj">
+                                <rect key="frame" x="20" y="589" width="375" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Event:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqf-jg-4gC">
+                                <rect key="frame" x="29" y="646" width="65" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDU-fa-3NQ">
+                                <rect key="frame" x="29" y="694" width="49" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wv2-zS-KYs">
+                                <rect key="frame" x="29" y="742" width="67" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeB-Xq-Y0T">
+                                <rect key="frame" x="112" y="646" width="283" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HK2-fA-vAp">
+                                <rect key="frame" x="112" y="694" width="283" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S84-W9-B2C">
+                                <rect key="frame" x="112" y="744" width="283" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1299,8 +1348,11 @@
                     </view>
                     <connections>
                         <outlet property="btnSave" destination="k3j-bY-Tc1" id="Dws-I7-I18"/>
+                        <outlet property="currentEventName" destination="JeB-Xq-Y0T" id="FwQ-f9-q3H"/>
+                        <outlet property="currentStatus" destination="S84-W9-B2C" id="vCR-za-6sk"/>
                         <outlet property="lbStatus" destination="7pP-x6-gFt" id="sYz-hO-uxM"/>
                         <outlet property="notifyDate" destination="9Cm-zi-4oM" id="xJC-pr-jch"/>
+                        <outlet property="setNotifyingDate" destination="HK2-fA-vAp" id="0M4-Un-0AR"/>
                         <outlet property="statusSwitch" destination="dqr-s8-bxd" id="Ekz-xV-NHO"/>
                         <outlet property="tfnotifyDate" destination="5pe-sK-PXi" id="2tO-3w-z7P"/>
                     </connections>
@@ -1308,7 +1360,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QN9-GF-1ZV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="qVi-3r-gjZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1845" y="-567"/>
+            <point key="canvasLocation" x="1844.9275362318842" y="-567.1875"/>
         </scene>
         <!--Create Due Date View Controller-->
         <scene sceneID="eZ0-2h-bM7">
@@ -1361,11 +1413,7 @@
                                                 <segue destination="wPI-W2-866" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="6Hh-AY-X2t"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="DQH-qK-RSv">
-                                            <connections>
-                                                <action selector="insertDueDate:" destination="Ynz-J0-eI0" id="CMQ-5U-NdK"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="DQH-qK-RSv"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -1414,13 +1462,14 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ck1-m1-CDF">
-                                <rect key="frame" x="20" y="741" width="367" height="39"/>
+                                <rect key="frame" x="20" y="741" width="388" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Notification                                                  &gt;">
+                                <state key="normal" title="Save Due Date with Notification                  ">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
+                                    <action selector="insertDueDate:" destination="Ynz-J0-eI0" eventType="touchUpInside" id="Xx2-so-QkO"/>
                                     <segue destination="fVY-Oh-vTF" kind="presentation" id="FJt-e0-Uch"/>
                                 </connections>
                             </button>
@@ -1805,6 +1854,7 @@
         <image name="icon_camera.png" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="FJt-e0-Uch"/>
         <segue reference="LF5-fd-wJZ"/>
         <segue reference="wq7-Eh-7za"/>
         <segue reference="7Y3-60-BNd"/>

@@ -84,15 +84,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var updateStatement : OpaquePointer? = nil
-            var updateStatementString = "UPDATE DueDates SET Name=?, Category=?, SubCategory=?, SelectedDate=?, Priority=? WHERE ID=?"
+            let updateStatementString = "UPDATE DueDates SET Name=?, Category=?, SubCategory=?, SelectedDate=?, Priority=? WHERE ID=?"
             if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK
             {
                 
-                let cName = duedate.name as! NSString
-                let cCategory = duedate.category as! NSString
-                let cSubCategory = duedate.subCategory as! NSString
-                let cDate = duedate.date as! NSString
-                let cPriority = duedate.priority as! NSString
+                let cName = duedate.name! as NSString
+                let cCategory = duedate.category! as NSString
+                let cSubCategory = duedate.subCategory! as NSString
+                let cDate = duedate.date! as NSString
+                let cPriority = duedate.priority! as NSString
                 
                 //TODO: Update Note and Reminder here
                 
@@ -156,11 +156,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     
                     //TODO: Call getNoteByDueDateId
                     // Call getNoteByID here
-                    var note : Note? = nil
+                    let note : Note? = nil
                     
                     //TODO: Call getReminderByDueDateId
                     // Call getReminderByDueDateId here
-                    var reminder : Reminder? = nil
+                    let reminder : Reminder? = nil
                     
                     let data : DueDate = DueDate.init()
                     data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority, theNote: note, theReminder: reminder)
@@ -212,11 +212,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     
                     //TODO: Call getNoteByDueDateId
                     // Call getNoteByID here
-                    var note : Note? = nil
+                    let note : Note? = nil
                     
                     //TODO: Call getReminderByDueDateId
                     // Call getReminderByDueDateId here
-                    var reminder : Reminder? = nil
+                    let reminder : Reminder? = nil
                     
                     let data : DueDate = DueDate.init()
                     data.initWithData(theRow: id, theUserId: userId, theName: name, theCategory: category, theSubCategory: subCategory, theDate: date, thePriority: priority, theNote: note, theReminder: reminder)
@@ -246,7 +246,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var insertStatement : OpaquePointer? = nil
-            var insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?)"
+            let insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?)"
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
             {
                 
@@ -299,7 +299,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var deleteStatement : OpaquePointer? = nil
-            var deleteQuery : String = "delete from Tasks where Id = ?"
+            let deleteQuery : String = "delete from Tasks where Id = ?"
             
             if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
                 
@@ -332,13 +332,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=?, Note_Id = ? where Id=?"
+            let updateQuery : String = "update Tasks set Title=?, Status=?, Priority=?, TaskDueDate=?, DaysInAdvance=?, Note_Id = ? where Id=?"
             
             if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
-                var cTitle = task.title! as NSString
-                var intStatus = task.status! as NSNumber
-                var cTaskDueDate = task.taskDueDate! as NSString
+                let cTitle = task.title! as NSString
+                let intStatus = task.status! as NSNumber
+                let cTaskDueDate = task.taskDueDate! as NSString
                 
                 sqlite3_bind_text(updateStatement, 1, cTitle.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 2, Int32(intStatus))
@@ -382,7 +382,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Tasks where Id = ?"
+            let selectQuery : String = "select * from Tasks where Id = ?"
             
             if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
                 
@@ -431,7 +431,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Tasks where User_Id = ?"
+            let selectQuery : String = "select * from Tasks where User_Id = ?"
             
             if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
                 
@@ -456,7 +456,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                     let status = (intStatus as NSNumber).boolValue
                     let taskDueDate = String(cString: cTaskDueDate!)
                     
-                    var task : Task = Task.init(row: id, user_id: user_id, title: title, status: status, priority: priority, taskDueDate: taskDueDate, daysInAdvance: daysInAdvance, note: note)
+                    let task : Task = Task.init(row: id, user_id: user_id, title: title, status: status, priority: priority, taskDueDate: taskDueDate, daysInAdvance: daysInAdvance, note: note)
                     
                     tasks.append(task)
                     
@@ -484,7 +484,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?, ?)"
+            let insertQuery : String = "insert into Tasks values(NULL, ?, ?, ?, ?, ?, ?, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 
@@ -533,7 +533,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var deleteStatement : OpaquePointer? = nil
-            var deleteQuery: String = "delete from Notes where Id = ?"
+            let deleteQuery: String = "delete from Notes where Id = ?"
             
             if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
                 
@@ -565,11 +565,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateQuery : String = "update Notes set Content = ? where Id = ?"
+            let updateQuery : String = "update Notes set Content = ? where Id = ?"
             
             if sqlite3_prepare_v2(db, updateQuery, -1, &updateStatement, nil) == SQLITE_OK {
                 
-                var cContent = note.content! as NSString
+                let cContent = note.content! as NSString
                 
                 sqlite3_bind_text(updateStatement, 1, cContent.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 2, Int32(note.id!))
@@ -601,7 +601,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var selectStatement : OpaquePointer? = nil
-            var selectQuery : String = "select * from Notes where Id = ?"
+            let selectQuery : String = "select * from Notes where Id = ?"
             
             if sqlite3_prepare_v2(db, selectQuery, -1, &selectStatement, nil) == SQLITE_OK {
                 
@@ -634,7 +634,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
             var insertStatement :OpaquePointer? = nil
-            var insertQuery : String = "insert into Notes values(NULL, ?)"
+            let insertQuery : String = "insert into Notes values(NULL, ?)"
             
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 let cContent = note.content! as NSString
@@ -668,7 +668,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath!, &db) == SQLITE_OK {
             
             var updateStatement : OpaquePointer? = nil
-            var updateStatementString : String = "update Users set Password = ? where ID = ?"
+            let updateStatementString : String = "update Users set Password = ? where ID = ?"
             
             if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
                 
@@ -1542,7 +1542,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var insertStatement : OpaquePointer? = nil
-            var insertStatementString = "insert into Notifications values(NULL,?,?)"
+            let insertStatementString = "insert into Notifications values(NULL,?,?)"
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
             {
                 let statusStr = notification.status! as NSString

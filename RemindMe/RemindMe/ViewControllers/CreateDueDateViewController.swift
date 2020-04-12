@@ -17,8 +17,15 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var reminderSwitch: UISwitch!
     
+    
+    
+    
+    
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
   
+  
+    
     //for date
     let datePicker = UIDatePicker()
     var pickerData: [String] = [String]()
@@ -37,15 +44,8 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedDate: String!
     var selectedCategory: String!
     var selectedPriority: String!
-
-    //alert function
-    @IBAction func setAlert(_ sender: Any) {
-    }
     
-    //notification function
-    @IBAction func setNotification(_ sender: Any) {
-    }
-  
+   
     // uiswitch for setting reminder
     @IBAction func setReminders(_ sender: Any) {
         let onState = reminderSwitch.isOn
@@ -59,7 +59,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             btnAlert.isHidden = true
         }
     }
-
+    
     func createReminder()
     {
         var eventStore = EKEventStore()
@@ -98,7 +98,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         }
     }
     
-    // segments function
+    //MARK: ----------------- segments function-----By Binod---------------
     @IBAction func indexChanaged(_ sender: Any) {
         switch prioritySC.selectedSegmentIndex
         {
@@ -112,9 +112,9 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             break
         }
     }
-    //MARK: save dueDate
+    //MARK: ----------------save dueDate By Binod -------------------------
     @IBAction func insertDueDate(_ sender: Any) {
-        
+       // onButtonTap()
         let duedate : DueDate = DueDate.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         let currentUser : User = mainDelegate.currentUser!
@@ -135,6 +135,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theNote: note, theReminder: reminder)
             
             let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
+            
             var returnMsg:String=""
             if returnCode == true
             {
@@ -143,7 +144,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
                 }
                 
                  returnMsg = "Due Date Added"
-                performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
+               // performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
             }
             else  if returnCode == false
             {
@@ -170,7 +171,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    // pickerview
+    //MARK:------------------- pickerview-----------------By Binod----------------------
     func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
         return 1
@@ -189,7 +190,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         selectedCategory = pickerData[row]
     }
 
-    //table view of due details
+    //MARK:---------------table view of due details---------By Binod
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return duedates.count
@@ -200,7 +201,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)!
         return cell
     }
-    //MARK: create date
+    //MARK: ------------create date-----------By Binod----------------------
     func createDatePicker(){
         //format date
         dateTextField.textAlignment = .center
@@ -218,7 +219,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         
     }
     
-    //MARK: date selection
+    //MARK: -----------------------date selection by Binod ---------------------------
     @objc func donePressed(){
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
@@ -228,7 +229,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         selectedDate = dateTextField.text
     }
     
-    //MARK: Alert function
+    //MARK: -----------------------Alert function by Binod---------------------------
     func createAlert(title: String, message: String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
@@ -243,6 +244,22 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){
         self.loadView()
     }
+    
+    ///////////-------Passing data to create notification view controller-------------by Binod-----------///////////////
+   /*  func onButtonTap()
+    {
+        let vc = CreateNotificationViewController(nibName: "CreateNotificationViewController", bundle: nil)
+        vc.text = "Hello"
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }*/
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? CreateNotificationViewController{
+            destination.text = tfEventTitle.text!
+        }
+    }
+
 
     /*
     // MARK: - Navigation
