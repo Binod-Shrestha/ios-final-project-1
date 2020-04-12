@@ -16,10 +16,10 @@ class DueDate: NSObject {
     var subCategory: String?
     var date: String?
     var priority: String?
-    var note : Note?
-    var reminder : Reminder?
+    var alertID: Int?
     
-    func initWithData(theRow i: Int, theUserId ui: Int, theName n: String, theCategory ct: String, theSubCategory sb: String, theDate d: String, thePriority p: String, theNote note: Note?, theReminder reminder: Reminder?)
+
+    func initWithData(theRow i: Int, theUserId ui: Int, theName n: String, theCategory ct: String, theSubCategory sb: String, theDate d: String, thePriority p: String, theAlert alertID: Int?)
     {
         id = i
         userId = ui
@@ -28,7 +28,6 @@ class DueDate: NSObject {
         subCategory = sb
         date = d
         priority = p
-        self.note = note
-        self.reminder = reminder
+        self.alertID = alertID
     }
 }

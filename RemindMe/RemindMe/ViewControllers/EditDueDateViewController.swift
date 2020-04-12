@@ -14,10 +14,9 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var pvCategory: UIPickerView!
     @IBOutlet weak var tfSCategory: UITextField!
     @IBOutlet weak var tfDueDate: UITextField!
+    @IBOutlet weak var swReminders : UISwitch!
     @IBOutlet weak var sgPriority: UISegmentedControl!
-    @IBOutlet var btnNotification : UIButton!
-    @IBOutlet var btnAlert : UIButton!
-    
+   
     var status : String?
     var selectedPriority : String?
     var selectedCategory : String?
@@ -26,29 +25,25 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     let datePicker = UIDatePicker()
     var pickerData = ["Business", "Personal", "School"]
 
-    @IBOutlet weak var swReminders: UISwitch!
     
-    // setReminders
-    @IBAction func setNotification(_ sender: Any)
-    {
-        
-    }
     
-    // uiswitch for setting reminder
-    @IBAction func setReminders(_ sender: Any)
-    {
-        let onState = swReminders.isOn
-        if onState {
-            status = "Active"
-            btnNotification.isHidden = false
-            btnAlert.isHidden = false
-        }else{
-            status = "Disabled"
-            btnNotification.isHidden = true
-            btnAlert.isHidden = true
-        }
-        
-    }
+    
+//
+//    // uiswitch for setting reminder
+//    @IBAction func setReminders(_ sender: Any)
+//    {
+//        let onState = swReminders.isOn
+//        if onState {
+//            status = "Active"
+//            btnNotification.isHidden = false
+//            btnAlert.isHidden = false
+//        }else{
+//            status = "Disabled"
+//            btnNotification.isHidden = true
+//            btnAlert.isHidden = true
+//        }
+//
+//    }
     
     // segments function
     @IBAction func indexChanaged(_ sender: Any)
@@ -69,37 +64,48 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     // Update reminder
     func UpdateReminder()
     {
-        let maindelegate = UIApplication.shared.delegate as! AppDelegate
+           let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+        let reminders = Reminder.init()
+       //  let currentReminder : Reminder = mainDelegate.curentReminder!
+        
+
         var eventStore = EKEventStore()
         let reminder = EKReminder(eventStore: eventStore)
-        let reminderName = tfEventName.text!
-        let reminderDate = tfDueDate.text!
+
+         reminders.reminderName = tfEventName.text!
+        
+         reminders.reminderDate = tfDueDate.text
+      
+ 
         reminder.calendar = eventStore.defaultCalendarForNewReminders()!
 
-        let reminderData : Reminder = Reminder(row: 0, reminderName: reminderName, reminderDate: reminderDate)
-        let returnCode = maindelegate.updateReminder(reminder: reminderData)
+       
+       let returnCode = mainDelegate.updateReminder(reminder:reminders)
+        
+       if returnCode == true{
+	
+       } else{
+            
+            print("Null")
+       }
     }
 
     //MARK: update DueDate
     @IBAction func updateDueDate(_ sender: Any)
     {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        let currentUser : User = mainDelegate.currentUser!
-        let currentDueDate : DueDate = mainDelegate.currentDueDate!
-        var eventName = tfEventName.text!
-        var sbCategory = tfSCategory.text!
-        var dateFromDatabase = tfDueDate.text!
         
-        //TODO: Update note and reminder
-        let note : Note? = nil
-        let reminder : Reminder? = nil
+        let currentDueDate : DueDate = mainDelegate.currentDueDate!
+        let eventName = tfEventName.text!
+        let sbCategory = tfSCategory.text!
+        let dateFromDatabase = tfDueDate.text!
+        
         currentDueDate.name = eventName
         currentDueDate.category = selectedCategory
         currentDueDate.subCategory =  sbCategory
         currentDueDate.date = dateFromDatabase
         currentDueDate.priority = selectedPriority
-        currentDueDate.note = note
-        currentDueDate.reminder = reminder
+        //currentDueDate.alertID = mainDelegate.currentAlert?.alertID
         
         
         
@@ -108,13 +114,15 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         if returnCode == true
         {
             var returnMsg : String = "Due Date updated"
+         if swReminders.isOn
+           {
 
-            if swReminders.isOn
-            {
- 
-            	UpdateReminder() 
-            }
+               UpdateReminder()
+          }
+
+
         }
+            
         else  if returnCode == false
         {
             var  returnMsg = "Due Date update Failed"
@@ -129,10 +137,14 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     override func viewDidLoad()
     {
         super.viewDidLoad()
+
         createDatePicker()
-        let duedate : DueDate = DueDate.init()
+
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentDueDate = mainDelegate.currentDueDate
+        ///var currentReminde = mainDelegate.curentReminder
+        
+    
         
         tfEventName.text = currentDueDate!.name
         tfSCategory.text = currentDueDate!.subCategory
@@ -202,5 +214,12 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.view.endEditing(true)
         selectedDate = tfDueDate.text
     }
+    
+    
+    @IBAction func unwindToEdittDueDateVC(sender:UIStoryboardSegue){
+        self.loadView()
+    }
+    
+    
 
 }

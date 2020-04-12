@@ -78,7 +78,7 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate {
             
         else if  returnCode == false
         {
-            let alertController = UIAlertController(title: "Sucess", message: "Login failed please try again", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Error", message: "Login failed please try again", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             present(alertController,animated: true)
