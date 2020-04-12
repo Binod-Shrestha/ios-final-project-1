@@ -2,14 +2,14 @@
 //  EditContactViewController.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-30.
+//  Created by Brian Holmes on 2020-03-30.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
 import UIKit
 
 class EditContactViewController: UIViewController {
-    
+    //Properties
     @IBOutlet var tfName : UITextField?
     @IBOutlet var tfOrganization : UITextField?
     @IBOutlet var tfTitle : UITextField?
@@ -20,21 +20,23 @@ class EditContactViewController: UIViewController {
     @IBOutlet var tvNotes : UITextView?
     let mainDelegate = UIApplication.shared.delegate as! AppDelegate
    
+    
     @IBAction func clickSave(){
         // Capture the details of contact on Edit screen
-        let newContact = Contact.init(theOwerUser: mainDelegate.tempUserId, theName: tfName!.text!, theOrganization: tfOrganization!.text!, theTitle: tfTitle!.text!, thePhone: tfPhone!.text!, theEmail: tfEmail!.text!, theDiscord: tfDiscord!.text!, theSlack: tfSlack!.text!, theNotes: tvNotes!.text)
+        //MARK, remove tempUserId
+        let newContact = Contact.init(theOwerUser: mainDelegate.currentUser!.id!, theName: tfName!.text!, theOrganization: tfOrganization!.text!, theTitle: tfTitle!.text!, thePhone: tfPhone!.text!, theEmail: tfEmail!.text!, theDiscord: tfDiscord!.text!, theSlack: tfSlack!.text!, theNotes: tvNotes!.text)
         
         // Main delegate is set to true when navigating from an existing contact
         if mainDelegate.updateContact == true
         {
-            let updateResult = mainDelegate.updateContact(contact: newContact)
+            let updateResult = mainDelegate.UpdateContact(contact: newContact)
             if updateResult == true
             {
-                print("User updated.")
+                print("User Saved.")
             }
             else
             {
-                print("Unable to update user.")
+                print("Unable to Save user.")
             }
             performSegue(withIdentifier: "EditContactToContactDetailVCSegue", sender: nil)
         }
@@ -54,6 +56,12 @@ class EditContactViewController: UIViewController {
             performSegue(withIdentifier: "EditContactToContactDetailVCSegue", sender: nil)
         }
     }
+//    @IBAction func ClickDelete(){
+//        mainDelegate.deleteContact(id: mainDelegate.currentContact!.id!)
+//        // MARK: Create this segue
+//        //performSegue(withIdentifier: "EditContactToHomeVCSegue", sender: nil)
+//        
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -2,7 +2,7 @@
 //  ContactDetailsViewController.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-30.
+//  Created by Brian Holmes on 2020-03-30.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
@@ -10,14 +10,15 @@ import UIKit
 
 class ContactDetailsViewController: UIViewController {
 
-    @IBOutlet var lblName : UILabel?
-    @IBOutlet var lblOrganization : UILabel?
-    @IBOutlet var lblTitle : UILabel?
-    @IBOutlet var lblPhone : UILabel?
-    @IBOutlet var lblEmail : UILabel?
-    @IBOutlet var lblDiscord : UILabel?
-    @IBOutlet var lblSlack : UILabel?
+    @IBOutlet var tfName : UITextField?
+    @IBOutlet var tfOrganization : UITextField?
+    @IBOutlet var tfTitle : UITextField?
+    @IBOutlet var tfPhone : UITextField?
+    @IBOutlet var tfEmail : UITextField?
+    @IBOutlet var tfDiscord : UITextField?
+    @IBOutlet var tfSlack : UITextField?
     @IBOutlet var tvNotes : UITextView?
+
     
     let mainDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -30,20 +31,20 @@ class ContactDetailsViewController: UIViewController {
         
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
         
         let contact = mainDelegate.currentContact
         
-        lblName?.text = contact?.name
-        lblOrganization?.text = contact?.organization
-        lblTitle?.text = contact?.title
-        lblPhone?.text = contact?.phone
-        lblEmail?.text = contact?.email
-        lblDiscord?.text = contact?.discord
-        lblSlack?.text = contact?.slack
+        tfName?.text = contact?.name
+        tfOrganization?.text = contact?.organization
+        tfTitle?.text = contact?.title
+        tfPhone?.text = contact?.phone
+        tfEmail?.text = contact?.email
+        tfDiscord?.text = contact?.discord
+        tfSlack?.text = contact?.slack
         tvNotes?.text = contact?.notes
         
     }
