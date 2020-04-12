@@ -119,9 +119,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         let currentUser : User = mainDelegate.currentUser!
         
-        // TODO: Update note and reminder
-        let note : Note? = nil
-        let reminder : Reminder? = nil
         if(tfEventTitle.text! == ""){
             createAlert(title: "Warning", message: "Please fill in the due date title")
         } else if (selectedCategory == nil){
@@ -132,7 +129,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             createAlert(title: "Warning", message: "Please select the priority.")
         }
         else{
-            duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theAlert: appDelegate.newAlert?.alertID)
+            duedate.initWithData(theRow: 0, theUserId: currentUser.id!, theName: tfEventTitle.text!, theCategory: selectedCategory, theSubCategory: tfsubCategory.text!, theDate: selectedDate, thePriority: selectedPriority, theAlert: appDelegate.notification.id)
             
             let returnCode = mainDelegate.insertDueDateIntoDatabase(duedate: duedate)
             

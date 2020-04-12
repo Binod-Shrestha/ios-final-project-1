@@ -1245,7 +1245,7 @@
                                     <action selector="datePickerValueChanged:" destination="fVY-Oh-vTF" eventType="valueChanged" id="7ic-tv-Qvp"/>
                                 </connections>
                             </datePicker>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dqr-s8-bxd">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dqr-s8-bxd">
                                 <rect key="frame" x="348" y="494" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
@@ -1828,7 +1828,6 @@
         <image name="icon_camera.png" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FJt-e0-Uch"/>
         <segue reference="LF5-fd-wJZ"/>
         <segue reference="wq7-Eh-7za"/>
         <segue reference="7Y3-60-BNd"/>

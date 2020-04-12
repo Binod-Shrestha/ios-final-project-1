@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var contacts : [Contact] = []
     var duedates : [DueDate] = []
     var notifications:[Notification] = []
+    var notification : Notification = Notification()
     
     var reminders : [Reminder] = []
     var eventStore : EKEventStore? = nil
@@ -240,7 +241,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         if sqlite3_open(self.databasePath, &db) == SQLITE_OK
         {
             var insertStatement : OpaquePointer? = nil
-            var insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?,?)"
+            let insertStatementString = "insert into DueDates values(NULL,?,?,?,?,?,?,?)"
             if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK
             {
                 
@@ -250,7 +251,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 let subCategoryStr = duedate.subCategory! as NSString
                 let dateStr = duedate.date! as NSString
                 let priorityStr = duedate.priority! as NSString
-                let alertID : Int = newAlert!.alertID!
+                let alertID : Int = notification.id ?? 99
                 
                 
                 sqlite3_bind_int(insertStatement, 1, Int32(userId))
@@ -1685,6 +1686,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if sqlite3_step(insertStatement) == SQLITE_DONE{
                     let rowId = sqlite3_last_insert_rowid(db)
                     print("succefull inserted \(rowId)")
+                    notification.id = Int(rowId)
                 }
                 else{
                     print("couldnt insert notification")
@@ -1739,7 +1741,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
     //MARK: get notification by id
     func getNotificationById(id: Int) -> Notification {
-        var notification : Notification = Notification()
+        
         
         var db : OpaquePointer? = nil
         
