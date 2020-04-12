@@ -48,18 +48,18 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     
    
     // uiswitch for setting reminder
-    @IBAction func setReminders(_ sender: Any) {
-        let onState = reminderSwitch.isOn
-        if onState {
-           status = "Active"
-            btnNotification.isHidden = false
-            btnAlert.isHidden = false
-        }else{
-            status = "Disabled"
-            btnNotification.isHidden = true
-            btnAlert.isHidden = true
-        }
-    }
+//    @IBAction func setReminders(_ sender: Any) {
+//        let onState = reminderSwitch.isOn
+//        if onState {
+//           status = "Active"
+//            btnNotification.isHidden = false
+//            btnAlert.isHidden = false
+//        }else{
+//            status = "Disabled"
+//            btnNotification.isHidden = true
+//            btnAlert.isHidden = true
+//        }
+//    }
     
     func createReminder()
     {

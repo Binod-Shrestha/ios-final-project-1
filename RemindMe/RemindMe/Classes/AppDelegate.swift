@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var currentTask : Task? = nil
     var currentDueDate : DueDate? = nil
 
-    var currentAlert : Alert? = nil
-    var newAlert : Alert? = nil
+//    var currentAlert : Alert? = nil
+//    var newAlert : Alert? = nil
 
     var currentContact : Contact? = nil
     var updateContact : Bool = false
@@ -265,7 +265,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 if sqlite3_step(insertStatement) == SQLITE_DONE{
                     let rowId = sqlite3_last_insert_rowid(db)
                     print("succefull inserted \(rowId)")
-                    newAlert = nil // clear newAlert
+                    //newAlert = nil // clear newAlert
                 }
                 else{
                     print("couldnt insert row")
@@ -1202,310 +1202,307 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
     }
 
-    //MARK: ============ 'Alerts' ==== Database Functions  ==================
-    
-    func insertAlertIntoDatabase(alert : Alert) -> Bool
-    {
-        var db : OpaquePointer? = nil
-        var returnCode : Bool = true
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
-        {
-            var insertStatement : OpaquePointer? = nil
-            let insertStatementString : String = "insert into alerts values(NULL,?,?)"
-            
-            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK{
-                
-                let cName = alert.name as NSString
-                let time = alert.time as NSInteger
-                
-                sqlite3_bind_text(insertStatement, 1, cName.utf8String, -1, nil)
-                sqlite3_bind_int(insertStatement, 2, Int32(time))
-                
-                
-                if sqlite3_step(insertStatement) == SQLITE_DONE {
-                    let rowID = sqlite3_last_insert_rowid(db)
-                    print("Successfully inserted into row# \(rowID):")
-                    newAlert?.alertID = Int(rowID)
-                    print("\(rowID) | \(alert.name) | \(alert.time)")
-                }else{
-                    print("Counld not insert row")
-                    returnCode = false
-                }
-                sqlite3_finalize(insertStatement)
-                
-            }else{
-                print("Insert statement could not be prepared")
-                returnCode = false
-            }
-            sqlite3_close(db)
-        }
-        else
-        {
-            print("Unable to open database")
-            returnCode = false
-        }
-        refreshDatabaseFromApp()
-        
-        //getAlertsByUserId()
-        
-        return returnCode
-    }
-    
-    func getAlertbyId(id : Int)->Alert{
-        
-        var db : OpaquePointer? = nil
-        var newAlert : Alert? = nil
-        
-        //action
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
-        {
-            print("> Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
-            
-            var queryStatement : OpaquePointer? = nil
-            let queryStatementString : String = "select * from Alerts where AlertID = ?"
-            
-            print("Testing if SQLite is Ok....")
-            
-            if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
-                print("SQLite is ok.")
-                sqlite3_bind_int(queryStatement, 1, Int32(id))
-                
-                while sqlite3_step(queryStatement) == SQLITE_ROW {
-                    
-                    let id : Int = Int(sqlite3_column_int(queryStatement, 0))
-                    let cName = sqlite3_column_text(queryStatement, 1)
-                    let date : Int = Int(sqlite3_column_int(queryStatement, 2))
-                    
-                    let name = String(cString: cName!)
-                   
-                    
-                    newAlert = Alert.init(alertID: id, name: name, time: date)
-                    
-                    print("\(id) | \(name) | \(date)")
-                }
-                sqlite3_finalize(queryStatement)
-            }else{
-                print("SQLite is not ok.")
-                print("Select statement could not be prepared")
-            }
-            print("Closing DB connection...")
-            sqlite3_close(db)
-        }
-        else{
-            print("Unable to open database")
-        }
-        return newAlert!
-    }
-    
-    
-    func UpdateAlert(alert: Alert)->Bool
-    {
-        var db : OpaquePointer? = nil
-        var returnCode : Bool = true
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
-        {
-            var updateStatement : OpaquePointer? = nil
-            let updateStatementString : String = "UPDATE Alerts SET Name = ?, Date = ? WHERE ID = ?"
-            
-            if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK{
-                
-                let alertID = alert.alertID! as NSInteger
-                let cName = alert.name as NSString
-                let date = alert.time as NSInteger
-                
-                sqlite3_bind_text(updateStatement, 1, cName.utf8String, -1, nil)
-                sqlite3_bind_int(updateStatement, 2, Int32(date))
-                sqlite3_bind_int(updateStatement, 3, Int32(alertID))
-                
-                if sqlite3_step(updateStatement) == SQLITE_DONE {
-                    let rowID = sqlite3_last_insert_rowid(db)
-                    print("Successfully updated row \(rowID)")
-                }else{
-                    print("Counld not update row")
-                    returnCode = false
-                }
-                sqlite3_finalize(updateStatement)
-                
-            }else{
-                print("Insert statement could not be prepared")
-                returnCode = false
-            }
-            sqlite3_close(db)
-        }
-        else
-        {
-            print("Unable to open database")
-            returnCode = false
-        }
-        currentAlert = alert
-        refreshDatabaseFromApp()
-        return returnCode
-    }
-    
-    func deleteAlert(id: Int) {
-        var db : OpaquePointer? = nil
-        // var returnCode = false
-        
-        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
-            
-            var deleteStatement : OpaquePointer? = nil
-            let deleteQuery : String = "delete from Alerts where Id = ?"
-            
-            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
-                
-                sqlite3_bind_int(deleteStatement, 1, Int32(id))
-                
-                if sqlite3_step(deleteStatement) == SQLITE_DONE {
-                    print("Deleted alert \(id)")
-                    // returnCode = true
-                } else {
-                    print("Could not delete alert \(id)")
-                }
-                
-                sqlite3_finalize(deleteStatement)
-            } else {
-                print("Could not prepare delete alert")
-            }
-            
-            sqlite3_close(db)
-        } else {
-            print("Could not open database")
-        }
-    }
-    //MARK: ============= ALERT & NOTIFICATION =========================
-    
-    // For DueDate saveFunction
-    func saveAlertToDbAndRegister() // Called when clicking SaveDueDate (before dueDate.db functions)
-    {
-        if currentAlert?.alertID == nil {
-            print("currentAlert?.alertID == nil")
-            // If dueDate has no currentAlert (only the case when creating a new dueDate, or updating a dueDate with no alert (adding and registering an Alert)
-            if newAlert == nil {
-                print("newAlert = nil")
-                return
-            }else{ // We are creating a duedate, and we have a new alert
-                if insertAlertIntoDatabase(alert: newAlert!) == true{
-                    print("Alert saved to db")
-                    currentAlert = newAlert
-                    print("currentAlert = newAlert")
-                    //MARK: DueDate needs an 'Alert :Int' property
-                    //currentDueDate.alert? = currentAlert?.alertID
-                    
-                    //Schedule and register new alert
-                    scheduleNotification()
-                    print("scheduled notification")
-                    registerCategories()
-                    
-                }else{
-                    print("Alert not saved to db")
-                }
-            }
-        }else{// If dueDate HAS a currentAlert (only the case when editing a dueDate (updating db unregistering previous alert and registering new Alert)
-            print("currentAlert?.alertID != nil")
-            // MARK: Logic for editing dueDate that had an Alert
-            if newAlert == nil {
-                print("newAlert == nil")
-                return
-            }else{
-                if insertAlertIntoDatabase(alert: newAlert!) == true{
-                    print("Alert saved to db")
-                    
-                    // unscheduleNotification(currentAlert.alertID)
-                    
-                    currentAlert = newAlert
-                    //MARK: DueDate needs an 'Alert :Int' property
-                    //currentDueDate.alert? = currentAlert?.alertID
-                    
-                    //Schedule and register new alert
-                    scheduleNotification()
-                    registerCategories()
-                    
-                    currentAlert = nil // clear currentAlert
-                    newAlert = nil // clear newAlert
-                }else{
-                    print("Alert not saved to db")
-                }
-            }
-        }
-    }
-    
-    
-    
-    func scheduleNotification(){
-        
-        let alertIdNumberForIdent = currentAlert?.alertID! as! NSNumber
-        let alertIdStringForIdent = alertIdNumberForIdent.stringValue
-        
-        //        let name = tfAlertTextField.text ?? ""
-        let center = UNUserNotificationCenter.current()
-        let content = UNMutableNotificationContent()
-        content.title = "Alert for:  \(String(describing: currentDueDate))"
-        content.body = "Alert note: \(String(describing: currentAlert?.name))"
-        content.categoryIdentifier = "alarm"
-        content.userInfo = ["custom  data" : "Some data stored in dictionary"]
-        content.sound = UNNotificationSound.default
-        
-        // current time
-        let now = Date()
-        
-        // ensure trigger time is on the minute
-        let timeFromIntervalToAlarm = currentAlert?.time
-        let timeFromintervalToCurrent = Int(floor(now.timeIntervalSinceReferenceDate/60) * 60)
-        let intervalFromCurrentToAlarm = timeFromIntervalToAlarm! - timeFromintervalToCurrent
-        
-        //Sets trigger
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(intervalFromCurrentToAlarm), repeats: false)
-        
-        // (FOR TESTING) Show alert 10 seconds after being scheduled
-        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-        
-        
-        // Builds UNNotification Request
-        let request = UNNotificationRequest(identifier: alertIdStringForIdent, content: content, trigger: trigger)
-        //Adding request to notification center
-        center.add(request)
-    }
-    
-    func registerCategories(){
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self as? UNUserNotificationCenterDelegate
-        
-        let show = UNNotificationAction(identifier: "show", title: "Tell me more...", options: .foreground)
-        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
-        
-        center.setNotificationCategories([category])
-    }
-    
-    // schedule delivery
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didRecieve response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void){
-        
-        // pull out buried userInfo dictionary
-        let userInfo = response.notification.request.content.userInfo
-        
-        if let customData = userInfo["customData"] as? String {
-            print("Custom data recieved; \(customData)")
-            
-            switch response.actionIdentifier {
-            case UNNotificationDefaultActionIdentifier:
-                // the user swiped to unlock
-                print("Default identifier")
-                
-            case "show":
-                // the user tapped the "Tell me more..." button
-                break
-            default:
-                break
-                
-            }
-        }
-        completionHandler()
-    }
-    
-    //////////////////////////////////////
-    ////////// END OF MOVE ///////////////
-    /////////////////////////////////////
+//    //MARK: ============ 'Alerts' ==== Database Functions  ==================
+//
+//    func insertAlertIntoDatabase(alert : Alert) -> Bool
+//    {
+//        var db : OpaquePointer? = nil
+//        var returnCode : Bool = true
+//
+//        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+//        {
+//            var insertStatement : OpaquePointer? = nil
+//            let insertStatementString : String = "insert into alerts values(NULL,?,?)"
+//
+//            if sqlite3_prepare_v2(db, insertStatementString, -1, &insertStatement, nil) == SQLITE_OK{
+//
+//                let cName = alert.name as NSString
+//                let time = alert.time as NSInteger
+//
+//                sqlite3_bind_text(insertStatement, 1, cName.utf8String, -1, nil)
+//                sqlite3_bind_int(insertStatement, 2, Int32(time))
+//
+//
+//                if sqlite3_step(insertStatement) == SQLITE_DONE {
+//                    let rowID = sqlite3_last_insert_rowid(db)
+//                    print("Successfully inserted into row# \(rowID):")
+//                    newAlert?.alertID = Int(rowID)
+//                    print("\(rowID) | \(alert.name) | \(alert.time)")
+//                }else{
+//                    print("Counld not insert row")
+//                    returnCode = false
+//                }
+//                sqlite3_finalize(insertStatement)
+//
+//            }else{
+//                print("Insert statement could not be prepared")
+//                returnCode = false
+//            }
+//            sqlite3_close(db)
+//        }
+//        else
+//        {
+//            print("Unable to open database")
+//            returnCode = false
+//        }
+//        refreshDatabaseFromApp()
+//
+//        //getAlertsByUserId()
+//
+//        return returnCode
+//    }
+//
+//    func getAlertbyId(id : Int)->Alert{
+//
+//        var db : OpaquePointer? = nil
+//        var newAlert : Alert? = nil
+//
+//        //action
+//        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+//        {
+//            print("> Successfully opened connection to database at \(self.databasePath ?? "Unknown")")
+//
+//            var queryStatement : OpaquePointer? = nil
+//            let queryStatementString : String = "select * from Alerts where AlertID = ?"
+//
+//            print("Testing if SQLite is Ok....")
+//
+//            if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+//                print("SQLite is ok.")
+//                sqlite3_bind_int(queryStatement, 1, Int32(id))
+//
+//                while sqlite3_step(queryStatement) == SQLITE_ROW {
+//
+//                    let id : Int = Int(sqlite3_column_int(queryStatement, 0))
+//                    let cName = sqlite3_column_text(queryStatement, 1)
+//                    let date : Int = Int(sqlite3_column_int(queryStatement, 2))
+//
+//                    let name = String(cString: cName!)
+//
+//
+//                    newAlert = Alert.init(alertID: id, name: name, time: date)
+//
+//                    print("\(id) | \(name) | \(date)")
+//                }
+//                sqlite3_finalize(queryStatement)
+//            }else{
+//                print("SQLite is not ok.")
+//                print("Select statement could not be prepared")
+//            }
+//            print("Closing DB connection...")
+//            sqlite3_close(db)
+//        }
+//        else{
+//            print("Unable to open database")
+//        }
+//        return newAlert!
+//    }
+//
+//
+//    func UpdateAlert(alert: Alert)->Bool
+//    {
+//        var db : OpaquePointer? = nil
+//        var returnCode : Bool = true
+//
+//        if sqlite3_open(self.databasePath, &db) == SQLITE_OK
+//        {
+//            var updateStatement : OpaquePointer? = nil
+//            let updateStatementString : String = "UPDATE Alerts SET Name = ?, Date = ? WHERE ID = ?"
+//
+//            if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK{
+//
+//                let alertID = alert.alertID! as NSInteger
+//                let cName = alert.name as NSString
+//                let date = alert.time as NSInteger
+//
+//                sqlite3_bind_text(updateStatement, 1, cName.utf8String, -1, nil)
+//                sqlite3_bind_int(updateStatement, 2, Int32(date))
+//                sqlite3_bind_int(updateStatement, 3, Int32(alertID))
+//
+//                if sqlite3_step(updateStatement) == SQLITE_DONE {
+//                    let rowID = sqlite3_last_insert_rowid(db)
+//                    print("Successfully updated row \(rowID)")
+//                }else{
+//                    print("Counld not update row")
+//                    returnCode = false
+//                }
+//                sqlite3_finalize(updateStatement)
+//
+//            }else{
+//                print("Insert statement could not be prepared")
+//                returnCode = false
+//            }
+//            sqlite3_close(db)
+//        }
+//        else
+//        {
+//            print("Unable to open database")
+//            returnCode = false
+//        }
+//        currentAlert = alert
+//        refreshDatabaseFromApp()
+//        return returnCode
+//    }
+//
+//    func deleteAlert(id: Int) {
+//        var db : OpaquePointer? = nil
+//        // var returnCode = false
+//
+//        if sqlite3_open(self.databasePath, &db) == SQLITE_OK {
+//
+//            var deleteStatement : OpaquePointer? = nil
+//            let deleteQuery : String = "delete from Alerts where Id = ?"
+//
+//            if sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStatement, nil) == SQLITE_OK {
+//
+//                sqlite3_bind_int(deleteStatement, 1, Int32(id))
+//
+//                if sqlite3_step(deleteStatement) == SQLITE_DONE {
+//                    print("Deleted alert \(id)")
+//                    // returnCode = true
+//                } else {
+//                    print("Could not delete alert \(id)")
+//                }
+//
+//                sqlite3_finalize(deleteStatement)
+//            } else {
+//                print("Could not prepare delete alert")
+//            }
+//
+//            sqlite3_close(db)
+//        } else {
+//            print("Could not open database")
+//        }
+//    }
+//    //MARK: ============= ALERT & NOTIFICATION =========================
+//
+//    // For DueDate saveFunction
+//    func saveAlertToDbAndRegister() // Called when clicking SaveDueDate (before dueDate.db functions)
+//    {
+//        if currentAlert?.alertID == nil {
+//            print("currentAlert?.alertID == nil")
+//            // If dueDate has no currentAlert (only the case when creating a new dueDate, or updating a dueDate with no alert (adding and registering an Alert)
+//            if newAlert == nil {
+//                print("newAlert = nil")
+//                return
+//            }else{ // We are creating a duedate, and we have a new alert
+//                if insertAlertIntoDatabase(alert: newAlert!) == true{
+//                    print("Alert saved to db")
+//                    currentAlert = newAlert
+//                    print("currentAlert = newAlert")
+//                    //MARK: DueDate needs an 'Alert :Int' property
+//                    //currentDueDate.alert? = currentAlert?.alertID
+//
+//                    //Schedule and register new alert
+//                    scheduleNotification()
+//                    print("scheduled notification")
+//                    registerCategories()
+//
+//                }else{
+//                    print("Alert not saved to db")
+//                }
+//            }
+//        }else{// If dueDate HAS a currentAlert (only the case when editing a dueDate (updating db unregistering previous alert and registering new Alert)
+//            print("currentAlert?.alertID != nil")
+//            // MARK: Logic for editing dueDate that had an Alert
+//            if newAlert == nil {
+//                print("newAlert == nil")
+//                return
+//            }else{
+//                if insertAlertIntoDatabase(alert: newAlert!) == true{
+//                    print("Alert saved to db")
+//
+//                    // unscheduleNotification(currentAlert.alertID)
+//
+//                    currentAlert = newAlert
+//                    //MARK: DueDate needs an 'Alert :Int' property
+//                    //currentDueDate.alert? = currentAlert?.alertID
+//
+//                    //Schedule and register new alert
+//                    scheduleNotification()
+//                    registerCategories()
+//
+//                    currentAlert = nil // clear currentAlert
+//                    newAlert = nil // clear newAlert
+//                }else{
+//                    print("Alert not saved to db")
+//                }
+//            }
+//        }
+//    }
+//
+//
+//
+//    func scheduleNotification(){
+//
+//        let alertIdNumberForIdent = currentAlert?.alertID! as! NSNumber
+//        let alertIdStringForIdent = alertIdNumberForIdent.stringValue
+//
+//        //        let name = tfAlertTextField.text ?? ""
+//        let center = UNUserNotificationCenter.current()
+//        let content = UNMutableNotificationContent()
+//        content.title = "Alert for:  \(String(describing: currentDueDate))"
+//        content.body = "Alert note: \(String(describing: currentAlert?.name))"
+//        content.categoryIdentifier = "alarm"
+//        content.userInfo = ["custom  data" : "Some data stored in dictionary"]
+//        content.sound = UNNotificationSound.default
+//
+//        // current time
+//        let now = Date()
+//
+//        // ensure trigger time is on the minute
+//        let timeFromIntervalToAlarm = currentAlert?.time
+//        let timeFromintervalToCurrent = Int(floor(now.timeIntervalSinceReferenceDate/60) * 60)
+//        let intervalFromCurrentToAlarm = timeFromIntervalToAlarm! - timeFromintervalToCurrent
+//
+//        //Sets trigger
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(intervalFromCurrentToAlarm), repeats: false)
+//
+//        // (FOR TESTING) Show alert 10 seconds after being scheduled
+//        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//
+//
+//        // Builds UNNotification Request
+//        let request = UNNotificationRequest(identifier: alertIdStringForIdent, content: content, trigger: trigger)
+//        //Adding request to notification center
+//        center.add(request)
+//    }
+//
+//    func registerCategories(){
+//        let center = UNUserNotificationCenter.current()
+//        center.delegate = self as? UNUserNotificationCenterDelegate
+//
+//        let show = UNNotificationAction(identifier: "show", title: "Tell me more...", options: .foreground)
+//        let category = UNNotificationCategory(identifier: "alarm", actions: [show], intentIdentifiers: [])
+//
+//        center.setNotificationCategories([category])
+//    }
+//
+//    // schedule delivery
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didRecieve response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void){
+//
+//        // pull out buried userInfo dictionary
+//        let userInfo = response.notification.request.content.userInfo
+//
+//        if let customData = userInfo["customData"] as? String {
+//            print("Custom data recieved; \(customData)")
+//
+//            switch response.actionIdentifier {
+//            case UNNotificationDefaultActionIdentifier:
+//                // the user swiped to unlock
+//                print("Default identifier")
+//
+//            case "show":
+//                // the user tapped the "Tell me more..." button
+//                break
+//            default:
+//                break
+//
+//            }
+//        }
+//        completionHandler()
+//    }
+//
     
     //MARK: ============= END OF ALERT & NOTIFICATION =========================
     
