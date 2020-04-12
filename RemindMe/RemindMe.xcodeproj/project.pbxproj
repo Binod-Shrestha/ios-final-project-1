@@ -34,6 +34,10 @@
 		AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */; };
 		AE7C855E2423FFE900EA6CBC /* gg-background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE7C855D2423FFE900EA6CBC /* gg-background.jpg */; };
 		AE7D9418242232140002B853 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7D9417242232140002B853 /* libsqlite3.tbd */; };
+		AE831E1A24437B950047C9C3 /* NeedHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE831E1924437B950047C9C3 /* NeedHelpViewController.swift */; };
+		AE831E1C24437BEA0047C9C3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE831E1B24437BE90047C9C3 /* WebKit.framework */; };
+		AE831E202443808A0047C9C3 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE831E1F2443808A0047C9C3 /* AboutViewController.swift */; };
+		AE831E23244388040047C9C3 /* pad_confirm.wav in Resources */ = {isa = PBXBuildFile; fileRef = AE831E22244388040047C9C3 /* pad_confirm.wav */; };
 		AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217A242F3A8600666B90 /* TaskCell.swift */; };
 		AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */; };
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
@@ -94,6 +98,10 @@
 		AE7C855A2423FF7D00EA6CBC /* CreateNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNoteViewController.swift; sourceTree = "<group>"; };
 		AE7C855D2423FFE900EA6CBC /* gg-background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "gg-background.jpg"; sourceTree = "<group>"; };
 		AE7D9417242232140002B853 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AE831E1924437B950047C9C3 /* NeedHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeedHelpViewController.swift; sourceTree = "<group>"; };
+		AE831E1B24437BE90047C9C3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		AE831E1F2443808A0047C9C3 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		AE831E22244388040047C9C3 /* pad_confirm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pad_confirm.wav; sourceTree = "<group>"; };
 		AE83217A242F3A8600666B90 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		AE83217C242F4AA500666B90 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
@@ -129,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE831E1C24437BEA0047C9C3 /* WebKit.framework in Frameworks */,
 				AE09DCC22442E41E00857F86 /* SystemConfiguration.framework in Frameworks */,
 				AE09DCC02442E41600857F86 /* AuthenticationServices.framework in Frameworks */,
 				AE09DCBE2442E40C00857F86 /* SafariServices.framework in Frameworks */,
@@ -202,6 +211,7 @@
 		AE7D9414242231F50002B853 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE831E1B24437BE90047C9C3 /* WebKit.framework */,
 				AE09DCCF2442EBDE00857F86 /* Bundles */,
 				AE09DCC52442E97900857F86 /* GoogleSignIn.framework */,
 				AE09DCC62442E97900857F86 /* GoogleSignInDependencies.framework */,
@@ -215,6 +225,14 @@
 				AE7D9417242232140002B853 /* libsqlite3.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE831E21244387E90047C9C3 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				AE831E22244388040047C9C3 /* pad_confirm.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		AE832173242F2F5800666B90 /* Tasks */ = {
@@ -256,6 +274,7 @@
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
+				AE831E21244387E90047C9C3 /* Sounds */,
 				AE09DCCD2442EB9800857F86 /* GoogleSignIn.bundle */,
 				AE09DCB02442E35500857F86 /* Bundles */,
 				AEEBD19D241D5BDA00A41300 /* RemindMe */,
@@ -342,6 +361,8 @@
 				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
 				3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */,
 				AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */,
+				AE831E1924437B950047C9C3 /* NeedHelpViewController.swift */,
+				AE831E1F2443808A0047C9C3 /* AboutViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -404,6 +425,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE831E23244388040047C9C3 /* pad_confirm.wav in Resources */,
 				AE09DCCE2442EB9800857F86 /* GoogleSignIn.bundle in Resources */,
 				AEB480F62441707300EC7782 /* RemindMe.db in Resources */,
 				AE770C1C24412F0B00F64EA0 /* remindme_noname_logo.png in Resources */,
@@ -450,9 +472,11 @@
 				AEFDD36B2442CA54000B8E40 /* ContactDetailsViewController.swift in Sources */,
 				AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
+				AE831E202443808A0047C9C3 /* AboutViewController.swift in Sources */,
 				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,
 				AE83217B242F3A8600666B90 /* TaskCell.swift in Sources */,
 				AEFAD2CB2436CCA20078640F /* DueDateCell.swift in Sources */,
+				AE831E1A24437B950047C9C3 /* NeedHelpViewController.swift in Sources */,
 				AEFAD2C92436CC860078640F /* ViewController.swift in Sources */,
 				AEFAD2CF2436CD050078640F /* DueDate.swift in Sources */,
 				AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */,

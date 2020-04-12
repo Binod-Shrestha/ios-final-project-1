@@ -2,7 +2,7 @@
 //  NoteCell.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-30.
+//  Created by Quynh Dinh on 2020-03-30.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 

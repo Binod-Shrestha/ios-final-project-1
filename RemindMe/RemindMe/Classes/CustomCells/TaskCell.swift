@@ -2,7 +2,7 @@
 //  TaskCell.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-28.
+//  Created by Quynh Dinh on 2020-03-28.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
@@ -22,7 +22,7 @@ class TaskCell: UITableViewCell {
         lbTitle.font = UIFont.boldSystemFont(ofSize: 25)
         lbTitle.font = UIFont(name: "MarkerFelt-Thin", size: 25)
         lbTitle.backgroundColor = .clear
-        lbTitle.textColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(32/255.0), blue: CGFloat(63/255.0), alpha: CGFloat(1.0))
+        lbTitle.textColor = UIColor(red: CGFloat(16/255.0), green: CGFloat(45/255.0), blue: CGFloat(40/255.0), alpha: CGFloat(1.0))
         
         lbPriority.textAlignment = .left
         lbPriority.font = UIFont.boldSystemFont(ofSize: 15)

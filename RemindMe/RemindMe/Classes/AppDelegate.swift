@@ -341,12 +341,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                 
                 var cTitle = task.title! as NSString
                 var intStatus = task.status! as NSNumber
-                var cTaskDueDate = task.taskDueDate! as NSString
+                var cDueDate : NSString?
+                if task.taskDueDate == nil {
+                    cDueDate = nil
+                } else {
+                    cDueDate = task.taskDueDate! as NSString
+                }
                 
                 sqlite3_bind_text(updateStatement, 1, cTitle.utf8String, -1, nil)
                 sqlite3_bind_int(updateStatement, 2, Int32(intStatus))
                 sqlite3_bind_int(updateStatement, 3, Int32(task.priority!))
-                sqlite3_bind_text(updateStatement, 4, cTaskDueDate.utf8String, -1, nil)
+                
+                if cDueDate == nil {
+                    sqlite3_bind_null(updateStatement, 4)
+                } else {
+                    sqlite3_bind_text(updateStatement, 4, cDueDate!.utf8String, -1, nil)
+                }
                 sqlite3_bind_int(updateStatement, 5, Int32(task.daysInAdvance!))
                 
                 if task.note == nil {
@@ -408,7 +418,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
-                    let taskDueDate = String(cString: cTaskDueDate!)
+                    
+                    var taskDueDate : String?
+                    if(cTaskDueDate != nil) {
+                        taskDueDate = String(cString: cTaskDueDate!)
+                    }
                     
                     task = Task.init(row: id, user_id: user_id, title: title, status: status, priority: priority, taskDueDate: taskDueDate, daysInAdvance: daysInAdvance, note: note)
                 }
@@ -457,7 +471,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     
                     let title = String(cString: cTitle!)
                     let status = (intStatus as NSNumber).boolValue
-                    let taskDueDate = String(cString: cTaskDueDate!)
+                    
+                    var taskDueDate : String?
+                    if(cTaskDueDate != nil) {
+                        taskDueDate = String(cString: cTaskDueDate!)
+                    }
                     
                     var task : Task = Task.init(row: id, user_id: user_id, title: title, status: status, priority: priority, taskDueDate: taskDueDate, daysInAdvance: daysInAdvance, note: note)
                     
@@ -492,14 +510,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             if sqlite3_prepare_v2(db, insertQuery, -1, &insertStatement, nil) == SQLITE_OK {
                 
                 let cTitle = task.title! as NSString
-                let cDueDate = task.taskDueDate! as NSString
+                
+                var cDueDate : NSString?
+                if task.taskDueDate == nil {
+                    cDueDate = nil
+                } else {
+                    cDueDate = task.taskDueDate! as NSString
+                }
+
                 let intStatus = task.status! as NSNumber
                 
                 sqlite3_bind_int(insertStatement, 1, Int32(task.user_id!))
                 sqlite3_bind_text(insertStatement, 2, cTitle.utf8String, -1, nil)
                 sqlite3_bind_int(insertStatement, 3, Int32(intStatus))
                 sqlite3_bind_int(insertStatement, 4, Int32(task.priority!))
-                sqlite3_bind_text(insertStatement, 5, cDueDate.utf8String, -1, nil)
+                if cDueDate == nil {
+                    sqlite3_bind_null(insertStatement, 5)
+                } else {
+                    sqlite3_bind_text(insertStatement, 5, cDueDate!.utf8String, -1, nil)
+                }
                 sqlite3_bind_int(insertStatement, 6, Int32(task.daysInAdvance!))
                 if task.note == nil {
                     sqlite3_bind_null(insertStatement, 7)

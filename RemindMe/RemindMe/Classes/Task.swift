@@ -24,7 +24,7 @@ class Task: NSObject {
         super.init()
     }
     
-    init(user_id : Int, title : String, status: Bool, priority: Int, taskDueDate: String, daysInAdvance: Int, note: Note?) {
+    init(user_id : Int, title : String, status: Bool, priority: Int, taskDueDate: String?, daysInAdvance: Int, note: Note?) {
         self.user_id = user_id
         self.title = title
         self.status = status
@@ -34,7 +34,7 @@ class Task: NSObject {
         self.note = note
     }
     
-    init(row: Int, user_id : Int, title : String, status: Bool, priority: Int, taskDueDate: String, daysInAdvance: Int, note: Note?) {
+    init(row: Int, user_id : Int, title : String, status: Bool, priority: Int, taskDueDate: String?, daysInAdvance: Int, note: Note?) {
         self.id = row
         self.user_id = user_id
         self.title = title

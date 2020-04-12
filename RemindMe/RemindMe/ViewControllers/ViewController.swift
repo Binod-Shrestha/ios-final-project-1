@@ -99,12 +99,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     var tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
                     var task = tasks[row]
                     let returnCode = mainDelegate.deleteTask(id: task.id!)
-                    let reminder = self.reminders[row]
-                    //var reminders = mainDelegate.deleteReminder(id: reminder.id!)
-                
-                    
-                    
-                    
+
                     var title : String = ""
                     var message : String = ""
                     var action = UIAlertAction()
@@ -112,7 +107,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     if returnCode == true {
                         // Successfully delete task
                         title = "Successfully"
-                        mainDelegate.deleteReminder(id: reminder.id!)
                         message = "Deleted \(task.title!)"
                         action = UIAlertAction(title: "OK", style: .default) {
                             (action) in
@@ -220,9 +214,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.accessoryType = .disclosureIndicator
             break
         case 1:
-            //TODO: Change UserId
             print("Calling getTasksByUser()...")
-            var tasks = mainDelegate.getTasksByUser(user_id: 1)
+            var tasks = mainDelegate.getTasksByUser(user_id: mainDelegate.currentUser!.id!)
             
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TaskCell ?? TaskCell(style: .default, reuseIdentifier: "cell")
             
@@ -240,8 +233,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
             (cell as! TaskCell).lbPriority.text = priority
             
-            let dueDate = "Due date: \(tasks[row].taskDueDate!)"
-            (cell as! TaskCell).lbTaskDueDate.text = dueDate
+            var text : String  = ""
+            if(tasks[row].status == false) {
+                text = "Status: Inactive"
+            } else {
+                text = "Due date: \(tasks[row].taskDueDate!)"
+            }
+            (cell as! TaskCell).lbTaskDueDate.text = text
 
             break
         case 2:
@@ -293,7 +291,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             break
         case 1:
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            let tasks = mainDelegate.getTasksByUser(user_id: 1)
+            let tasks = mainDelegate.getTasksByUser(user_id: mainDelegate.currentUser!.id!)
             
             let row = indexPath.row
             mainDelegate.currentTask = tasks[row]
@@ -320,7 +318,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Long Press Gesture
+        
+        // Quynh: Set up Long Press Gesture
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressGesture.minimumPressDuration = 1.0
         longPressGesture.delegate = self
@@ -339,7 +338,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     //method:2 left to right
-    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -353,7 +351,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 // Perform segue to go to EditDueDateVC
                 break
             case 1:
-                // Perform segue to go to EditTaskVC
+                // Quynh: Perform segue to go to EditTaskVC
+                let mainDelegate = UIApplication.shared.delegate as! AppDelegate
+                let tasks = mainDelegate.getTasksByUser(user_id: mainDelegate.currentUser!.id!)
+                
+                let row = indexPath.row
+                mainDelegate.currentTask = tasks[row]
+                
+                self.performSegue(withIdentifier: "HomeToEditTaskSegue", sender: nil)
                 break
             case 2:
                 // Perform segue to go to EditContactVC
@@ -368,7 +373,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     // Swipe from right to left
-
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             action, index in
@@ -458,6 +462,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return [delete]
     }
     
+    // Quynh: Handle long gesture event
     @objc func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchPoint = longPressGestureRecognizer.location(in: self.tableView)

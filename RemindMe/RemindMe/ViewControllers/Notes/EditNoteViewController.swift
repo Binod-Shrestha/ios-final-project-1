@@ -2,7 +2,7 @@
 //  EditNoteViewController.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-24.
+//  Created by Quynh Dinh on 2020-03-24.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
@@ -11,14 +11,10 @@ import UIKit
 class EditNoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet var textView : UITextView!
     @IBOutlet var btnDone : UIBarButtonItem!
-    @IBOutlet var btnAddImage : UIButton!
     @IBOutlet var btnUpdate : UIButton!
     @IBOutlet var btnDelete : UIButton!
     
-    @IBAction func btnAddImageClicked(sender:UIButton) {
-        attachImageToText()
-    }
-    
+    // btnDelete event handler
     @IBAction func btnDeleteClicked() {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentTask = mainDelegate.currentTask
@@ -38,8 +34,9 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         self.present(alert, animated: true)
     }
     
-    //TODO: Do UpdateNote function
+    // btnUpdate event handler
     @IBAction func btnUpdateClicked(sender : UIButton) {
+        // Save the note to the current task
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var note = mainDelegate.currentTask!.note
         
@@ -66,27 +63,6 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         
         textView.resignFirstResponder()
         textView.textColor = UIColor.lightGray
-    }
-    
-    // Attach image to the text
-    func attachImageToText() {
-        
-        let image = UIImage(named: "gg-background.jpg")
-        
-        let imageRatio = image!.size.width/image!.size.height
-        
-        // Initiate an attachment with inserted image
-        let attachment = NSTextAttachment()
-        attachment.image = image
-        attachment.bounds = CGRect(x: 0, y: 0, width: imageRatio * 150, height: 150)
-        
-        // Add the attachment to an attributed string
-        let attributeString = NSAttributedString(attachment: attachment)
-        
-        // Add the attributed string to the current position of the text view
-        textView.textStorage.insert(attributeString, at: textView.selectedRange.location)
-        
-        print("AttributedString: \(textView.attributedText.string)")
     }
     
     // When the user begins to enter the note
@@ -132,16 +108,4 @@ class EditNoteViewController: UIViewController, UITextViewDelegate {
         var currentNote = mainDelegate.currentTask!.note
         textView.text = currentNote?.content
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

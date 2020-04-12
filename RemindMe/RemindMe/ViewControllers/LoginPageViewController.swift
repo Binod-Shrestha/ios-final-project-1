@@ -12,9 +12,17 @@ import GoogleSignIn
 class LoginPageViewController: UIViewController ,UITextFieldDelegate {
     @IBOutlet var tfemail : UITextField!
     @IBOutlet var tfpassword : UITextField!
+    
+    // Quynh: Declaration for Google Sign-in and NeedHelp buttons
     @IBOutlet weak var signInButton: GIDSignInButton!
+    @IBOutlet var btnNeedHelp : UIButton!
+    
     
     @IBAction func unwindToLoginVC(sender:UIStoryboardSegue){
+        
+    }
+    
+    @IBAction func btnNeedHelpClicked(sender: Any) {
         
     }
     
@@ -30,8 +38,8 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Quynh's Google Sign-In implementation
-        // Callback
+        // Quynh: Google Sign-In implementation
+        // Set up Callback
         refreshInterface()
         (UIApplication.shared.delegate as! AppDelegate).signIncallback = refreshInterface
         // Initialize Google sign-in

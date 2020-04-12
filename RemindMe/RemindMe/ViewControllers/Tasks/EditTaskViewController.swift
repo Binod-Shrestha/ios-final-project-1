@@ -2,7 +2,7 @@
 //  EditTaskViewController.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-29.
+//  Created by Quynh Dinh on 2020-03-29.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
@@ -20,6 +20,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var dpDeadline :  UIDatePicker!
     
+    // btnDelete event handler
     @IBAction func btnDeleteClicked(sender: UIButton) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentTask = mainDelegate.currentTask
@@ -62,7 +63,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         self.present(alert, animated: true)
     }
     
+    // btnUpdate event handler
     @IBAction func btnUpdateClicked(sender: UIButton) {
+        // Check if the title is blank
         if (tfTitle.text == "" || tfTitle.text == nil) {
             var alert = UIAlertController(title: "Warning", message: "Please enter required field(s)!", preferredStyle: .alert)
             var cancelAction  = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -70,6 +73,7 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
             alert.addAction(cancelAction)
             present(alert, animated: true)
         } else {
+            // Update the task
             let alert = UIAlertController(title: "Confirmation", message: "Do you want to update the task?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
@@ -81,14 +85,16 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
-                var date = dateFormatter.string(from: self.dpDeadline.date)
+                var date : String?
+                if self.swStatus.isOn {
+                    date = dateFormatter.string(from: self.dpDeadline.date)
+                }
                 
                 currentTask!.title = self.tfTitle.text
                 currentTask!.status = self.swStatus.isOn
                 currentTask!.priority = self.sgmPriority.selectedSegmentIndex
                 currentTask!.taskDueDate = date
                 currentTask!.daysInAdvance = 2
-                
                 
                 var title : String = ""
                 var message : String = ""
@@ -97,7 +103,9 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
                 var note = currentTask!.note
                 var noteReturnCode : Bool = true
                 
+                // Check if the task contains a note
                 if (note != nil) {
+                    // If the task contains a new note
                     if (note!.id == nil) {
                         let note_id = mainDelegate.insertNote(note: note!)
 
@@ -109,18 +117,24 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
                             noteReturnCode = false
                         }
                     } else {
+                        // If the task contains an existing note
                         if (note!.content == nil) {
+                            // If the user deletes the existing note (content of the existing note is empty)
                             noteReturnCode = mainDelegate.deleteNote(id: note!.id!)
                             currentTask!.note = nil
                         } else {
+                            // If the user updates the content of the note
                             noteReturnCode = mainDelegate.updateNote(note: note!)
                         }
                     }
                 }
 
+                // Check if the note is updated sucessfully
                 if noteReturnCode {
+                    //  Update the current task
                     let taskReturnCode = mainDelegate.updateTask(task: currentTask!)
                     
+                    // Check if the task is updated
                     if taskReturnCode {
                         title = "Successfully"
                         message = "Updated \(currentTask!.title!)"
@@ -152,7 +166,22 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Status switch Value Changed event handler
+    @IBAction func swStatusValueChanged(sender: UISwitch) {
+        var status : String = ""
+        if swStatus.isOn {
+            dpDeadline.isEnabled = true
+            status = "Active"
+        } else {
+            dpDeadline.isEnabled = false
+            status = "Inactive"
+        }
+        lbStatus.text = status
+    }
+    
+    // btnNote event handler
     @IBAction func btnNoteClicked(sender : UIButton) {
+        // Get the current state of the current task
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         var currentUser = mainDelegate.currentUser
         var currentTask : Task? = mainDelegate.currentTask
@@ -160,7 +189,12 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
-        var date = dateFormatter.string(from: dpDeadline.date)
+        
+        var date : String?
+        
+        if swStatus.isOn {
+            date = dateFormatter.string(from: dpDeadline.date)
+        }
         
         currentTask!.title = self.tfTitle.text
         currentTask!.status = self.swStatus.isOn
@@ -202,15 +236,15 @@ class EditTaskViewController: UIViewController, UITextFieldDelegate {
         swStatus.isOn = currentTask!.status!
         if swStatus.isOn {
             lbStatus.text = "Active"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+            let date = dateFormatter.date(from: currentTask!.taskDueDate!)
+            dpDeadline.date = date!
         } else {
             lbStatus.text = "Inactive"
+            dpDeadline.isEnabled = false
         }
         sgmPriority.selectedSegmentIndex = currentTask!.priority!
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
-        let date = dateFormatter.date(from: currentTask!.taskDueDate!)
-        dpDeadline.date = date!
         
         if currentTask!.note?.content == nil {
             btnNote.setTitle("Add Note", for: .normal)
