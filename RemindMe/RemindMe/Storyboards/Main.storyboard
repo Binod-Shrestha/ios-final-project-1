@@ -1312,7 +1312,7 @@
                                     <navigationItem title="Create Notification" id="yRJ-AA-VuA">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="YEK-re-iX9">
                                             <connections>
-                                                <segue destination="qVi-3r-gjZ" kind="unwind" unwindAction="unwindToCreateDueDateVCWithSender:" id="wfu-Yc-RI6"/>
+                                                <segue destination="qVi-3r-gjZ" kind="unwind" unwindAction="unwindToHomeVCWithSender:" id="TQh-SL-aAa"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="k3j-bY-Tc1">
@@ -1324,9 +1324,6 @@
                                                     <action selector="saveNotification:" destination="fVY-Oh-vTF" eventType="touchUpInside" id="Gub-Gv-dk9"/>
                                                 </connections>
                                             </button>
-                                            <connections>
-                                                <segue destination="Ynz-J0-eI0" kind="presentation" identifier="CreateDueDateToHomeVCSegue" id="LF5-fd-wJZ"/>
-                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -1495,7 +1492,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Save" id="DQH-qK-RSv">
                                             <connections>
-                                                <action selector="insertDueDate:" destination="Ynz-J0-eI0" id="Eto-T6-S3e"/>
+                                                <action selector="saveDueDate:" destination="Ynz-J0-eI0" id="xi9-jC-mwP"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -1551,15 +1548,15 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ck1-m1-CDF">
-                                <rect key="frame" x="33" y="674" width="402" height="39"/>
+                                <rect key="frame" x="19" y="674" width="368" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Save Due Date with Notification      &gt;            ">
+                                <state key="normal" title="Add Notification                                        &gt;">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="insertDueDate:" destination="Ynz-J0-eI0" eventType="touchUpInside" id="Xx2-so-QkO"/>
-                                    <segue destination="fVY-Oh-vTF" kind="presentation" id="FJt-e0-Uch"/>
+                                    <action selector="addNotification:" destination="Ynz-J0-eI0" eventType="touchUpInside" id="q1c-iv-QAK"/>
+                                    <segue destination="fVY-Oh-vTF" kind="presentation" identifier="CreateDueDateToCreateNotificationVCSegue" id="cdu-oh-JsR"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1580,7 +1577,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H7n-k7-74V" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="wPI-W2-866" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1844.9275362318842" y="136.60714285714286"/>
+            <point key="canvasLocation" x="1694" y="169"/>
         </scene>
         <!--Edit Due Date View Controller-->
         <scene sceneID="jIM-qJ-duW">
@@ -1710,12 +1707,17 @@
         <image name="grey_fog.jpg" width="640" height="1136"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LF5-fd-wJZ"/>
-        <segue reference="mQX-yV-Rlx"/>
         <segue reference="7Y3-60-BNd"/>
         <segue reference="nZg-RF-Pw0"/>
         <segue reference="YE8-ZG-GhS"/>
         <segue reference="oFL-2j-Aep"/>
         <segue reference="cKO-ze-OpF"/>
+        <segue reference="HiC-Nu-gXz"/>
+        <segue reference="mQX-yV-Rlx"/>
+        <segue reference="BmH-SF-h7c"/>
+        <segue reference="NeN-c6-YH1"/>
+        <segue reference="mCK-Bi-4fi"/>
+        <segue reference="XkP-zO-8gJ"/>
+        <segue reference="5Ju-2v-4zC"/>
     </inferredMetricsTieBreakers>
 </document>

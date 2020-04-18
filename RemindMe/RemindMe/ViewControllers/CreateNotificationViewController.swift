@@ -1,14 +1,14 @@
 //
 //  CreateNotificationViewController.swift
 //  RemindMe
-//  Binod Shrestha
+//  Binod Shrestha and Brian
 //  Created by Xcode User on 2020-04-07.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
 import UIKit
 import UserNotifications
-
+//MARK:===================== BY BINOD AND BRIAN ==========================
 class CreateNotificationViewController: UIViewController {
     
     @IBOutlet weak var notifyDate: UIDatePicker!
@@ -28,7 +28,7 @@ class CreateNotificationViewController: UIViewController {
     
     @IBOutlet weak var currentStatus: UILabel!
     
-    //MARK: Switch function
+    //MARK: ================Switch function: By Binod=============
     @IBAction func createStatus(_ sender: UISwitch) {
         if (statusSwitch.isOn) {
             status = "Enabled"
@@ -42,7 +42,7 @@ class CreateNotificationViewController: UIViewController {
     }
     
     
-    //MARK: alert function
+    //MARK: =============== alert function By Binod and Brian ====================
     func setNotification(date : Date) {
       //  var currentUser : User = mainDelegate.currentUser!
     
@@ -99,7 +99,7 @@ class CreateNotificationViewController: UIViewController {
         center.setNotificationCategories([category])
     }
     
-    //MARK: save notification function
+    //MARK: ============= save notification function By: Binod =================
     @IBAction func saveNotification(_ sender: Any) {
         let notification : Notification = Notification.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -134,7 +134,6 @@ class CreateNotificationViewController: UIViewController {
             {
                 returnMsg = "Notification Added"
                 print(returnMsg)
-               performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
             }
             else  if returnCode == false
             {
@@ -158,14 +157,14 @@ class CreateNotificationViewController: UIViewController {
     
     }
     
-    //MARK: Date function
+    //MARK: ============== Date function By Binod ===================
     @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
         
         tfnotifyDate.text = dateFormatter.string(from: sender.date)
         view.endEditing(true)
     }
     
-    //MARK: common alert function
+    //MARK: =========common alert function by Binod==================
     func createAlert(title: String, message: String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
