@@ -35,13 +35,13 @@ class SignupPageViewController: UIViewController,UITextFieldDelegate,UIPickerVie
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.row  = row
-        lblPickerTest.text = securityQuestions[row]
+    
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    //Function is used to by the app to register the user into our app
     @IBAction func signUp(sender : Any)
     {
         let user : User = User(row: 0, email: tfemail.text!, password: tfpassword.text!, name: tfname.text!, securityQuestion: row, securityAnswer: tfsecurityAnswer.text!)

@@ -61,34 +61,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
 
-    // Update reminder
-    func UpdateReminder()
-    {
-           let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-        let reminders = Reminder.init()
-       //  let currentReminder : Reminder = mainDelegate.curentReminder!
-        
 
-        var eventStore = EKEventStore()
-        let reminder = EKReminder(eventStore: eventStore)
-
-         reminders.reminderName = tfEventName.text!
-        
-         reminders.reminderDate = tfDueDate.text
-      
- 
-        reminder.calendar = eventStore.defaultCalendarForNewReminders()!
-
-       
-       let returnCode = mainDelegate.updateReminder(reminder:reminders)
-        
-       if returnCode == true{
-	
-       } else{
-            
-            print("Null")
-       }
-    }
 
     //MARK: update DueDate
     @IBAction func updateDueDate(_ sender: Any)
@@ -109,16 +82,12 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         
         
-        //TODO: change insertDueDate to updateDueDate
+        //sherwin : this is used to update the reminder which will call the update function from the app delegate
         let returnCode = mainDelegate.updateDueDateData(duedate: currentDueDate)
         if returnCode == true
         {
             var returnMsg : String = "Due Date updated"
-         if swReminders.isOn
-           {
-
-               UpdateReminder()
-          }
+      
 
 
         }

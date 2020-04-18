@@ -16,12 +16,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     @IBOutlet weak var btnAlert: UIButton!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var reminderSwitch: UISwitch!
-    
-    
-    
-    
-    
-    
+
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
   
   
@@ -61,6 +56,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
 //        }
 //    }
     
+    //Sherwin : Function will create a reminder
     func createReminder()
     {
         var eventStore = EKEventStore()
@@ -137,6 +133,8 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
             if returnCode == true
             {
                 if reminderSwitch.isOn{
+                    
+                    //Sherwin : Function will be called only if the switch is on 
                     self.createReminder()
                 }
                 

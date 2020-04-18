@@ -696,8 +696,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         return noteId
     }
+    
+    
+    //MARK: =====================Sherwin Code block =============================================
 
-    //MARK: Users Database functions
+    //MEthod that is used to Reset the password of the user
     func resetPassword(user: User, newPassword : String) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
@@ -735,7 +738,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         return returnCode
     }
-
+//Function is used to search for useers email when resetting password
     func getUserByEmail (email : String) -> User? {
        // var user : User = User()
        var user : User? = nil
@@ -784,7 +787,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func logOut() {
         currentUser = nil
     }
-    
+  //Function is used to Verify the users credentials and find specific user in database while signing in
     func loginVerification(user : User) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode : Bool = true
@@ -832,7 +835,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
         return  returnCode
     }
-    
+    //Function is used to register the user to the  database
     func signUp(user : User) -> Bool
     {
         var db : OpaquePointer? = nil
@@ -875,7 +878,95 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         }
         return returnCode
     }
-
+    
+//Function is used to load the calendars
+    func loadCalendars() {
+        let calendars = self.eventStore!.calendars(for: .reminder)
+        
+        for calendar in calendars as [EKCalendar] {
+            print("Calendar = \(calendar.title)")
+        }
+        print("Default Calendars: \(self.eventStore!.defaultCalendarForNewReminders())")
+    }
+    //Shrwin : This Function is used to check and make sure reminder permission have been granted
+    func checkRemindersPermission() {
+        print("Checking access permission to Reminders ...")
+        
+        switch EKEventStore.authorizationStatus(for: .reminder) {
+        case .authorized:
+            print("Already granted access to Reminders")
+            self.loadCalendars()
+        case .notDetermined:
+            print("Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: EKEntityType.reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Reminders")
+        case .denied:
+            print("Access to Reminders is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Reminders")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Reminders is granted")
+                    self.loadCalendars()
+                } else {
+                    print("Access to Reminders is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    //Sherwin : Verify all the calendat permission
+    func checkCalendarsPermission() {
+        print("Checking access permission to Calendars ...")
+        
+        switch EKEventStore.authorizationStatus(for: .event) {
+        case .authorized:
+            print("Already granted access to Calendars")
+            self.checkRemindersPermission()
+        case .notDetermined:
+            print ("Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .event, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendats is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        case .restricted:
+            print("Restricted access to Calendars")
+        case .denied:
+            print("Access to Calendars is denied")
+        @unknown default:
+            print("Default: Not determined. Asking for access Calendars")
+            self.eventStore!.requestAccess(to: .reminder, completion: {
+                (isAllowed, error) in
+                if isAllowed {
+                    print("Access to Calendars is granted")
+                    self.eventStore = EKEventStore()
+                    self.checkRemindersPermission()
+                } else {
+                    print("Access to Calendars is not granted")
+                    print(error?.localizedDescription)
+                }
+            })
+        }
+    }
+    
     //MARK: Database functions for Reminders
     func insertReminder(reminder : Reminder) -> Bool
     {
@@ -917,7 +1008,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return returnCode
     }
     
- 
+ //Function is used to update the remnder
     func updateReminder(reminder : Reminder) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -956,7 +1047,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         return returnCode
     }
-
+    
+    //Method is = used to get the reminder by Id
     func getReminderById(id : Int) -> Reminder? {
         var reminder : Reminder? = nil
         
@@ -993,7 +1085,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return reminder
     }
     
-    
+    //Method is used to Delete the reminder from the database
     func deleteReminder(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -1025,7 +1117,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return returnCode
     }
 
-
+   //MARK: =================END_OF_Sherwins Code Block============================
+    
+    
+    
+    
+    
     //MARK: =====================BRIAN'S_CODE_BLOCK==============================================
     //MARK: ========== Contacts Database Functions ==============
     func insertContactIntoDatabase(contact : Contact) -> Bool
@@ -1550,93 +1647,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     //MARK: ========================= SETUP FUNCTIONS ===========================
 
     //MARK: Prepare Database and Check Permissions
-    func loadCalendars() {
-        let calendars = self.eventStore!.calendars(for: .reminder)
-        
-        for calendar in calendars as [EKCalendar] {
-            print("Calendar = \(calendar.title)")
-        }
-        print("Default Calendars: \(self.eventStore!.defaultCalendarForNewReminders())")
-    }
     
-    func checkRemindersPermission() {
-        print("Checking access permission to Reminders ...")
-        
-        switch EKEventStore.authorizationStatus(for: .reminder) {
-        case .authorized:
-            print("Already granted access to Reminders")
-            self.loadCalendars()
-        case .notDetermined:
-            print("Not determined. Asking for access Reminders")
-            self.eventStore!.requestAccess(to: EKEntityType.reminder, completion: {
-                (isAllowed, error) in
-                if isAllowed {
-                    print("Access to Reminders is granted")
-                    self.loadCalendars()
-                } else {
-                    print("Access to Reminders is not granted")
-                    print(error?.localizedDescription)
-                }
-            })
-        case .restricted:
-            print("Restricted access to Reminders")
-        case .denied:
-            print("Access to Reminders is denied")
-        @unknown default:
-            print("Default: Not determined. Asking for access Reminders")
-            self.eventStore!.requestAccess(to: .reminder, completion: {
-                (isAllowed, error) in
-                if isAllowed {
-                    print("Access to Reminders is granted")
-                    self.loadCalendars()
-                } else {
-                    print("Access to Reminders is not granted")
-                    print(error?.localizedDescription)
-                }
-            })
-        }
-    }
-    
-    func checkCalendarsPermission() {
-        print("Checking access permission to Calendars ...")
 
-        switch EKEventStore.authorizationStatus(for: .event) {
-        case .authorized:
-            print("Already granted access to Calendars")
-            self.checkRemindersPermission()
-        case .notDetermined:
-            print ("Not determined. Asking for access Calendars")
-            self.eventStore!.requestAccess(to: .event, completion: {
-                (isAllowed, error) in
-                if isAllowed {
-                    print("Access to Calendars is granted")
-                    self.eventStore = EKEventStore()
-                    self.checkRemindersPermission()
-                } else {
-                    print("Access to Calendats is not granted")
-                    print(error?.localizedDescription)
-                }
-            })
-        case .restricted:
-            print("Restricted access to Calendars")
-        case .denied:
-            print("Access to Calendars is denied")
-        @unknown default:
-            print("Default: Not determined. Asking for access Calendars")
-            self.eventStore!.requestAccess(to: .reminder, completion: {
-                (isAllowed, error) in
-                if isAllowed {
-                    print("Access to Calendars is granted")
-                    self.eventStore = EKEventStore()
-                    self.checkRemindersPermission()
-                } else {
-                    print("Access to Calendars is not granted")
-                    print(error?.localizedDescription)
-                }
-            })
-        }
-    }
-    
     func refreshDatabaseFromApp()
     {
         var success = false

@@ -6,6 +6,9 @@
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
+
+//Created By Sherwin Gonsalves
+
 import UIKit
 
 class ResetPasswordViewController: UIViewController {
@@ -24,6 +27,10 @@ class ResetPasswordViewController: UIViewController {
     var foundUser : User?
     
     @IBOutlet weak var questionLabel: UILabel!
+    
+    
+    //This function would check if the user exist in the database and display users security Question
+    
     @IBAction func btnSecurityClicked(sender: UIButton) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -64,7 +71,7 @@ class ResetPasswordViewController: UIViewController {
     
     
     
-    
+    //This function would change password once it has verified all the users security Questions 
     @IBAction func btnChangePasswordClicked(sender : UIButton) {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         
@@ -98,7 +105,7 @@ class ResetPasswordViewController: UIViewController {
                 }
                 
                         let alertController = UIAlertController(title: "Success", message: returnMessage, preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "ok", style: .cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "ok", style: .default)  { (_)-> Void in   self.performSegue(withIdentifier: "ResetToLogin", sender: self) }
                 alertController.addAction(cancelAction)
                 present(alertController,animated: true)
 
@@ -109,7 +116,7 @@ class ResetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      
+        //Sherwin: Will hide all the labels and buttons  by default and then be displayed when called 
         self.answerLabel.isHidden = true
         self.questionLabel.isHidden = true
         self.lbQuestion.isHidden = true

@@ -6,9 +6,13 @@
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
+//class been done by sherwin Gosalves
+
 import UIKit
 
 class User: NSObject {
+    
+//Declaration of objects
     var id: Int?
     var email : String?
     var password : String?
@@ -16,10 +20,14 @@ class User: NSObject {
     var securityAnswer: String?
     var securityQuestion: Int?
     
+    
+    
     override init() {
         super.init()
     }
     
+    
+    //For the forget password
     init(email : String, password : String) {
         self.email = email
         self.password = password
@@ -31,7 +39,7 @@ class User: NSObject {
         self.securityQuestion = securityQuestion
         self.securityAnswer = securityAnswer
     }
-    
+    //For Registration
     init(row : Int, email: String, password : String, name : String, securityQuestion :Int, securityAnswer : String)
     {
         self.id = row

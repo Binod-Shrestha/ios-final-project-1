@@ -6,6 +6,8 @@
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
+//Class done by sherwin gonsalves
+
 import UIKit
 
 class Reminder: NSObject {
@@ -14,11 +16,11 @@ class Reminder: NSObject {
     var id: Int?
     var reminderName : String?
     var reminderDate : String?
-
-    
     var notification : Notification?
     var alarm : Alarm?
     
+    
+    //Methos that is used to set the reminder details into the database
     init(row: Int, reminderName: String, reminderDate: String) {
         self.id = row
         self.reminderDate = reminderDate
@@ -27,14 +29,6 @@ class Reminder: NSObject {
     }
     
     
-  /*  init(row: Int, reminderName: String, reminderDate: String, notification :Notification, alarm :Alarm) {
-        self.id = row
-        self.reminderDate = reminderDate
-        self.reminderName = reminderName
-      self.notification = notification
-     self.alarm  = alarm
-    }
-    */
     override init() {
         super.init()
     }

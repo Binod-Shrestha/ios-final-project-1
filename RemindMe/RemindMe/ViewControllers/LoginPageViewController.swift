@@ -6,6 +6,8 @@
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
+
+//Create by sherwin Gonsalves
 import UIKit
 import GoogleSignIn
 
@@ -56,6 +58,8 @@ class LoginPageViewController: UIViewController ,UITextFieldDelegate {
         return textField.resignFirstResponder()
     }
 
+    
+    //Sherwin:This Method is used to verify the users credentials and let him in into the application
     @IBAction func login(sender : Any)
     {
         let email = tfemail.text
