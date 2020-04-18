@@ -2,11 +2,11 @@
 //  User.swift
 //  RemindMe
 //
-//  Created by Xcode User on 2020-03-14.
+//  Created by sherwin Gosalves on 2020-03-14.
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
-//class been done by sherwin Gosalves
+
 
 import UIKit
 

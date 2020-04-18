@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     var reminders : [Reminder] = []
 
     
+    //Sherwin: Function is used to log user out of the application
     @IBAction func btnLogOutTriggered(sender: UIBarButtonItem) {
         // Cancel object selection
         if btnLogOut.title == "Cancel" {
@@ -32,12 +33,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             indexPath = nil
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
-            mainDelegate.logOut()
+       
 
             let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
+                
+                //Quynh: Sign user out if user using google account
                 GIDSignIn.sharedInstance()?.signOut()
+                
+                mainDelegate.logOut()
                 self.performSegue(withIdentifier: "logOutSegue", sender: self)
             }
             alertController.addAction(cancelAction)

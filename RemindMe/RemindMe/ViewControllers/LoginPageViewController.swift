@@ -7,7 +7,7 @@
 //
 
 
-//Create by sherwin Gonsalves
+
 import UIKit
 import GoogleSignIn
 
