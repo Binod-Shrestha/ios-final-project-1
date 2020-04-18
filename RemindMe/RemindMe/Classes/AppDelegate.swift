@@ -298,7 +298,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return returnCode
     }
     
-    //MARK: Database functions for Tasks
+    //MARK: Database functions for Tasks - Quynh
     func deleteTask(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -563,7 +563,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return returnCode
     }
     
-    //MARK: Database functions for Notes
+    //MARK: Database functions for Notes - Quynh
     func deleteNote(id: Int) -> Bool {
         var db : OpaquePointer? = nil
         var returnCode = false
@@ -1708,7 +1708,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         return true
     }
     
-    //MARK: Methods for Google SignIn
+    //MARK: Methods for Google SignIn - Quynh
     @available(iOS 9.0, *)
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
