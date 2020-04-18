@@ -1725,6 +1725,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             return
         } else {
             if(user?.userID != nil) {
+                
+                // Note: UserId here is hard-coded as the google sign in returns userId in string and our application is using integer UserId
                 currentUser = User(row: 04122020, email: user.profile.email, password: "temp", name: user.profile.name, securityQuestion: 0, securityAnswer: "temp")
                 
                 let idToken = user.authentication.idToken
