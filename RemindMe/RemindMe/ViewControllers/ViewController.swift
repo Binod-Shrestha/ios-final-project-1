@@ -26,7 +26,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if btnLogOut.title == "Cancel" {
             var cell = self.tableView.cellForRow(at: indexPath!)
             cell?.isSelected = false
-            
             btnLogOut.title = "Log Out"
             btnCreate.title = "+"
             
@@ -34,7 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             mainDelegate.logOut()
- 
+
             let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
