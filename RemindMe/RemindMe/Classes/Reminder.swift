@@ -17,7 +17,6 @@ class Reminder: NSObject {
 
     
     var notification : Notification?
-    var alarm : Alarm?
     
     init(row: Int, reminderName: String, reminderDate: String) {
         self.id = row

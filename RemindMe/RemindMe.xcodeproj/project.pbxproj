@@ -21,7 +21,6 @@
 		AE09DCD82442EC4B00857F86 /* GoogleSignInDependencies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE09DCD62442EC4A00857F86 /* GoogleSignInDependencies.framework */; };
 		AE1364F2243D1C0C00AE32CC /* CreateNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */; };
 		AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */; };
-		AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */; };
 		AE2A35D22432CFCF006E9166 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */; };
 		AE37E428242B266700F32C86 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AE37E427242B266700F32C86 /* libsqlite3.0.tbd */; };
 		AE5023892437ACF50050B4F1 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE5023882437ACF50050B4F1 /* ContactCell.swift */; };
@@ -43,15 +42,12 @@
 		AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAE018F24328A0C003365F7 /* NoteCell.swift */; };
 		AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */; };
 		AEB480F62441707300EC7782 /* RemindMe.db in Resources */ = {isa = PBXBuildFile; fileRef = AEB480F52441707300EC7782 /* RemindMe.db */; };
-		AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82B5243EC8A200A90522 /* Alert.swift */; };
-		AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */; };
 		AEEBD1A6241D5BDB00A41300 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */; };
 		AEEBD1A9241D5BDB00A41300 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEEBD1A7241D5BDB00A41300 /* LaunchScreen.storyboard */; };
 		AEEBD1B7241D65D800A41300 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B6241D65D800A41300 /* Contact.swift */; };
 		AEEBD1B9241D65F000A41300 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1B8241D65F000A41300 /* Reminder.swift */; };
 		AEEBD1BB241D660500A41300 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BA241D660500A41300 /* User.swift */; };
 		AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BC241D661E00A41300 /* Notification.swift */; };
-		AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1BE241D662F00A41300 /* Alarm.swift */; };
 		AEEBD1C1241D680C00A41300 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C0241D680C00A41300 /* Task.swift */; };
 		AEEBD1C3241D6C1000A41300 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEBD1C2241D6C1000A41300 /* Note.swift */; };
 		AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */; };
@@ -60,7 +56,6 @@
 		AEFAD2CB2436CCA20078640F /* DueDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2CA2436CCA20078640F /* DueDateCell.swift */; };
 		AEFAD2CF2436CD050078640F /* DueDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2CE2436CD050078640F /* DueDate.swift */; };
 		AEFAD2D22436CD240078640F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D02436CD230078640F /* AppDelegate.swift */; };
-		AEFAD2D32436CD240078640F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFAD2D12436CD230078640F /* Category.swift */; };
 		AEFAD2D52436CD570078640F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AEFAD2D42436CD570078640F /* Main.storyboard */; };
 		AEFDD36B2442CA54000B8E40 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFDD3692442CA54000B8E40 /* ContactDetailsViewController.swift */; };
 		AEFDD36C2442CA54000B8E40 /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFDD36A2442CA54000B8E40 /* EditContactViewController.swift */; };
@@ -85,7 +80,6 @@
 		AE09DCD62442EC4A00857F86 /* GoogleSignInDependencies.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleSignInDependencies.framework; sourceTree = "<group>"; };
 		AE1364F1243D1C0C00AE32CC /* CreateNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNotificationViewController.swift; sourceTree = "<group>"; };
 		AE1364F3243D1C2800AE32CC /* EditNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNotificationViewController.swift; sourceTree = "<group>"; };
-		AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		AE2A35D12432CFCF006E9166 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AE37E427242B266700F32C86 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AE5023882437ACF50050B4F1 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -107,8 +101,6 @@
 		AEAE018F24328A0C003365F7 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		AEB1E003242AE98D00931B27 /* EditNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteViewController.swift; sourceTree = "<group>"; };
 		AEB480F52441707300EC7782 /* RemindMe.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemindMe.db; sourceTree = "<group>"; };
-		AEDD82B5243EC8A200A90522 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
-		AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlertViewController.swift; sourceTree = "<group>"; };
 		AEEBD19B241D5BDA00A41300 /* RemindMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEEBD1A5241D5BDB00A41300 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AEEBD1A8241D5BDB00A41300 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -117,7 +109,6 @@
 		AEEBD1B8241D65F000A41300 /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		AEEBD1BA241D660500A41300 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AEEBD1BC241D661E00A41300 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		AEEBD1BE241D662F00A41300 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		AEEBD1C0241D680C00A41300 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		AEEBD1C2241D6C1000A41300 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		AEFAD2C42436CC860078640F /* CreateDueDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDueDateViewController.swift; sourceTree = "<group>"; };
@@ -126,7 +117,6 @@
 		AEFAD2CA2436CCA20078640F /* DueDateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DueDateCell.swift; sourceTree = "<group>"; };
 		AEFAD2CE2436CD050078640F /* DueDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DueDate.swift; sourceTree = "<group>"; };
 		AEFAD2D02436CD230078640F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AEFAD2D12436CD230078640F /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		AEFAD2D42436CD570078640F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		AEFDD3692442CA54000B8E40 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
 		AEFDD36A2442CA54000B8E40 /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
@@ -263,18 +253,9 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		AEDD82B7243ECEEC00A90522 /* Alerts */ = {
-			isa = PBXGroup;
-			children = (
-				AEDD82BA243ED8CA00A90522 /* AddAlertViewController.swift */,
-			);
-			path = Alerts;
-			sourceTree = "<group>";
-		};
 		AEEBD192241D5BDA00A41300 = {
 			isa = PBXGroup;
 			children = (
-				AE831E21244387E90047C9C3 /* Sounds */,
 				AE09DCCD2442EB9800857F86 /* GoogleSignIn.bundle */,
 				AE09DCB02442E35500857F86 /* Bundles */,
 				AEEBD19D241D5BDA00A41300 /* RemindMe */,
@@ -295,6 +276,7 @@
 		AEEBD19D241D5BDA00A41300 /* RemindMe */ = {
 			isa = PBXGroup;
 			children = (
+				AE831E21244387E90047C9C3 /* Sounds */,
 				AE37E429242B37ED00F32C86 /* Database */,
 				AEEBD1B3241D5C0C00A41300 /* ViewControllers */,
 				AEEBD1B2241D5C0400A41300 /* Storyboards */,
@@ -321,17 +303,14 @@
 			isa = PBXGroup;
 			children = (
 				AEFAD2D02436CD230078640F /* AppDelegate.swift */,
-				AEFAD2D12436CD230078640F /* Category.swift */,
 				AEFAD2CE2436CD050078640F /* DueDate.swift */,
 				AEAE019124328DFD003365F7 /* CustomCells */,
 				AEEBD1B6241D65D800A41300 /* Contact.swift */,
 				AEEBD1B8241D65F000A41300 /* Reminder.swift */,
 				AEEBD1BA241D660500A41300 /* User.swift */,
 				AEEBD1BC241D661E00A41300 /* Notification.swift */,
-				AEEBD1BE241D662F00A41300 /* Alarm.swift */,
 				AEEBD1C0241D680C00A41300 /* Task.swift */,
 				AEEBD1C2241D6C1000A41300 /* Note.swift */,
-				AEDD82B5243EC8A200A90522 /* Alert.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -348,7 +327,6 @@
 		AEEBD1B3241D5C0C00A41300 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AEDD82B7243ECEEC00A90522 /* Alerts */,
 				AE5023862437AB490050B4F1 /* Contacts */,
 				AE832173242F2F5800666B90 /* Tasks */,
 				AE7C85592423FF4600EA6CBC /* Notes */,
@@ -360,7 +338,6 @@
 				3B6606DA2423938700160572 /* SignupPageViewController.swift */,
 				3B6606DC2423939E00160572 /* LoginPageViewController.swift */,
 				3B0EBE28243147570024B86E /* ResetPasswordViewController.swift */,
-				AE1364F5243D3DCD00AE32CC /* NotificationsViewController.swift */,
 				AE831E1924437B950047C9C3 /* NeedHelpViewController.swift */,
 				AE831E1F2443808A0047C9C3 /* AboutViewController.swift */,
 			);
@@ -454,11 +431,8 @@
 				AEB1E004242AE98D00931B27 /* EditNoteViewController.swift in Sources */,
 				AEEBD1BB241D660500A41300 /* User.swift in Sources */,
 				3B0EBE29243147570024B86E /* ResetPasswordViewController.swift in Sources */,
-				AEEBD1BF241D662F00A41300 /* Alarm.swift in Sources */,
 				AE83217D242F4AA500666B90 /* CreateTaskViewController.swift in Sources */,
-				AEDD82BB243ED8CA00A90522 /* AddAlertViewController.swift in Sources */,
 				AEAE019024328A0C003365F7 /* NoteCell.swift in Sources */,
-				AEDD82B6243EC8A200A90522 /* Alert.swift in Sources */,
 				AEEBD1BD241D661E00A41300 /* Notification.swift in Sources */,
 				AEFAD2C72436CC860078640F /* CreateDueDateViewController.swift in Sources */,
 				3B6606DB2423938700160572 /* SignupPageViewController.swift in Sources */,
@@ -468,9 +442,7 @@
 				AE1364F4243D1C2800AE32CC /* EditNotificationViewController.swift in Sources */,
 				AEFDD36C2442CA54000B8E40 /* EditContactViewController.swift in Sources */,
 				AE0656652431403200DE4C92 /* EditTaskViewController.swift in Sources */,
-				AEFAD2D32436CD240078640F /* Category.swift in Sources */,
 				AEFDD36B2442CA54000B8E40 /* ContactDetailsViewController.swift in Sources */,
-				AE1364F6243D3DCD00AE32CC /* NotificationsViewController.swift in Sources */,
 				AEEBD1C1241D680C00A41300 /* Task.swift in Sources */,
 				AE831E202443808A0047C9C3 /* AboutViewController.swift in Sources */,
 				AE7C855B2423FF7D00EA6CBC /* CreateNoteViewController.swift in Sources */,

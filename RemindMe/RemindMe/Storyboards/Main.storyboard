@@ -1287,7 +1287,7 @@
                         <outlet property="tfOrganization" destination="x7M-Bf-41N" id="vBv-g9-Zdx"/>
                         <outlet property="tfPhone" destination="CPS-6I-gDW" id="jpN-Jo-vnh"/>
                         <outlet property="tfSlack" destination="zI0-hu-poE" id="rp2-8Y-wql"/>
-                        <outlet property="tfTitle" destination="Xce-58-b0a" id="bhG-jF-unL"/>
+                        <outlet property="tfTitle" destination="BWu-cn-6HF" id="Yk6-Um-O2A"/>
                         <outlet property="tvNotes" destination="Qbm-iZ-otv" id="1s2-Oe-WSt"/>
                         <segue destination="Z8I-XK-7G6" kind="presentation" identifier="ContactDetailToEditContactSegue" id="7Y3-60-BNd"/>
                     </connections>
@@ -1577,7 +1577,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H7n-k7-74V" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="wPI-W2-866" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1694" y="169"/>
+            <point key="canvasLocation" x="1894" y="102"/>
         </scene>
         <!--Edit Due Date View Controller-->
         <scene sceneID="jIM-qJ-duW">
@@ -1673,17 +1673,6 @@
                                     <outlet property="delegate" destination="FhY-sY-OEc" id="rrY-de-z8P"/>
                                 </connections>
                             </textField>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yoc-ps-jNa">
-                                <rect key="frame" x="340" y="608" width="49" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set Reminder" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7p-Ak-kTL">
-                                <rect key="frame" x="25" y="615" width="127" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fSR-i3-9i5"/>
@@ -1691,7 +1680,6 @@
                     <connections>
                         <outlet property="pvCategory" destination="HWe-Z8-lza" id="2cb-xb-Kus"/>
                         <outlet property="sgPriority" destination="X0G-AL-dzO" id="eff-M6-k8S"/>
-                        <outlet property="swReminders" destination="Yoc-ps-jNa" id="Skc-g8-O3f"/>
                         <outlet property="tfDueDate" destination="l9K-ro-U0V" id="HZ1-5A-Hns"/>
                         <outlet property="tfEventName" destination="KS3-iA-AlN" id="1qr-eC-Kxb"/>
                         <outlet property="tfSCategory" destination="MC8-cP-zaD" id="eMN-gG-jEv"/>
@@ -1707,14 +1695,8 @@
         <image name="grey_fog.jpg" width="640" height="1136"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="wq7-Eh-7za"/>
         <segue reference="7Y3-60-BNd"/>
-        <segue reference="nZg-RF-Pw0"/>
-        <segue reference="YE8-ZG-GhS"/>
-        <segue reference="oFL-2j-Aep"/>
-        <segue reference="cKO-ze-OpF"/>
-        <segue reference="HiC-Nu-gXz"/>
-        <segue reference="mQX-yV-Rlx"/>
-        <segue reference="BmH-SF-h7c"/>
         <segue reference="NeN-c6-YH1"/>
         <segue reference="mCK-Bi-4fi"/>
         <segue reference="XkP-zO-8gJ"/>

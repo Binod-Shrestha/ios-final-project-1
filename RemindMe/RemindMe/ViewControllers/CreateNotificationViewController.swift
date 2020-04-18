@@ -90,6 +90,7 @@ class CreateNotificationViewController: UIViewController {
          }
     }
     
+    //MARK: By Brian - Register the notification category with action
     func  registerCategories(){
         let center = UNUserNotificationCenter.current()
         center.delegate = self as? UNUserNotificationCenterDelegate

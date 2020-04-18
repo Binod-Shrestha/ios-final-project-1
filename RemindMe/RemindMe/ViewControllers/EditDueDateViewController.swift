@@ -14,7 +14,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var pvCategory: UIPickerView!
     @IBOutlet weak var tfSCategory: UITextField!
     @IBOutlet weak var tfDueDate: UITextField!
-    @IBOutlet weak var swReminders : UISwitch!
     @IBOutlet weak var sgPriority: UISegmentedControl!
    
     var status : String?
@@ -87,18 +86,11 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         currentDueDate.date = dateFromDatabase
         currentDueDate.priority = selectedPriority
         
-        
         //TODO: change insertDueDate to updateDueDate
         let returnCode = mainDelegate.updateDueDateData(duedate: currentDueDate)
         if returnCode == true
         {
             var returnMsg : String = "Due Date updated"
-
-         if swReminders.isOn
-           {
-
-               UpdateReminder()
-          }
         }
             
         else  if returnCode == false
