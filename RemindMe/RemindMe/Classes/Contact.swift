@@ -6,9 +6,6 @@
 //  Copyright © 2020 BBQS. All rights reserved.
 //
 
-// ****** Brian  to complete *****
-
-
 import UIKit
 
 class Contact: NSObject {

@@ -17,7 +17,6 @@ class Reminder: NSObject {
     var reminderName : String?
     var reminderDate : String?
     var notification : Notification?
-    var alarm : Alarm?
     
     
     //Methos that is used to set the reminder details into the database

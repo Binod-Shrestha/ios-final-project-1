@@ -26,7 +26,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if btnLogOut.title == "Cancel" {
             var cell = self.tableView.cellForRow(at: indexPath!)
             cell?.isSelected = false
-            
             btnLogOut.title = "Log Out"
             btnCreate.title = "+"
             
@@ -34,7 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         } else {
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             mainDelegate.logOut()
- 
+
             let alertController = UIAlertController(title: "Warning", message: "Do you want to log out ?", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             let okAction = UIAlertAction(title: "Confirm", style: .default)  { (_)-> Void in
@@ -56,7 +55,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 performSegue(withIdentifier: "HomeToCreateDueDateSegue", sender: nil)
                 break
             case 1:
-                // Display Create New Task ViewController
+                // Quynh: Display Create New Task ViewController
                 let mainDelegate = UIApplication.shared.delegate as! AppDelegate
                 mainDelegate.currentTask = nil
                 performSegue(withIdentifier: "HomeToCreateNewTaskSegue", sender: nil)
@@ -90,7 +89,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 }
                 break
             case 1:
-                // Delete selected task
+                // Quynh: Delete selected task
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
@@ -160,6 +159,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             count = duedates.count
             break
         case 1:
+            // Quynh: Get number of tasks to populate tableview cell when user chooses Task on segment control
             let tasks = mainDelegate.getTasksByUser(user_id: currentUser.id!)
             count = tasks.count
             break
@@ -182,6 +182,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             height = 110
             break
         case 1:
+            // Quynh: Set height for task cell
             height = 95
             break
         case 2:
@@ -193,9 +194,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         return height
     }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = .clear
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -214,12 +217,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.accessoryType = .disclosureIndicator
             break
         case 1:
-            print("Calling getTasksByUser()...")
+            // Quynh: Populate cell
             var tasks = mainDelegate.getTasksByUser(user_id: mainDelegate.currentUser!.id!)
             
             cell = tableView.dequeueReusableCell(withIdentifier: "cell") as? TaskCell ?? TaskCell(style: .default, reuseIdentifier: "cell")
             
-            // Populate cell
             let row = indexPath.row
             (cell as! TaskCell).lbTitle.text = tasks[row].title
             
@@ -290,6 +292,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             performSegue(withIdentifier: "HomeToEditDueDatesSegue", sender: nil)
             break
         case 1:
+            // Quynh: Go to EditTaskViewController when the user selects the task cell
             let mainDelegate = UIApplication.shared.delegate as! AppDelegate
             let tasks = mainDelegate.getTasksByUser(user_id: mainDelegate.currentUser!.id!)
             
@@ -402,7 +405,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     self.present(alertController,animated: true)
                 break
             case 1:
-                // Delete the selected task
+                // Quynh: Delete the selected task
                 let alert = UIAlertController(title: "Confirmation", message: "Do you want to delete the task?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let confirmAction = UIAlertAction(title: "Confirm", style: .default) {
