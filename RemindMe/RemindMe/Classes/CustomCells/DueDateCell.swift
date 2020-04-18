@@ -1,13 +1,14 @@
 //
 //  NoteCell.swift
 //  RemindMe
-//
+// By Binod Shrestha
 //  Created by Xcode User on 2020-03-04.
 //  Copyright © 2020 Xcode User. All rights reserved.
 //
 
 import UIKit
-
+//Mark: ===================== coded by Binod Shrestha ==========
+//MARK: ======//////////// CLASS - 2 ///////////////////
 class DueDateCell: UITableViewCell {
     
     // instantiate the items

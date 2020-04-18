@@ -25,26 +25,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var pickerData = ["Business", "Personal", "School"]
 
     
-    
-    
-//
-//    // uiswitch for setting reminder
-//    @IBAction func setReminders(_ sender: Any)
-//    {
-//        let onState = swReminders.isOn
-//        if onState {
-//            status = "Active"
-//            btnNotification.isHidden = false
-//            btnAlert.isHidden = false
-//        }else{
-//            status = "Disabled"
-//            btnNotification.isHidden = true
-//            btnAlert.isHidden = true
-//        }
-//
-//    }
-    
-    // segments function
+    //MARK: ============ segments function by Binod ===================
     @IBAction func indexChanaged(_ sender: Any)
     {
         switch sgPriority.selectedSegmentIndex
@@ -74,7 +55,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let returnCode = maindelegate.updateReminder(reminder: reminderData)
     }
 
-    //MARK: update DueDate
+    //MARK: ============ update DueDate by Binod ==================
     @IBAction func updateDueDate(_ sender: Any)
     {
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -89,8 +70,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         currentDueDate.subCategory =  sbCategory
         currentDueDate.date = dateFromDatabase
         currentDueDate.priority = selectedPriority
-        //currentDueDate.alertID = mainDelegate.currentAlert?.alertID
-        
         
         
         //TODO: change insertDueDate to updateDueDate
@@ -98,12 +77,6 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         if returnCode == true
         {
             var returnMsg : String = "Due Date updated"
-
-//            if swReminders.isOn
-//            {
-// 
-//                UpdateReminder()
-//            }
         }
         else  if returnCode == false
         {
@@ -116,6 +89,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return textField.resignFirstResponder()
     }
     
+    //MARK: =========== By Binod Shrestha =========
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -150,7 +124,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.pvCategory.selectRow(intSelectedCategory!, inComponent: 0, animated: true)
     }
     
-    // pickerview
+    //MARK: =========== pickerview by Binod ====================
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -166,7 +140,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         selectedCategory = pickerData[row]
     }
     
-    // date function
+    //MARK: ============= date function by Binod =================
     func createDatePicker()
     {
         //format date
@@ -181,7 +155,7 @@ class EditDueDateViewController: UIViewController, UIPickerViewDelegate, UIPicke
         tfDueDate.inputView = datePicker
         
     }
-    //MARK: done button for date picker
+    //MARK: ========== done button for date picker by Binod ===============
     @objc func donePressed()
     {
         let dateFormatter = DateFormatter()

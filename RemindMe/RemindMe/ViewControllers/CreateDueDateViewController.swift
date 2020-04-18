@@ -13,20 +13,41 @@ import EventKit
 class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate, UIPickerViewDataSource,UITextFieldDelegate {
     @IBOutlet var tfEventTitle : UITextField!
     @IBOutlet weak var picker: UIPickerView!
-    @IBOutlet weak var btnAlert: UIButton!
     @IBOutlet weak var btnNotification: UIButton!
     @IBOutlet weak var reminderSwitch: UISwitch!
+
+    //MARK: =============== Save Due Date  by Binod ==================
+    @IBAction func saveDueDate(_ sender: Any) {
+       insertDueDate()
+        createAlert(title: "Information", message: "Due Date added successfully.")
+        
+    }
+
+    //Mark: ========= add notification by Binod ===========
+    @IBAction func addNotification(_ sender: Any) {
+        
+        saveNotification()
+    }
     
-    
-    
-    
-    
-    
+    //MARK: ============= save notification by Binod =============
+     func saveNotification() {
+       
+        let alertController = UIAlertController(title: "Information", message: "Do you want to add notification to the due date ?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let okAction = UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.insertDueDate()
+            self.performSegue(withIdentifier: "CreateDueDateToCreateNotificationVCSegue", sender: self)
+        })
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController,animated: true, completion: nil)
+        
+    }
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-  
-  
-    
-    //for date
+
+    //MARK: ========= for date by Binod ===================
     let datePicker = UIDatePicker()
     var pickerData: [String] = [String]()
     let cellReuseIdentifier = "cell"
@@ -46,20 +67,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     var selectedCategory: String!
     var selectedPriority: String!
     
-   
-    // uiswitch for setting reminder
-//    @IBAction func setReminders(_ sender: Any) {
-//        let onState = reminderSwitch.isOn
-//        if onState {
-//           status = "Active"
-//            btnNotification.isHidden = false
-//            btnAlert.isHidden = false
-//        }else{
-//            status = "Disabled"
-//            btnNotification.isHidden = true
-//            btnAlert.isHidden = true
-//        }
-//    }
     
     func createReminder()
     {
@@ -114,7 +121,7 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
         }
     }
     //MARK: ----------------save dueDate By Binod -------------------------
-    @IBAction func insertDueDate(_ sender: Any) {
+     func insertDueDate() {
         duedate = DueDate.init()
         let mainDelegate = UIApplication.shared.delegate as! AppDelegate
         let currentUser : User = mainDelegate.currentUser!
@@ -141,11 +148,11 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
                 }
                 
                  returnMsg = "Due Date Added"
-               // performSegue(withIdentifier: "CreateDueDateToHomeVCSegue", sender: self)
             }
             else  if returnCode == false
             {
                 returnMsg = "Due Date Add Failed"
+                createAlert(title: "Warning", message: "Due Date added failed.")
             }
             print(returnMsg)
         }
@@ -242,15 +249,6 @@ class CreateDueDateViewController: UIViewController,UITableViewDelegate, UITable
     @IBAction func unwindToCreateDueDateVC(sender:UIStoryboardSegue){
         self.loadView()
     }
-    
-    ///////////-------Passing data to create notification view controller-------------by Binod-----------///////////////
-   /*  func onButtonTap()
-    {
-        let vc = CreateNotificationViewController(nibName: "CreateNotificationViewController", bundle: nil)
-        vc.text = "Hello"
-        
-        navigationController?.pushViewController(vc, animated: true)
-    }*/
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? CreateNotificationViewController{
