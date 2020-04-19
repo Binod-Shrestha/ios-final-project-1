@@ -172,12 +172,11 @@ class CreateTaskViewController: UIViewController, UITextFieldDelegate {
             swStatus.isOn = currentTask!.status!
             sgmPriority.selectedSegmentIndex = currentTask!.priority!
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
-            let date = dateFormatter.date(from: currentTask!.taskDueDate!)
-            
             if swStatus.isOn {
                 dpDeadline.isEnabled  = true
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+                let date = dateFormatter.date(from: currentTask!.taskDueDate!)
                 dpDeadline.date = date!
             } else {
                 dpDeadline.isEnabled = false
